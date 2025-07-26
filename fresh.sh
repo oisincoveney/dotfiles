@@ -42,3 +42,7 @@ ln -s ./.mackup.cfg $HOME/.mackup.cfg
 
 # Set macOS preferences - we will run this last because this will reload the shell
 source ./.macos
+
+
+# Ensure that claude code only updates with brew
+claude config set -g autoUpdates false
