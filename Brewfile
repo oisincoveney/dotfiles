@@ -13,7 +13,8 @@ brew 'mas' # Mac App Store manager
 
 
 # Development
-brew 'oven-sh/bun'
+tap 'oven-sh/bun'
+brew 'bun'
 
 # Apps
 cask 'arc'
