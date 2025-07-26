@@ -49,7 +49,7 @@ cask 'visual-studio-code'
 cask 'whatsapp'
 cask 'windsurf'
 cask 'zoom'
-cask 'zoxide'
+brew 'zoxide'
 
 # Quicklook
 cask 'qlmarkdown'
