@@ -26,6 +26,7 @@ cask 'raycast'
 cask 'screen-studio'
 cask 'slack'
 cask 'tableplus'
+cask 'transmission'
 cask 'visual-studio-code'
 cask 'zoom'
 
