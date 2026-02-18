@@ -21,3 +21,10 @@ description: "Universal coding style rules"
 - Trailing commas everywhere
 - Single quotes in JS, double quotes in JSX
 - 120 char line width
+
+## Git
+- NEVER commit/push directly to main
+- NEVER amend commits or rewrite history after pushing
+- NEVER use `--force` without explicit approval
+- Always create new commits — never amend, squash, or rebase unless explicitly asked
+- Conventional commit format: `feat|fix|chore|docs|test|refactor(scope): description`
