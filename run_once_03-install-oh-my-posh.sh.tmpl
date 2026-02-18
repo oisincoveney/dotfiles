@@ -1,0 +1,15 @@
+#!/bin/bash
+# Install Oh My Posh if not present
+set -euo pipefail
+
+if ! command -v oh-my-posh &>/dev/null; then
+  echo "Installing Oh My Posh..."
+{{ if eq .chezmoi.os "darwin" -}}
+  brew install jandedobbeleer/oh-my-posh/oh-my-posh
+{{ else if eq .chezmoi.os "linux" -}}
+  curl -s https://ohmyposh.dev/install.sh | bash -s
+{{ end -}}
+  echo "Oh My Posh installed."
+else
+  echo "Oh My Posh already installed."
+fi

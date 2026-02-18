@@ -1,0 +1,73 @@
+#!/bin/bash
+# Install core packages on a fresh machine
+set -euo pipefail
+
+{{ if eq .chezmoi.os "darwin" -}}
+# ── macOS: Homebrew ──────────────────────────────────────────────────
+
+if ! command -v brew &>/dev/null; then
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME/.zprofile"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+brew bundle --file=/dev/stdin <<EOF || true
+brew 'chezmoi'
+brew 'gh'
+brew 'git'
+brew 'grep'
+brew 'zoxide'
+brew 'fzf'
+brew 'mise'
+brew 'delta'
+
+tap 'oven-sh/bun'
+brew 'bun'
+
+cask 'arc'
+cask 'claude'
+cask 'discord'
+cask 'iterm2'
+cask 'obsidian'
+cask 'orbstack'
+cask 'raycast'
+cask 'slack'
+cask 'tableplus'
+cask 'visual-studio-code'
+
+cask 'font-roboto'
+cask 'font-source-code-pro'
+EOF
+
+echo "Homebrew packages installed."
+
+{{ else if eq .chezmoi.os "linux" -}}
+# ── Linux: core packages ─────────────────────────────────────────────
+
+if command -v apt-get &>/dev/null; then
+  sudo apt-get update -qq
+  sudo apt-get install -y -qq git curl zsh fzf
+elif command -v dnf &>/dev/null; then
+  sudo dnf install -y git curl zsh fzf
+elif command -v pacman &>/dev/null; then
+  sudo pacman -Syu --noconfirm git curl zsh fzf
+fi
+
+# Install zoxide
+if ! command -v zoxide &>/dev/null; then
+  curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+fi
+
+# Install mise
+if ! command -v mise &>/dev/null; then
+  curl https://mise.run | sh
+fi
+
+# Install delta
+if ! command -v delta &>/dev/null; then
+  cargo install git-delta 2>/dev/null || echo "Install delta manually: https://github.com/dandavison/delta"
+fi
+
+echo "Linux packages installed."
+{{ end -}}
