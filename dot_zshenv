@@ -1,4 +1,4 @@
-. "$HOME/.cargo/env"
+[[ -r "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
 # uv
-export PATH="/Users/oisin/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"

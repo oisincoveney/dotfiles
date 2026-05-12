@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+set -eu
+
+hook_name="${1:-}"
+if [ -z "$hook_name" ]; then
+  exit 0
+fi
+shift
+
+if ! command -v bd >/dev/null 2>&1; then
+  exit 0
+fi
+
+export BD_GIT_HOOK=1
+timeout_seconds="${BEADS_HOOK_TIMEOUT:-300}"
+
+if command -v timeout >/dev/null 2>&1; then
+  timeout "$timeout_seconds" bd hooks run "$hook_name" "$@"
+  status=$?
+  if [ "$status" -eq 124 ]; then
+    echo >&2 "beads: hook '$hook_name' timed out after ${timeout_seconds}s; continuing without beads"
+    exit 0
+  fi
+else
+  bd hooks run "$hook_name" "$@"
+  status=$?
+fi
+
+if [ "$status" -eq 3 ]; then
+  echo >&2 "beads: database not initialized; skipping hook '$hook_name'"
+  exit 0
+fi
+
+exit "$status"

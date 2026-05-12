@@ -1,78 +1,104 @@
-# Completions
-fpath=("$HOME/.oh-my-zsh/custom/completions" $fpath)
-autoload -Uz compinit
-compinit
+# Dotfiles
+export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# Oh My Zsh
+export ZSH="${ZSH:-$HOME/.oh-my-zsh}"
+export ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.config/zsh}"
 
-# Random theme on each shell
-ZSH_THEME="random"
-
-# Pasting URLs fix
+ZSH_THEME="${ZSH_THEME:-random}"
 DISABLE_MAGIC_FUNCTIONS="true"
-
-# Command auto-correction
 ENABLE_CORRECTION="true"
-
-# Timestamp format in history
 HIST_STAMPS="yyyy-mm-dd"
-
-# oh-my-zsh custom directory (aliases.zsh, path.zsh auto-sourced)
-ZSH_CUSTOM="$HOME/.config/zsh"
-
-# Plugins
 plugins=(git)
 
-source $ZSH/oh-my-zsh.sh
+if [[ -d "$ZSH_CUSTOM/completions" ]]; then
+  fpath=("$ZSH_CUSTOM/completions" $fpath)
+fi
 
-# ── User Configuration ───────────────────────────────────────────────
+if [[ -r "$ZSH/oh-my-zsh.sh" ]]; then
+  source "$ZSH/oh-my-zsh.sh"
+else
+  autoload -Uz compinit
+  compinit
+  [[ -r "$ZSH_CUSTOM/path.zsh" ]] && source "$ZSH_CUSTOM/path.zsh"
+  [[ -r "$ZSH_CUSTOM/aliases.zsh" ]] && source "$ZSH_CUSTOM/aliases.zsh"
+fi
 
 # Locale
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
+export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+export LANG="${LANG:-en_US.UTF-8}"
 
-# ── PATH ─────────────────────────────────────────────────────────────
+# Smart cd
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
 
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.bun/bin:$PATH"
+# Fuzzy finder
+if [[ -o interactive && -t 0 && -t 1 ]] && command -v fzf >/dev/null 2>&1; then
+  if fzf --zsh >/dev/null 2>&1; then
+    source <(fzf --zsh)
+  else
+    [[ -r /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+    [[ -r /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
+  fi
+fi
 
-{{ if eq .chezmoi.os "darwin" -}}
-# macOS-specific PATH additions
-[ -d "$HOME/.codeium/windsurf/bin" ] && export PATH="$HOME/.codeium/windsurf/bin:$PATH"
-[ -d "$HOME/.lmstudio/bin" ] && export PATH="$PATH:$HOME/.lmstudio/bin"
-[ -d "$HOME/.antigravity/antigravity/bin" ] && export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
-[ -d "$HOME/.android-dev" ] && export PATH="$HOME/.android-dev:$PATH"
-{{ end -}}
-
-# ── Tools ────────────────────────────────────────────────────────────
-
-# Zoxide (smart cd)
-eval "$(zoxide init zsh)"
-
-# fzf (fuzzy finder)
-source <(fzf --zsh)
-
-# oh-my-posh prompt (skip Apple Terminal)
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+# Prompt
+if [[ "$TERM_PROGRAM" != "Apple_Terminal" ]] && command -v oh-my-posh >/dev/null 2>&1; then
   eval "$(oh-my-posh init zsh --config catppuccin)"
 fi
 
-# mise (runtime version manager)
-eval "$(mise activate zsh)"
+# Runtime/tool managers
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
+
+if [[ -r "$HOME/.moon/bin/env" ]]; then
+  source "$HOME/.moon/bin/env"
+fi
+
+# Optional tool integrations
+if command -v wtp >/dev/null 2>&1; then
+  eval "$(wtp shell-init zsh)"
+fi
 
 {{ if eq .chezmoi.os "darwin" -}}
-# Google Cloud SDK (macOS / Homebrew)
-[ -f '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc' ] && . '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc'
-[ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ] && . '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc'
-
-# Kiro shell integration
-[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+if [[ "$TERM_PROGRAM" == "kiro" ]] && command -v kiro >/dev/null 2>&1; then
+  source "$(kiro --locate-shell-integration-path zsh)"
+fi
 {{ end -}}
 
-# AsyncAPI CLI Autocomplete
-ASYNCAPI_AC_ZSH_SETUP_PATH="$HOME/Library/Caches/@asyncapi/cli/autocomplete/zsh_setup"
-[ -f "$ASYNCAPI_AC_ZSH_SETUP_PATH" ] && source "$ASYNCAPI_AC_ZSH_SETUP_PATH"
+if command -v openclaw >/dev/null 2>&1; then
+  source <(openclaw completion --shell zsh)
+fi
 
-# OpenClaw Completion
-command -v openclaw &>/dev/null && source <(openclaw completion --shell zsh)
+# Google Cloud SDK completions: Homebrew on macOS, direct install on Linux.
+if [[ -r /opt/homebrew/share/google-cloud-sdk/path.zsh.inc ]]; then
+  source /opt/homebrew/share/google-cloud-sdk/path.zsh.inc
+fi
+
+if [[ -r /opt/homebrew/share/google-cloud-sdk/completion.zsh.inc ]]; then
+  source /opt/homebrew/share/google-cloud-sdk/completion.zsh.inc
+fi
+
+if [[ -r "$HOME/google-cloud-sdk/path.zsh.inc" ]]; then
+  source "$HOME/google-cloud-sdk/path.zsh.inc"
+fi
+
+if [[ -r "$HOME/google-cloud-sdk/completion.zsh.inc" ]]; then
+  source "$HOME/google-cloud-sdk/completion.zsh.inc"
+fi
+
+{{ if eq .chezmoi.os "darwin" -}}
+# AsyncAPI CLI autocomplete
+ASYNCAPI_AC_ZSH_SETUP_PATH="$HOME/Library/Caches/@asyncapi/cli/autocomplete/zsh_setup"
+if [[ -r "$ASYNCAPI_AC_ZSH_SETUP_PATH" ]]; then
+  source "$ASYNCAPI_AC_ZSH_SETUP_PATH"
+fi
+unset ASYNCAPI_AC_ZSH_SETUP_PATH
+{{ end -}}
+
+# Machine-local env vars, tokens, and one-off overrides. Do not commit this file.
+if [[ -r "$HOME/.config/zsh/secrets.zsh" ]]; then
+  source "$HOME/.config/zsh/secrets.zsh"
+fi

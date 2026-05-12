@@ -14,13 +14,20 @@ fi
 
 brew bundle --file=/dev/stdin <<EOF || true
 brew 'chezmoi'
+brew 'atuin'
+brew 'eza'
+brew 'fd'
 brew 'gh'
 brew 'git'
 brew 'grep'
+brew 'mas'
 brew 'zoxide'
 brew 'fzf'
 brew 'mise'
 brew 'delta'
+brew 'oh-my-posh'
+brew 'ripgrep'
+brew 'tmux'
 
 tap 'oven-sh/bun'
 brew 'bun'
@@ -47,11 +54,11 @@ echo "Homebrew packages installed."
 
 if command -v apt-get &>/dev/null; then
   sudo apt-get update -qq
-  sudo apt-get install -y -qq git curl zsh fzf
+  sudo apt-get install -y -qq curl fd-find fzf gh git ripgrep tmux unzip xclip zoxide zsh
 elif command -v dnf &>/dev/null; then
-  sudo dnf install -y git curl zsh fzf
+  sudo dnf install -y git curl zsh fzf ripgrep tmux unzip zoxide
 elif command -v pacman &>/dev/null; then
-  sudo pacman -Syu --noconfirm git curl zsh fzf
+  sudo pacman -Syu --noconfirm git curl zsh fzf ripgrep tmux unzip zoxide
 fi
 
 # Install zoxide

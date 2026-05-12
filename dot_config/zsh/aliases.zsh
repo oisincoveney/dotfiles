@@ -1,14 +1,41 @@
 # Shortcuts
 alias reloadshell="omz reload"
-alias shrug="echo '¯\_(ツ)_/¯' | pbcopy"
 alias compile="commit 'compile'"
 alias timestamp="date +%s"
 alias version="commit 'version'"
 
+shrug() {
+  local text='¯\_(ツ)_/¯'
+
+  if command -v pbcopy >/dev/null 2>&1; then
+    print -rn -- "$text" | pbcopy
+  elif command -v wl-copy >/dev/null 2>&1; then
+    print -rn -- "$text" | wl-copy
+  elif command -v xclip >/dev/null 2>&1; then
+    print -rn -- "$text" | xclip -selection clipboard
+  else
+    print -r -- "$text"
+  fi
+}
+
 # Directories
-alias dotfiles="cd $DOTFILES"
-alias library="cd $HOME/Library"
-alias projects="cd $HOME/Code"
+dotfiles() {
+  cd "$DOTFILES" || return
+}
+
+library() {
+  cd "$HOME/Library" || return
+}
+
+projects() {
+  if [[ -d "$HOME/dev" ]]; then
+    cd "$HOME/dev" || return
+  elif [[ -d "$HOME/Code" ]]; then
+    cd "$HOME/Code" || return
+  else
+    cd "$HOME/projects" || return
+  fi
+}
 
 # Git
 alias amend="git add . && git commit --amend --no-edit"
@@ -24,3 +51,7 @@ alias resolve="git add . && git commit --no-edit"
 alias stash="git stash -u"
 alias unstage="git restore --staged ."
 alias wip="commit wip"
+
+# Agents
+alias cc="claude --dangerously-skip-permissions"
+alias co="codex --dangerously-bypass-approvals-and-sandbox"
