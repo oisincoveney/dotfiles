@@ -1,0 +1,7 @@
+[user]
+	name = Oisin Coveney
+	email = git@oisin.ee
+
+[core]
+	hooksPath = ~/.git-hooks
+	excludesFile = ~/.gitignore_global

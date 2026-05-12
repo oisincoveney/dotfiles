@@ -5,11 +5,20 @@ tap 'homebrew/cask-versions'
 # Binaries
 brew 'bash' # Latest Bash version
 brew 'coreutils' # Those that come with macOS are outdated
+brew 'atuin'
+brew 'eza'
+brew 'fd'
+brew 'fzf'
 brew 'gh'
 brew 'git'
 brew 'grep'
 brew 'mackup'
 brew 'mas' # Mac App Store manager
+brew 'mise'
+brew 'oh-my-posh'
+brew 'ripgrep'
+brew 'tmux'
+brew 'zoxide'
 
 
 # Development
@@ -49,7 +58,6 @@ cask 'visual-studio-code'
 cask 'whatsapp'
 cask 'windsurf'
 cask 'zoom'
-brew 'zoxide'
 
 # Quicklook
 cask 'qlmarkdown'
