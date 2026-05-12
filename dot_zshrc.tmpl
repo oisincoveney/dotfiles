@@ -43,6 +43,25 @@ if [[ -o interactive && -t 0 && -t 1 ]] && command -v fzf >/dev/null 2>&1; then
   fi
 fi
 
+# Terminal key bindings. Keep these after Oh My Zsh/fzf so remote SSH
+# sessions get sane Delete/Backspace behavior even with partial terminfo.
+bindkey '^?' backward-delete-char
+bindkey '^H' backward-delete-char
+bindkey '^[[3~' delete-char
+bindkey '^[3;5~' delete-char
+
+if [[ -n "${terminfo[kdch1]:-}" ]]; then
+  bindkey "${terminfo[kdch1]}" delete-char
+fi
+
+if [[ -n "${terminfo[khome]:-}" ]]; then
+  bindkey "${terminfo[khome]}" beginning-of-line
+fi
+
+if [[ -n "${terminfo[kend]:-}" ]]; then
+  bindkey "${terminfo[kend]}" end-of-line
+fi
+
 # Prompt
 if [[ "$TERM_PROGRAM" != "Apple_Terminal" ]] && command -v oh-my-posh >/dev/null 2>&1; then
   eval "$(oh-my-posh init zsh --config catppuccin)"
