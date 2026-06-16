@@ -27,3 +27,10 @@ hide_rate_limit_model_nudge = true
 [features]
 hooks = true
 apps = false
+{{ if env "REPO_DIR" }}
+# Coder dev-workspace: trust the cloned repo so the interactive codex TUI starts
+# at the prompt instead of the "Do you trust this folder?" dialog. REPO_DIR is
+# exported by the dev-workspace agent env; this block is absent on laptops.
+[projects."{{ env "REPO_DIR" }}"]
+trust_level = "trusted"
+{{ end }}
