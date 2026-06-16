@@ -2,3 +2,7 @@
 
 # uv
 export PATH="$HOME/.local/bin:$PATH"
+
+# Machine-local, non-public overrides (e.g. internal infra endpoints). Not
+# tracked here — this dotfiles repo is public. See ~/.zshenv.local.
+[[ -r "$HOME/.zshenv.local" ]] && source "$HOME/.zshenv.local"
