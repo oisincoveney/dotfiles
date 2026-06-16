@@ -8,19 +8,15 @@
 # rules hash: {{ include "dot_rulesync/rules/global.md" | sha256sum }}{{ include "dot_rulesync/rules/behavior.md" | sha256sum }}{{ include "dot_rulesync/rules/coding-style.md" | sha256sum }}{{ include "dot_rulesync/rules/anti-patterns.md" | sha256sum }}{{ include "dot_rulesync/rules/verification.md" | sha256sum }}
 set -euo pipefail
 
-# Resolve rulesync: prefer the version on PATH, then npx-installed, then
-# the globally npm-installed one. All three deliver 8.19.0 on a fresh machine.
-if command -v rulesync &>/dev/null; then
-  RULESYNC="rulesync"
-elif command -v npx &>/dev/null; then
-  RULESYNC="npx --yes rulesync@8.19.0"
-elif [ -d "$HOME/.npm-global/bin" ] && "$HOME/.npm-global/bin/rulesync" --version &>/dev/null; then
-  RULESYNC="$HOME/.npm-global/bin/rulesync"
-else
-  echo "rulesync not found; skipping rule generation (install with: npm i -g rulesync@8.19.0)" >&2
+# Always run rulesync through the pinned npx invocation so the exact version
+# (8.19.0) is enforced on every workstation regardless of what may be on PATH.
+if ! command -v npx &>/dev/null; then
+  echo "npx not found; skipping rule generation (install Node.js to enable)" >&2
   exit 0
 fi
 
-echo "Running rulesync generate (pinned 8.19.0 path: $RULESYNC)..."
+RULESYNC="npx --yes rulesync@8.19.0"
+
+echo "Running rulesync generate (pinned: $RULESYNC)..."
 $RULESYNC generate
 echo "rulesync: rules written to ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md, etc."
