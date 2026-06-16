@@ -1,2 +1,28 @@
 README.md
 LICENSE.md
+
+# Never track AI-tool state, history, caches, or secrets that live alongside
+# the configs we manage (these dirs hold multi-GB sqlite logs + auth tokens).
+**/*.sqlite
+**/*.sqlite-shm
+**/*.sqlite-wal
+**/auth.json
+**/*.credentials.json
+**/history.jsonl
+.claude/projects
+.claude/sessions
+.claude/session-env
+.claude/file-history
+.claude/paste-cache
+.claude/plans
+.claude/backups
+.claude/todos
+.claude/statsig
+.config/opencode/node_modules
+.config/opencode/plugins
+
+# The Mac's Claude settings.json is managed by local apps (Muxy/herdr/orca
+# hooks with Mac-absolute paths); only deploy the portable settings off-darwin.
+{{ if eq .chezmoi.os "darwin" }}
+.claude/settings.json
+{{ end }}

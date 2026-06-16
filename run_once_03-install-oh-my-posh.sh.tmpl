@@ -7,7 +7,10 @@ if ! command -v oh-my-posh &>/dev/null; then
 {{ if eq .chezmoi.os "darwin" -}}
   brew install jandedobbeleer/oh-my-posh/oh-my-posh
 {{ else if eq .chezmoi.os "linux" -}}
-  curl -s https://ohmyposh.dev/install.sh | bash -s
+  # Install to ~/.local/bin so no sudo / write to /usr/local/bin is needed
+  # (matters in non-root containers); ensure the dir exists and is on PATH.
+  mkdir -p "$HOME/.local/bin"
+  curl -s https://ohmyposh.dev/install.sh | bash -s -- -d "$HOME/.local/bin"
 {{ end -}}
   echo "Oh My Posh installed."
 else

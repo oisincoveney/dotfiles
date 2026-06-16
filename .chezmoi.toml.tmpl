@@ -1,0 +1,6 @@
+# Provide chezmoi template data (name/email used by dot_gitconfig.tmpl etc.)
+# without ever prompting, so `chezmoi apply` / `coder dotfiles` run cleanly in
+# headless environments. Override per-machine with CHEZMOI_NAME / CHEZMOI_EMAIL.
+[data]
+    name = {{ env "CHEZMOI_NAME" | default "Oisin Coveney" | quote }}
+    email = {{ env "CHEZMOI_EMAIL" | default "oisinthec@gmail.com" | quote }}

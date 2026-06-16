@@ -52,13 +52,23 @@ echo "Homebrew packages installed."
 {{ else if eq .chezmoi.os "linux" -}}
 # ── Linux: core packages ─────────────────────────────────────────────
 
+# Use sudo only when we are not already root and sudo exists. Container/Nix
+# images often run as a non-root user with no sudo; on those the package
+# manager is also absent and the tools are baked into the image, so we skip.
+SUDO=""
+if [ "$(id -u)" -ne 0 ] && command -v sudo &>/dev/null; then
+  SUDO="sudo"
+fi
+
 if command -v apt-get &>/dev/null; then
-  sudo apt-get update -qq
-  sudo apt-get install -y -qq curl fd-find fzf gh git ripgrep tmux unzip xclip zoxide zsh
+  $SUDO apt-get update -qq
+  $SUDO apt-get install -y -qq curl fd-find fzf gh git ripgrep tmux unzip xclip zoxide zsh
 elif command -v dnf &>/dev/null; then
-  sudo dnf install -y git curl zsh fzf ripgrep tmux unzip zoxide
+  $SUDO dnf install -y git curl zsh fzf ripgrep tmux unzip zoxide
 elif command -v pacman &>/dev/null; then
-  sudo pacman -Syu --noconfirm git curl zsh fzf ripgrep tmux unzip zoxide
+  $SUDO pacman -Syu --noconfirm git curl zsh fzf ripgrep tmux unzip zoxide
+else
+  echo "No supported package manager (apt/dnf/pacman); assuming the image provides these tools."
 fi
 
 # Install zoxide
