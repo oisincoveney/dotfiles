@@ -26,3 +26,24 @@ LICENSE.md
 {{ if eq .chezmoi.os "darwin" }}
 .claude/settings.json
 {{ end }}
+
+# AI-config-only mode (CHEZMOI_AI_ONLY=1): used by the headless moka
+# pipeline-runner. Deploy ONLY the AI tool config (rules + opencode/codex/gemini)
+# and exclude git identity/hooks, ssh, and the interactive shell/editor setup so
+# the bot's git identity and automated git ops are never touched. Pair with
+# `chezmoi apply --exclude=scripts` to skip the run_once installers.
+{{ if env "CHEZMOI_AI_ONLY" }}
+.gitconfig
+.git-hooks
+.ssh
+.zshrc
+.zshenv
+.zprofile
+.profile
+.config/zsh
+.config/tmux
+.config/nvim
+.config/zellij
+.config/mise
+.rulesync
+{{ end }}
