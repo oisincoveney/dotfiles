@@ -54,6 +54,15 @@ LICENSE.md
 .codex/state_5.sqlite
 .codex/computer-use
 
+# Coder dev-workspace only (REPO_DIR set): the codex coder module owns
+# ~/.codex/config.toml — it writes the dev model provider (OpenRouter) and the
+# cloned-repo trust entry there BEFORE codex starts. chezmoi must not clobber it
+# with the laptop config (gpt-5.5 + no provider), which both breaks the model and
+# re-introduces the "Do you trust this directory?" prompt. No-op on laptops.
+{{ if env "REPO_DIR" }}
+.codex/config.toml
+{{ end }}
+
 # The Mac's Claude settings.json is managed by local apps (Muxy/herdr/orca
 # hooks with Mac-absolute paths); only deploy the portable settings off-darwin.
 {{ if eq .chezmoi.os "darwin" }}
