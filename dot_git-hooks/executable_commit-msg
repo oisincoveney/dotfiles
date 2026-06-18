@@ -6,4 +6,3 @@ if [ -n "$msg" ] && [ -f "$msg" ]; then
 	grep -vi '^Co-authored-by:' "$msg" > "$tmp" && mv "$tmp" "$msg"
 fi
 
-"$(dirname "$0")/_lefthook" commit-msg "$@"
