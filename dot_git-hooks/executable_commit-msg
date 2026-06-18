@@ -1,2 +1,9 @@
 #!/usr/bin/env sh
+# Machine-wide policy: strip Co-Authored-By trailers (incl. agent-added) before commit.
+msg="$1"
+if [ -n "$msg" ] && [ -f "$msg" ]; then
+	tmp="$msg.coauthor.tmp"
+	grep -vi '^Co-authored-by:' "$msg" > "$tmp" && mv "$tmp" "$msg"
+fi
+
 "$(dirname "$0")/_lefthook" commit-msg "$@"
