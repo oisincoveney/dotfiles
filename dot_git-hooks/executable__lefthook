@@ -11,6 +11,23 @@ if [ "${LEFTHOOK:-}" = "0" ]; then
   exit 0
 fi
 
+# Skip silently when this repo has no lefthook config. Otherwise lefthook prints a
+# "No config files ... found" notice to stderr on every git action (commit, push,
+# checkout, merge) in every non-lefthook repo — once per hook stage.
+config_root="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+if [ -n "$config_root" ]; then
+  found_config=
+  for base in lefthook .lefthook .config/lefthook; do
+    for ext in yml yaml json toml; do
+      if [ -e "$config_root/$base.$ext" ]; then
+        found_config=1
+        break 2
+      fi
+    done
+  done
+  [ -n "$found_config" ] || exit 0
+fi
+
 if [ -n "${LEFTHOOK_BIN:-}" ]; then
   exec "$LEFTHOOK_BIN" run "$hook_name" "$@"
 fi
