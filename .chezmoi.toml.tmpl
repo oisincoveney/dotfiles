@@ -11,4 +11,4 @@ sourceDir = {{ (joinPath .chezmoi.homeDir ".dotfiles") | quote }}
 # headless environments. Override per-machine with CHEZMOI_NAME / CHEZMOI_EMAIL.
 [data]
     name = {{ env "CHEZMOI_NAME" | default "Oisin Coveney" | quote }}
-    email = {{ env "CHEZMOI_EMAIL" | default "oisinthec@gmail.com" | quote }}
+    email = {{ env "CHEZMOI_EMAIL" | default "git@oisin.ee" | quote }}

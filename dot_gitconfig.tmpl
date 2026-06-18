@@ -3,8 +3,8 @@
 [spice "branchCreate"]
 	commit = false
 [user]
-	email = {{ .email | quote }}
-	name = {{ .name | quote }}
+	email = {{ .email }}
+	name = {{ .name }}
 [rerere]
   enabled = true
 
@@ -24,3 +24,11 @@
 
 [merge]
     conflictStyle = zdiff3
+{{ if eq .chezmoi.os "darwin" -}}
+[credential "https://github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+{{ end -}}
