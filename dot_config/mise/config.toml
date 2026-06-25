@@ -1,4 +1,5 @@
 [tools]
+"github:gastownhall/beads" = { version = "latest", exe = "bd" }
 uv = "latest"
 
 [settings]

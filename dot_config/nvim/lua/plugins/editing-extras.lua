@@ -12,13 +12,13 @@ return {
   {
     "gbprod/substitute.nvim",
     keys = {
-      { "s", function() require("substitute").operator() end, desc = "Substitute" },
-      { "ss", function() require("substitute").line() end, desc = "Substitute line" },
-      { "S", function() require("substitute").eol() end, desc = "Substitute to EOL" },
-      { "s", function() require("substitute").visual() end, mode = "x", desc = "Substitute" },
-      { "sx", function() require("substitute.exchange").operator() end, desc = "Exchange" },
-      { "sxx", function() require("substitute.exchange").line() end, desc = "Exchange line" },
-      { "X", function() require("substitute.exchange").visual() end, mode = "x", desc = "Exchange" },
+      { "gs", function() require("substitute").operator() end, desc = "Substitute" },
+      { "gss", function() require("substitute").line() end, desc = "Substitute line" },
+      { "gS", function() require("substitute").eol() end, desc = "Substitute to EOL" },
+      { "gs", function() require("substitute").visual() end, mode = "x", desc = "Substitute" },
+      { "gsx", function() require("substitute.exchange").operator() end, desc = "Exchange" },
+      { "gsxx", function() require("substitute.exchange").line() end, desc = "Exchange line" },
+      { "gsx", function() require("substitute.exchange").visual() end, mode = "x", desc = "Exchange" },
     },
     opts = {},
   },
@@ -47,9 +47,6 @@ return {
   -- Smart autosave
   {
     "okuuva/auto-save.nvim",
-    event = { "InsertLeave", "TextChanged" },
-    opts = {
-      execution_message = { enabled = false },
-    },
+    enabled = false,
   },
 }

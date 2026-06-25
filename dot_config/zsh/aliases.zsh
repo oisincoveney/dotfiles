@@ -53,5 +53,7 @@ alias unstage="git restore --staged ."
 alias wip="commit wip"
 
 # Agents
-alias cc="claude --dangerously-skip-permissions"
+alias cc="CLAUDE_CODE_NO_FLICKER=1 claude --dangerously-skip-permissions"
 alias co="codex --dangerously-bypass-approvals-and-sandbox"
+alias ki="kimi --yolo"
+alias oc="opencode --dangerously-skip-permissions"
