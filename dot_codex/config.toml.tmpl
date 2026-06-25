@@ -5,6 +5,20 @@ personality = "pragmatic"
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 plan_mode_reasoning_effort = "high"
+{{ if env "BROKER_API_KEY" }}
+# Route codex through the central CLIProxyAPI broker (MAA-1): a custom
+# OpenAI-compatible provider keyed by $BROKER_API_KEY (env_key names the env var
+# Codex reads the Bearer from; wire_api="responses" is the only supported value).
+# Active only when BROKER_API_KEY is in the env; machines without it fall back to
+# the default `openai` login.
+model_provider = "broker"
+
+[model_providers.broker]
+name = "broker"
+base_url = "https://cliproxy.momokaya.ee/v1"
+env_key = "BROKER_API_KEY"
+wire_api = "responses"
+{{ end }}
 
 [tui]
 status_line = [

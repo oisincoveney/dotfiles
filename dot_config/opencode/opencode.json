@@ -28,11 +28,14 @@
   },
   "plugin": [
     "@devtheops/opencode-plugin-otel@1.1.0",
-    "@prevalentware/opencode-goal-plugin",
-    "oc-codex-multi-auth@6.3.2"
+    "@prevalentware/opencode-goal-plugin"
   ],
   "provider": {
     "openai": {
+      "options": {
+        "baseURL": "https://cliproxy.momokaya.ee/v1",
+        "apiKey": "{env:BROKER_API_KEY}"
+      },
       "models": {
         "gpt-5.5-none": {
           "options": {
