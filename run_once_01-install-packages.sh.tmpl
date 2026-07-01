@@ -12,42 +12,10 @@ if ! command -v brew &>/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-brew bundle --file=/dev/stdin <<EOF || true
-brew 'chezmoi'
-brew 'atuin'
-brew 'eza'
-brew 'fd'
-brew 'gh'
-brew 'git'
-brew 'grep'
-brew 'mas'
-brew 'zoxide'
-brew 'fzf'
-brew 'mise'
-brew 'delta'
-brew 'oh-my-posh'
-brew 'ripgrep'
-brew 'tmux'
-
-tap 'oven-sh/bun'
-brew 'bun'
-
-cask 'arc'
-cask 'claude'
-cask 'discord'
-cask 'iterm2'
-cask 'obsidian'
-cask 'orbstack'
-cask 'raycast'
-cask 'slack'
-cask 'tableplus'
-cask 'visual-studio-code'
-
-cask 'font-roboto'
-cask 'font-source-code-pro'
-EOF
-
-echo "Homebrew packages installed."
+# The full package set is the single source of truth in ~/.config/Brewfile
+# (+ Brewfile.fonts). It's installed by run_onchange_after_02-brew-bundle, which
+# re-runs automatically whenever either Brewfile changes.
+echo "Homebrew ready; packages are applied by the Brewfile bundle step."
 
 {{ else if eq .chezmoi.os "linux" -}}
 # ── Linux: core packages ─────────────────────────────────────────────
@@ -62,11 +30,11 @@ fi
 
 if command -v apt-get &>/dev/null; then
   $SUDO apt-get update -qq
-  $SUDO apt-get install -y -qq curl fd-find fzf gh git ripgrep tmux unzip xclip zoxide zsh
+  $SUDO apt-get install -y -qq bat curl fd-find fzf gh git ripgrep tmux unzip xclip zoxide zsh
 elif command -v dnf &>/dev/null; then
-  $SUDO dnf install -y git curl zsh fzf ripgrep tmux unzip zoxide
+  $SUDO dnf install -y bat git curl zsh fzf ripgrep tmux unzip zoxide
 elif command -v pacman &>/dev/null; then
-  $SUDO pacman -Syu --noconfirm git curl zsh fzf ripgrep tmux unzip zoxide
+  $SUDO pacman -Syu --noconfirm bat eza git curl zsh fzf ripgrep tmux unzip zoxide
 else
   echo "No supported package manager (apt/dnf/pacman); assuming the image provides these tools."
 fi
@@ -79,6 +47,21 @@ fi
 # Install mise
 if ! command -v mise &>/dev/null; then
   curl https://mise.run | sh
+fi
+
+# Install starship (prompt).
+if ! command -v starship &>/dev/null; then
+  curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
+fi
+
+# Install atuin (shell history).
+if ! command -v atuin &>/dev/null; then
+  curl -sSfL https://setup.atuin.sh | sh 2>/dev/null || echo "Install atuin manually: https://atuin.sh"
+fi
+
+# Install eza (modern ls) where the distro didn't provide it.
+if ! command -v eza &>/dev/null; then
+  cargo install eza 2>/dev/null || echo "Install eza manually: https://github.com/eza-community/eza"
 fi
 
 # Install delta

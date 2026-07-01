@@ -1,0 +1,242 @@
+tap "anomalyco/tap", trusted: true
+tap "cirruslabs/cli", trusted: true
+tap "cormacrelf/tap", trusted: true
+tap "dopplerhq/doppler", "https://github.com/DopplerHQ/homebrew-doppler.git", trusted: true
+tap "facebook/fb", trusted: true
+tap "hamed-elfayome/claude-usage", trusted: true
+tap "hashicorp/tap", trusted: true
+tap "khoi/sand", trusted: true
+tap "muxy-app/tap"
+tap "oven-sh/bun", trusted: true
+tap "satococoa/tap", trusted: true
+tap "sst/tap", "https://github.com/anomalyco/homebrew-tap.git", trusted: true
+tap "stablyai/orca"
+tap "stacklok/tap", trusted: true
+tap "stripe/stripe-cli", trusted: true
+tap "thdxg/tap", trusted: true
+tap "tobi/try", "https://github.com/tobi/try", trusted: true
+tap "xykong/tap", trusted: true
+# Run your GitHub Actions locally
+brew "act"
+# Static checker for GitHub Actions workflow files
+brew "actionlint"
+# Simple, modern, secure file encryption
+brew "age"
+# GitOps Continuous Delivery for Kubernetes
+brew "argocd"
+# Improved shell history for zsh, bash, fish and nushell
+brew "atuin"
+# General-purpose data compression with high compression ratio
+brew "xz"
+# Markdown‑native Task Manager & Kanban visualizer for any Git repository
+brew "backlog-md"
+# Bourne-Again SHell, a UNIX command interpreter
+brew "bash"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Secure and free password manager for all of your devices
+brew "bitwarden-cli"
+# Manage your dotfiles across multiple diverse machines, securely
+brew "chezmoi"
+# Dependency manager for Cocoa projects
+brew "cocoapods"
+# Tool for provisioning self-hosted development environments with Terraform
+brew "coder"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# Tool for interacting with remote images and registries
+brew "crane"
+# Modern, maintained replacement for ls
+brew "eza"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# Command-line tools for fly.io services
+brew "flyctl"
+# Command-line outline and bitmap font editor/converter
+brew "fontforge"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# GitHub command-line tool
+brew "gh"
+# Distributed revision control system
+brew "git"
+# Syntax-highlighting pager for git and diff output
+brew "git-delta"
+# Quickly rewrite git repository history
+brew "git-filter-repo"
+# Manage stacked Git branches
+brew "git-spice"
+# GNU Privacy Guard (OpenPGP)
+brew "gnupg"
+# GNU grep, egrep and fgrep
+brew "grep"
+# Popular GNU data compression program
+brew "gzip"
+# Kubernetes package manager
+brew "helm"
+# Agent multiplexer that lives in your terminal
+brew "herdr"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Little helper to run CNCF's k3s in Docker
+brew "k3d"
+# Kubernetes controller and tool for one-way encrypted Secrets
+brew "kubeseal"
+# Fast and powerful Git hooks manager for any type of projects
+brew "lefthook"
+# Library to render SVG files using Cairo
+brew "librsvg"
+# Mac App Store command-line interface
+brew "mas"
+# Polyglot runtime manager (asdf rust clone)
+brew "mise"
+# Simple tool to make locally trusted development certificates
+brew "mkcert"
+# Neon CLI tool
+brew "neonctl"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
+# Build better apps by developing and testing code directly in Kubernetes
+brew "okteto"
+# Create, run, and share large language models (LLMs)
+brew "ollama", restart_service: :changed
+# Provides a software solution to manage, store, and distribute sensitive data
+brew "openbao"
+# Terminal client for Ollama
+brew "oterm"
+# High-performance formatting tool for JavaScript and TypeScript
+brew "oxfmt"
+# Swiss-army knife of markup format conversion
+brew "pandoc"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
+# Protocol buffers (Google's data interchange format)
+brew "protobuf"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.12"
+# QR Code generation
+brew "qrencode"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Nodejs-based tool for optimizing SVG vector graphics files
+brew "svgo"
+# Modernized, complete, self-contained TeX/LaTeX engine
+brew "tectonic"
+# Markup-based typesetting system
+brew "typst"
+# Extraction utility for .zip compressed archives
+brew "unzip"
+# Command-line client for WebSockets
+brew "websocat"
+# Tools for the WireGuard secure network tunnel
+brew "wireguard-tools"
+# Generate your Xcode project from a spec file and your folder structure
+brew "xcodegen"
+# Process YAML, JSON, XML, CSV and properties documents from the CLI
+brew "yq"
+# Pluggable terminal workspace, with terminal multiplexer as the base feature
+brew "zellij"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# Watcher for macOS 10.14+ light/dark mode changes
+brew "cormacrelf/tap/dark-notify"
+# A Powerful Command Line for automating iOS Simulators
+brew "facebook/fb/idb-companion"
+# Terraform
+brew "hashicorp/tap/terraform"
+# Worktree Plus - Enhanced worktree management with automated setup and hooks
+brew "satococoa/tap/wtp"
+# ToolHive (thv) is a lightweight, secure, and fast manager for MCP (Model Context Protocol) servers
+brew "stacklok/tap/thv"
+# Fresh directories for every vibe - lightweight experiments for people with ADHD
+brew "tobi/try/try"
+brew "yakitrak/yakitrak/obsidian-cli"
+# Chromium based browser
+cask "arc"
+# Audio utility
+cask "background-music"
+# Desktop password and login vault
+cask "bitwarden"
+# Scriptable scratchpad for developers
+cask "boop"
+# OpenAI's coding agent that runs in your terminal
+cask "codex"
+# Allows switching between application windows
+cask "contexts"
+# Universal database tool and SQL client
+cask "dbeaver-community"
+# Voice and text chat software
+cask "discord"
+# Collaborative team software
+cask "figma"
+# Screenshot software with built-in annotation tools
+cask "flameshot"
+# Markdown previews in Finder QuickLook with diagrams and math
+cask "xykong/tap/flux-markdown"
+# Kubernetes IDE
+cask "freelens"
+# Set of tools to manage resources and applications hosted on Google Cloud
+cask "gcloud-cli"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
+# Desktop client for GitHub repositories
+cask "github"
+# Web browser
+cask "google-chrome"
+# Speech to text application
+cask "handy"
+# Vector graphics editor
+cask "inkscape"
+# Screen and video recording software
+cask "loom"
+# Graphic design software
+cask "lunacy"
+# Encrypted to-do list, habit tracker, journaling, life-tracking and notes app
+cask "lunatask"
+# Markdown editor
+cask "markedit"
+# Smooths scrolling and set mouse scroll directions independently
+cask "mos"
+# Terminal multiplexer for macOS
+cask "muxy-app/tap/muxy", trusted: true
+# VPN client for secure internet access and private browsing
+cask "nordvpn"
+# Knowledge base that works on top of a local folder of plain text Markdown files
+cask "obsidian"
+# Replacement for Docker Desktop
+cask "orbstack"
+# Utility to uninstall apps and remove leftover files from old/uninstalled apps
+cask "pearcleaner"
+# Quick Look plugin for JSON files
+cask "quicklook-json"
+# Control your tools with a few keystrokes
+cask "raycast"
+# Screen recorder and editor
+cask "screen-studio"
+# Digital design and prototyping platform
+cask "sketch"
+# Team communication and collaboration software
+cask "slack"
+# Music streaming service
+cask "spotify"
+# Native GUI tool for relational databases
+cask "tableplus"
+# To-do & task list manager
+cask "ticktick"
+# Open-source BitTorrent client
+cask "transmission"
+# Native desktop client for WhatsApp
+cask "whatsapp"
+# Multiplayer code editor
+cask "zed"
+# Video communication and virtual meeting platform
+cask "zoom"
+mas "Flow", id: 1423210932
+mas "keymapp", id: 6472865291
+mas "MeetingBar", id: 1532419400
+mas "WireGuard", id: 1451685025
+mas "Xcode", id: 497799835
