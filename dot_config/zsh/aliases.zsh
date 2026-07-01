@@ -1,5 +1,18 @@
+# Modern CLI replacements (guarded — fall back to coreutils when absent).
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --icons=auto --group-directories-first'
+  alias l='eza -l --icons=auto --group-directories-first --git'
+  alias ll='eza -lah --icons=auto --group-directories-first --git'
+  alias la='eza -a --icons=auto --group-directories-first'
+  alias lt='eza --tree --level=2 --icons=auto --group-directories-first'
+fi
+if command -v bat >/dev/null 2>&1; then
+  alias cat='bat --paging=never'
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi
+
 # Shortcuts
-alias reloadshell="omz reload"
+alias reloadshell="exec zsh"
 alias compile="commit 'compile'"
 alias timestamp="date +%s"
 alias version="commit 'version'"

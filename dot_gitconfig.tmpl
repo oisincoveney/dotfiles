@@ -17,10 +17,29 @@
     diffFilter = delta --color-only
 
 [delta]
+    features = catppuccin-mocha
     navigate = true  # use n and N to move between diff sections
     side-by-side = true
-    line-number = true
+    line-numbers = true
+    syntax-theme = Catppuccin Mocha
 
+# Catppuccin Mocha decorations — https://github.com/catppuccin/delta
+[delta "catppuccin-mocha"]
+    minus-style = normal "#543a48"
+    minus-non-emph-style = normal "#543a48"
+    minus-emph-style = normal "#8c4f5a"
+    minus-empty-line-marker-style = normal "#543a48"
+    line-numbers-minus-style = "#f38ba8"
+    plus-style = syntax "#3c4d3c"
+    plus-non-emph-style = syntax "#3c4d3c"
+    plus-emph-style = syntax "#5b7a5b"
+    plus-empty-line-marker-style = syntax "#3c4d3c"
+    line-numbers-plus-style = "#a6e3a1"
+    line-numbers-zero-style = "#6c7086"
+    file-style = "#cba6f7"
+    file-decoration-style = "#cba6f7" ul
+    hunk-header-style = "#89b4fa"
+    hunk-header-decoration-style = "#6c7086" box
 
 [merge]
     conflictStyle = zdiff3

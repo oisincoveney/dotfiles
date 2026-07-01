@@ -1,0 +1,29 @@
+# Ghostty — https://ghostty.org/docs/config
+# Catppuccin Mocha + 0xProto Nerd Font (already installed under ~/Library/Fonts).
+
+theme = Catppuccin Mocha
+
+font-family = "0xProto Nerd Font Mono"
+font-size = 14
+font-thicken = true
+adjust-cell-height = 12%
+
+# Cursor
+cursor-style = block
+cursor-style-blink = true
+shell-integration-features = cursor,sudo,title
+
+# Window chrome — roomy padding, translucent, native macOS feel.
+window-padding-x = 14
+window-padding-y = 10
+window-padding-balance = true
+background-opacity = 0.95
+background-blur-radius = 20
+macos-titlebar-style = tabs
+macos-option-as-alt = true
+
+# Behaviour
+copy-on-select = clipboard
+confirm-close-surface = false
+mouse-hide-while-typing = true
+window-save-state = always

@@ -1,3 +1,7 @@
+# Keep $path (and $PATH) unique automatically — zsh drops any duplicate the
+# moment it's added, no matter the source (.zshenv, path_helper, app launchers).
+typeset -U path PATH
+
 # Add directories to PATH without duplicating entries on shell reload.
 add_to_path() {
   [[ -d "$1" ]] || return
@@ -21,6 +25,7 @@ add_to_path "$HOME/.android-dev"
 add_to_path "$HOME/.codeium/windsurf/bin"
 add_to_path "$HOME/.antigravity/antigravity/bin"
 append_to_path "$HOME/.lmstudio/bin"
+append_to_path "$HOME/.turso"
 
 # Project-local binaries.
 add_to_path "vendor/bin"
