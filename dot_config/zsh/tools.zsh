@@ -13,9 +13,8 @@ export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type=d --hidden --strip-cwd-prefix --exclude .git'
 export BAT_THEME='Catppuccin Mocha'
-# glow markdown style (dark until the catppuccin glow theme is added) + gum
-# (charm) catppuccin-mocha palette
-export GLAMOUR_STYLE=dark
+# glow markdown catppuccin theme (fetched by run_once_04) + gum (charm) palette
+export GLAMOUR_STYLE="${XDG_CONFIG_HOME:-$HOME/.config}/glow/catppuccin-mocha.json"
 export GUM_INPUT_CURSOR_FOREGROUND='#f5e0dc'
 export GUM_INPUT_PROMPT_FOREGROUND='#cba6f7'
 export GUM_CHOOSE_CURSOR_FOREGROUND='#f5e0dc'

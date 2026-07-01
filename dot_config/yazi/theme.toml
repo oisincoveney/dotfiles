@@ -1,0 +1,4 @@
+# yazi — Catppuccin Mocha flavor. The flavor package is installed into
+# flavors/catppuccin-mocha.yazi by run_once_04-catppuccin-themes.sh (ya pkg).
+[flavor]
+dark = "catppuccin-mocha"
