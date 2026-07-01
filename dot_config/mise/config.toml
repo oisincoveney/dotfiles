@@ -124,6 +124,31 @@ oha = "latest"               # HTTP load generator; perf-check endpoints (comple
 grpcurl = "latest"           # `curl` for gRPC — exercise gRPC services from CLI
 "github:tstack/lnav" = "latest"  # log viewer with SQL queries over log files (aqua macOS asset misnamed)
 vale = "latest"              # prose/style linter for docs & markdown
+# H · infra manifest validation & diff (argocd/helm/k3d/terraform CI gates)
+kubeconform = "latest"       # validate k8s manifests against schema
+kube-linter = "latest"       # lint k8s / Helm / Kustomize for misconfigs
+conftest = "latest"          # OPA/Rego policy tests on any config
+kustomize = "latest"         # render/patch k8s config (argocd renders this)
+tflint = "latest"            # Terraform linter (provider-aware)
+dyff = "latest"              # semantic YAML diff (manifest drift, not line noise)
+jd = "latest"                # semantic JSON diff/patch (compare API responses/state)
+# I · supply-chain hardening (GitOps + image push)
+trufflehog = "latest"        # secret scan that verifies creds are still LIVE (vs gitleaks detect-only)
+syft = "latest"              # SBOM generator (feeds trivy/attestation)
+cosign = "latest"            # Sigstore sign/verify artifacts & images
+# J · multi-repo & release (~30 repos in ~/dev)
+ghorg = "latest"             # bulk-clone an entire org/user
+mani = "latest"              # run one command across many repos
+"github:goreleaser/goreleaser" = "latest"  # build+release binaries and images (github backend skips the nightly prereleases aqua interleaves)
+k6 = "latest"                # scriptable HTTP load testing
+# K · config-format + agent extras
+taplo = "latest"             # TOML formatter/linter (Cargo.toml, pyproject.toml)
+yamlfmt = "latest"           # YAML formatter
+cue = "latest"               # typed config validation / generation
+helmfile = "latest"          # declarative multi-Helm release management
+golangci-lint = "latest"     # Go meta-linter (you scaffold Go via go-blueprint)
+"pipx:files-to-prompt" = "latest"  # fd/rg output → LLM prompt (pairs with repomix)
+hexyl = "latest"             # colored hex viewer for binary/unknown formats
 
 [settings]
 idiomatic_version_file_enable_tools = []
