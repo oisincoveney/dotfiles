@@ -62,6 +62,9 @@ _evalcache broot --print-shell-function zsh
 _evalcache navi widget zsh
 _evalcache pay-respects zsh --alias f
 _evalcache tv init zsh
+# direnv: per-directory env; hooks precmd to load/unload .envrc (needs `direnv
+# allow` per project — by-design, not maintenance).
+_evalcache direnv hook zsh
 
 # ── helper: source the first readable file from a candidate list (SDKs) ───────
 _source_first() {

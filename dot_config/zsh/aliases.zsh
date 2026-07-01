@@ -23,6 +23,19 @@ command -v lazydocker >/dev/null 2>&1  && alias lzd='lazydocker'
 command -v onefetch >/dev/null 2>&1    && alias ofetch='onefetch'
 command -v jless >/dev/null 2>&1       && alias jl='jless'
 
+# Agent kit — short handles for the new tools (git dft handled in gitconfig).
+command -v difft >/dev/null 2>&1       && alias dft='difft'
+command -v k9s >/dev/null 2>&1         && alias k9='k9s'
+command -v just >/dev/null 2>&1        && alias j='just'
+command -v kubectx >/dev/null 2>&1     && alias kx='kubectx'
+command -v kubens >/dev/null 2>&1      && alias kn='kubens'
+# kubecolor: colorized kubectl. Alias only when kubectl exists; forward its
+# completions (guarded — compdef exists only after compinit has run).
+if command -v kubecolor >/dev/null 2>&1 && command -v kubectl >/dev/null 2>&1; then
+  alias kubectl='kubecolor'
+  (( $+functions[compdef] )) && compdef kubecolor=kubectl
+fi
+
 # Shortcuts
 alias reloadshell="exec zsh"
 alias compile="commit 'compile'"

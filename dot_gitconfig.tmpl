@@ -43,6 +43,15 @@
 
 [merge]
     conflictStyle = zdiff3
+
+# difftastic — syntax-aware diff on demand via `git dft`. Default `git diff`
+# stays on delta above; this is opt-in so nothing surprises existing muscle memory.
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
+[difftool]
+    prompt = false
+[alias]
+    dft = difftool --tool=difftastic
 {{ if eq .chezmoi.os "darwin" -}}
 [credential "https://github.com"]
 	helper =
