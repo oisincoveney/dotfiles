@@ -26,12 +26,17 @@ export GUM_FILTER_INDICATOR_FOREGROUND='#cba6f7'
 # and regenerating only when the binary is newer turns N forks into zero on warm
 # starts — the single biggest startup win here.
 _evalcache() {
-  local bin="$1"
-  command -v "$bin" >/dev/null 2>&1 || return 0
+  local bin="$1" binpath
+  binpath="$(command -v -- "$bin" 2>/dev/null)" || return 0
   local cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/evalcache/${bin}.zsh"
-  if [[ ! -s "$cache" || "$(command -v -- "$bin")" -nt "$cache" ]]; then
+  # Regenerate when the cache is missing/stale, the binary is newer, OR the
+  # resolved binary PATH changed (e.g. moved brew -> mise). A path change isn't
+  # caught by mtime, and inits like starship bake the absolute binary path into
+  # $PROMPT — a stale path silently breaks the prompt. The `# path:` marker line
+  # records which binary the cache was built from.
+  if [[ ! -s "$cache" || "$binpath" -nt "$cache" ]] || ! grep -qxF "# path:$binpath" "$cache" 2>/dev/null; then
     mkdir -p "${cache:h}"
-    if ! "$@" >| "$cache" 2>/dev/null; then
+    if { print -r -- "# path:$binpath"; "$@"; } >| "$cache" 2>/dev/null; then :; else
       rm -f "$cache"
       "$@" 2>/dev/null | source /dev/stdin   # binary can't cache: run live
       return 0
@@ -42,9 +47,11 @@ _evalcache() {
 
 # One concept ("activate shell integration if the binary exists, cached") owns
 # this axis, instead of a stack of near-identical `if command -v X` blocks.
+# mise FIRST — it puts starship/zoxide/atuin/… on PATH, so their inits below can
+# actually find them (they're mise-managed now, not brew/always-on-PATH).
+_evalcache mise activate zsh
 _evalcache starship init zsh
 _evalcache zoxide init zsh
-_evalcache mise activate zsh
 _evalcache wtp shell-init zsh
 
 # zen kit: universal completions (carapace), tree-nav (broot `br`), cheatsheets
