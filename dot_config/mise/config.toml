@@ -29,5 +29,51 @@ uv = "latest"
 "npm:@zed-industries/claude-agent-acp" = "latest"
 "npm:@zed-industries/claude-code-acp" = "latest"
 
+# ── Portable CLI kit — installed identically on macOS + every Linux SSH box via
+#    mise's aqua backend (prebuilt binaries, no compile, no Homebrew-on-Linux).
+#    This is the cross-platform source of truth; brew = macOS GUI casks only.
+# core replacements
+eza = "latest"
+bat = "latest"
+fd = "latest"
+ripgrep = "latest"
+fzf = "latest"
+zoxide = "latest"
+starship = "latest"
+atuin = "latest"
+delta = "latest"
+# zen TUIs
+yazi = "latest"
+lazygit = "latest"
+lazydocker = "latest"
+television = "latest"
+# btop: no macOS prebuilt exists (aqua = linux-only). It's brew on mac +
+# distro/aqua on Linux — the one unavoidable platform split. See run_once_01.
+"github:Canop/broot" = "latest"
+# modern-unix drop-ins
+dust = "latest"
+duf = "latest"
+"aqua:dalance/procs" = "latest"
+sd = "latest"
+choose = "latest"
+hyperfine = "latest"
+tokei = "latest"
+# charm + fetch (the sexy)
+fastfetch = "latest"
+"aqua:o2sh/onefetch" = "latest"
+glow = "latest"
+gum = "latest"
+# data / http / net
+xh = "latest"
+jless = "latest"
+"github:mr-karan/doggo" = "latest"
+gping = "latest"
+dasel = "latest"
+# shell UX
+carapace = "latest"
+"cargo:tealdeer" = "latest"   # builds a binary named `tldr`
+"cargo:navi" = "latest"
+"cargo:pay-respects" = "latest"
+
 [settings]
 idiomatic_version_file_enable_tools = []

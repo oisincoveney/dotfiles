@@ -1,0 +1,20 @@
+#!/bin/bash
+# Install/sync the mise tool set whenever the global mise config changes. This is
+# the cross-platform half of the setup: the same ~/.config/mise/config.toml drives
+# identical tools on macOS and every Linux box, via mise's aqua/github/cargo
+# backends (prebuilt binaries, no Homebrew-on-Linux needed).
+#
+# A GitHub token is passed through so mise's github/aqua backends don't trip the
+# unauthenticated GitHub rate limit while fetching ~35 tools (best-effort: uses an
+# existing $GITHUB_TOKEN, else the gh CLI login, else proceeds unauthenticated).
+#
+# mise config hash: {{ include "dot_config/mise/config.toml" | sha256sum }}
+set -euo pipefail
+
+command -v mise >/dev/null 2>&1 || { echo "mise not installed; skipping tool sync."; exit 0; }
+
+export GITHUB_TOKEN="${GITHUB_TOKEN:-$(gh auth token 2>/dev/null || true)}"
+
+echo "Syncing mise tools…"
+mise install -y || true
+echo "mise tool sync complete."

@@ -18,11 +18,11 @@ fi
 echo "Homebrew ready; packages are applied by the Brewfile bundle step."
 
 {{ else if eq .chezmoi.os "linux" -}}
-# ── Linux: core packages ─────────────────────────────────────────────
-
-# Use sudo only when we are not already root and sudo exists. Container/Nix
-# images often run as a non-root user with no sudo; on those the package
-# manager is also absent and the tools are baked into the image, so we skip.
+# ── Linux: base shell + mise bootstrap ───────────────────────────────
+# The full CLI/zen kit (eza, bat, fzf, yazi, lazygit, starship, atuin, …) is
+# installed by mise — run_onchange_after_03-mise-install — identically to macOS.
+# Here we only need the base shell, git, and btop (btop ships no macOS prebuilt,
+# so it's brew on mac and distro-installed here on Linux).
 SUDO=""
 if [ "$(id -u)" -ne 0 ] && command -v sudo &>/dev/null; then
   SUDO="sudo"
@@ -30,44 +30,19 @@ fi
 
 if command -v apt-get &>/dev/null; then
   $SUDO apt-get update -qq
-  $SUDO apt-get install -y -qq bat curl fd-find fzf gh git ripgrep tmux unzip xclip zoxide zsh
+  $SUDO apt-get install -y -qq btop curl gh git unzip xclip zsh
 elif command -v dnf &>/dev/null; then
-  $SUDO dnf install -y bat git curl zsh fzf ripgrep tmux unzip zoxide
+  $SUDO dnf install -y btop curl gh git unzip zsh
 elif command -v pacman &>/dev/null; then
-  $SUDO pacman -Syu --noconfirm bat eza git curl zsh fzf ripgrep tmux unzip zoxide
+  $SUDO pacman -Syu --noconfirm btop curl gh git unzip zsh
 else
   echo "No supported package manager (apt/dnf/pacman); assuming the image provides these tools."
 fi
 
-# Install zoxide
-if ! command -v zoxide &>/dev/null; then
-  curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-fi
-
-# Install mise
+# mise: the cross-platform tool manager. Everything else flows from it.
 if ! command -v mise &>/dev/null; then
   curl https://mise.run | sh
 fi
 
-# Install starship (prompt).
-if ! command -v starship &>/dev/null; then
-  curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
-fi
-
-# Install atuin (shell history).
-if ! command -v atuin &>/dev/null; then
-  curl -sSfL https://setup.atuin.sh | sh 2>/dev/null || echo "Install atuin manually: https://atuin.sh"
-fi
-
-# Install eza (modern ls) where the distro didn't provide it.
-if ! command -v eza &>/dev/null; then
-  cargo install eza 2>/dev/null || echo "Install eza manually: https://github.com/eza-community/eza"
-fi
-
-# Install delta
-if ! command -v delta &>/dev/null; then
-  cargo install git-delta 2>/dev/null || echo "Install delta manually: https://github.com/dandavison/delta"
-fi
-
-echo "Linux packages installed."
+echo "Linux base ready; run_onchange_after_03-mise-install provisions the tool kit."
 {{ end -}}
