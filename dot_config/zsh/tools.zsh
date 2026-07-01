@@ -13,6 +13,14 @@ export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type=d --hidden --strip-cwd-prefix --exclude .git'
 export BAT_THEME='Catppuccin Mocha'
+# glow markdown style (dark until the catppuccin glow theme is added) + gum
+# (charm) catppuccin-mocha palette
+export GLAMOUR_STYLE=dark
+export GUM_INPUT_CURSOR_FOREGROUND='#f5e0dc'
+export GUM_INPUT_PROMPT_FOREGROUND='#cba6f7'
+export GUM_CHOOSE_CURSOR_FOREGROUND='#f5e0dc'
+export GUM_CHOOSE_SELECTED_FOREGROUND='#a6e3a1'
+export GUM_FILTER_INDICATOR_FOREGROUND='#cba6f7'
 
 # ── cached tool init: fork the binary once, cache its shell output, re-source ──
 # `eval "$(starship init zsh)"` forks a process every startup. Caching the output
@@ -39,6 +47,15 @@ _evalcache starship init zsh
 _evalcache zoxide init zsh
 _evalcache mise activate zsh
 _evalcache wtp shell-init zsh
+
+# zen kit: universal completions (carapace), tree-nav (broot `br`), cheatsheets
+# (navi, ctrl-g), command-fix (pay-respects `f`), fuzzy switchboard (television).
+export CARAPACE_BRIDGES='zsh,fzf'
+_evalcache carapace _carapace zsh
+_evalcache broot --print-shell-function zsh
+_evalcache navi widget zsh
+_evalcache pay-respects zsh --alias f
+_evalcache tv init zsh
 
 # ── helper: source the first readable file from a candidate list (SDKs) ───────
 _source_first() {
@@ -94,4 +111,23 @@ if command -v moka >/dev/null 2>&1; then
       moka init --force >/dev/null 2>&1 && { mkdir -p "${_moka_vf:h}"; print -r -- "$_moka_cur" >| "$_moka_vf"; }
     fi
   } &!
+fi
+
+# yazi: `y` opens the file manager and cd's to wherever you quit it.
+if command -v yazi >/dev/null 2>&1; then
+  y() {
+    local tmp cwd
+    tmp="$(mktemp -t yazi-cwd.XXXXXX)"
+    yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd < "$tmp"
+    [[ -n "$cwd" && "$cwd" != "$PWD" ]] && builtin cd -- "$cwd"
+    rm -f -- "$tmp"
+  }
+fi
+
+# Greeting: fastfetch once per terminal window (not per subshell). Interactive
+# TTY only; the exported flag makes nested shells skip it, so it never repeats.
+if [[ -o interactive && -t 1 && -z "${_SHELL_GREETED:-}" ]] && command -v fastfetch >/dev/null 2>&1; then
+  fastfetch
+  export _SHELL_GREETED=1
 fi

@@ -30,4 +30,5 @@ zinit wait lucid for \
     Aloxaf/fzf-tab \
     atload'_zsh_autosuggest_start' \
       zsh-users/zsh-autosuggestions \
-    zdharma-continuum/fast-syntax-highlighting
+    zdharma-continuum/fast-syntax-highlighting \
+    olets/zsh-abbr

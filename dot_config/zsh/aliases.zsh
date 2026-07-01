@@ -10,6 +10,18 @@ if command -v bat >/dev/null 2>&1; then
   alias cat='bat --paging=never'
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
+# Zen kit — interactive-only aliases (never affect scripts). Each guarded.
+command -v dust >/dev/null 2>&1        && alias du='dust'
+command -v duf >/dev/null 2>&1         && alias df='duf'
+command -v procs >/dev/null 2>&1       && alias ps='procs'
+command -v btop >/dev/null 2>&1        && { alias top='btop'; alias htop='btop'; }
+command -v xh >/dev/null 2>&1          && alias http='xh'
+command -v doggo >/dev/null 2>&1       && alias dig='doggo'
+command -v glow >/dev/null 2>&1        && alias md='glow'
+command -v lazygit >/dev/null 2>&1     && alias lg='lazygit'
+command -v lazydocker >/dev/null 2>&1  && alias lzd='lazydocker'
+command -v onefetch >/dev/null 2>&1    && alias ofetch='onefetch'
+command -v jless >/dev/null 2>&1       && alias jl='jless'
 
 # Shortcuts
 alias reloadshell="exec zsh"
