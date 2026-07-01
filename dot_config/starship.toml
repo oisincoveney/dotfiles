@@ -1,19 +1,36 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# Line 1 left: os · dir · git · runtimes · cmd-duration (bg powerline).
+# Line 1 right (right_format): repo-gated context + status + clock + battery —
+#   optional modules live here so they can't leave dangling powerline separators.
+# Line 2: user@host ❯  (two-line input).
 format = """
 [](surface0)\
 $os\
 $directory\
 [](fg:surface0 bg:blue)\
 $git_branch\
+$git_state\
 $git_status\
 [](fg:blue bg:teal)\
-$nodejs$rust$golang$python$bun\
+$nodejs$bun$rust$golang$python\
 [](fg:teal bg:surface1)\
 $cmd_duration\
 [](fg:surface1)\
 $line_break\
-$character"""
+$username$hostname$character"""
+
+right_format = """
+$git_metrics\
+$kubernetes\
+$docker_context\
+${custom.gcloud}\
+$terraform\
+$direnv\
+$jobs\
+$status\
+$time\
+$battery"""
 
 palette = 'catppuccin_mocha'
 add_newline = true
@@ -22,6 +39,17 @@ add_newline = true
 success_symbol = '[❯](bold green)'
 error_symbol = '[❯](bold red)'
 vimcmd_symbol = '[❮](bold peach)'
+
+[username]
+show_always = true
+style_user = "bold lavender"
+style_root = "bold red"
+format = '[$user]($style)'
+
+[hostname]
+ssh_only = false
+style = "bold overlay2"
+format = '[@$hostname ]($style)'
 
 [os]
 disabled = false
@@ -54,9 +82,86 @@ symbol = ""
 style = "bg:blue fg:crust"
 format = '[ $symbol $branch ]($style)'
 
+[git_state]
+style = "bg:blue fg:crust"
+format = '[\($state( $progress_current/$progress_total)\) ]($style)'
+
 [git_status]
 style = "bg:blue fg:crust"
 format = '[$all_status$ahead_behind ]($style)'
+
+# ── right prompt: context + status (fg-coloured, no bg chain) ─────────
+[git_metrics]
+disabled = false
+added_style = "green"
+deleted_style = "red"
+format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
+
+# repo-gated: only shows in k8s repos AND when a kube context is set.
+[kubernetes]
+disabled = false
+symbol = "☸ "
+style = "sky"
+format = '[$symbol$context( \($namespace\))]($style) '
+detect_files = ['Chart.yaml', 'kustomization.yaml', 'skaffold.yaml', 'helmfile.yaml', 'Tiltfile']
+detect_folders = ['k8s', '.helm', 'manifests', 'kubernetes', 'charts']
+
+# repo-gated: only in repos with Docker/compose files.
+[docker_context]
+symbol = " "
+style = "sapphire"
+format = '[$symbol$context]($style) '
+detect_files = ['Dockerfile', 'docker-compose.yml', 'docker-compose.yaml', 'compose.yml', 'compose.yaml']
+only_with_files = true
+
+# repo-gated: the built-in gcloud module can't file-gate, so use a custom module
+# that only triggers in GCP repos and reads the active project from gcloud's
+# config file (no slow `gcloud` fork on every prompt).
+[custom.gcloud]
+detect_files = ['app.yaml', 'cloudbuild.yaml', '.gcloudignore']
+detect_folders = ['.gcloud']
+command = "sed -n 's/^project *= *//p' ~/.config/gcloud/configurations/config_default 2>/dev/null | head -1"
+symbol = "󱇶 "
+style = "peach"
+format = '[$symbol$output]($style) '
+shell = ['bash', '--noprofile', '--norc']
+
+[terraform]
+symbol = "󱁢 "
+style = "mauve"
+format = '[$symbol$workspace]($style) '
+
+[direnv]
+disabled = false
+style = "yellow"
+symbol = "󱚟 "
+format = '[$symbol$allowed]($style) '
+allowed_msg = ""
+not_allowed_msg = "✗"
+denied_msg = "✗"
+
+[jobs]
+symbol = "󰜎 "
+style = "overlay1"
+format = '[$symbol$number]($style) '
+
+[status]
+disabled = false
+symbol = "✘ "
+style = "red"
+format = '[$symbol$status]($style) '
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "overlay1"
+format = '[ $time]($style)'
+
+[battery]
+format = '[$symbol$percentage]($style) '
+[[battery.display]]
+threshold = 20
+style = "red"
 
 [cmd_duration]
 min_time = 500
