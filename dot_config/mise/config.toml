@@ -1,6 +1,33 @@
 [tools]
-"github:gastownhall/beads" = { version = "latest", exe = "bd" }
+# node: mise owns the default `node` on PATH (brew's node stays only as a silent
+# dependency of backlog-md/neonctl/oxfmt/etc). Projects still pin their own via
+# .node-version / mise.toml; nub reads whatever PATH node matches the pin.
+node = "lts"
 uv = "latest"
+
+# ── Global JS CLIs — single source of truth (was scattered across Homebrew's
+#    node prefix + bun global). mise installs each and shims its bin on PATH.
+# Dev toolkit / agents
+"npm:@nubjs/nub" = "latest"
+"npm:opencode-ai" = "latest"
+"npm:@oisincoveney/pipeline" = "latest"   # moka
+"npm:@mariozechner/pi-coding-agent" = "latest"  # pi
+"npm:agent-browser" = "latest"
+"npm:eas-cli" = "latest"
+# Codegen / scaffolding / lint
+"npm:oxlint" = "latest"
+"npm:fallow" = "latest"
+"npm:context-awesome" = "latest"
+"npm:@intellectronica/ruler" = "latest"
+"npm:@melkeydev/go-blueprint" = "latest"
+"npm:@devcontainers/cli" = "latest"
+"npm:expo-doctor" = "latest"
+"npm:ajv-cli" = "latest"
+"npm:wscat" = "latest"
+"npm:strip-json-comments-cli" = "latest"
+# Zed ACP bridges
+"npm:@zed-industries/claude-agent-acp" = "latest"
+"npm:@zed-industries/claude-code-acp" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
