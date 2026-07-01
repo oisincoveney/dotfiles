@@ -24,18 +24,16 @@ brew "actionlint"
 brew "age"
 # GitOps Continuous Delivery for Kubernetes
 brew "argocd"
-# Improved shell history for zsh, bash, fish and nushell
-brew "atuin"
 # General-purpose data compression with high compression ratio
 brew "xz"
 # Markdown‑native Task Manager & Kanban visualizer for any Git repository
 brew "backlog-md"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
-# Clone of cat(1) with syntax highlighting and Git integration
-brew "bat"
 # Secure and free password manager for all of your devices
 brew "bitwarden-cli"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "btop"
 # Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
 # Dependency manager for Cocoa projects
@@ -46,24 +44,16 @@ brew "coder"
 brew "coreutils"
 # Tool for interacting with remote images and registries
 brew "crane"
-# Modern, maintained replacement for ls
-brew "eza"
-# Simple, fast and user-friendly alternative to find
-brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
 # Command-line tools for fly.io services
 brew "flyctl"
 # Command-line outline and bitmap font editor/converter
 brew "fontforge"
-# Command-line fuzzy finder written in Go
-brew "fzf"
 # GitHub command-line tool
 brew "gh"
 # Distributed revision control system
 brew "git"
-# Syntax-highlighting pager for git and diff output
-brew "git-delta"
 # Quickly rewrite git repository history
 brew "git-filter-repo"
 # Manage stacked Git branches
@@ -118,10 +108,6 @@ brew "protobuf"
 brew "python@3.12"
 # QR Code generation
 brew "qrencode"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
-# Cross-shell prompt for astronauts
-brew "starship"
 # Nodejs-based tool for optimizing SVG vector graphics files
 brew "svgo"
 # Modernized, complete, self-contained TeX/LaTeX engine
@@ -140,8 +126,6 @@ brew "xcodegen"
 brew "yq"
 # Pluggable terminal workspace, with terminal multiplexer as the base feature
 brew "zellij"
-# Shell extension to navigate your filesystem faster
-brew "zoxide"
 # Watcher for macOS 10.14+ light/dark mode changes
 brew "cormacrelf/tap/dark-notify"
 # A Powerful Command Line for automating iOS Simulators
