@@ -109,6 +109,21 @@ hurl = "latest"              # plain-text HTTP tests — agent verifies APIs
 mprocs = "latest"            # run parallel procs in split panes
 direnv = "latest"            # per-directory env (hook wired in tools.zsh)
 sops = "latest"              # encrypted secrets in git (age key; GitOps-native)
+# E · data & DB (agents had GUI-only db clients before)
+duckdb = "latest"            # in-process analytical SQL; query CSV/JSON/Parquet files directly
+usql = "latest"              # universal DB CLI — one binary, any DB, scriptable queries
+"github:dathere/qsv" = "latest"  # fast CSV toolkit (stats/dedup/join/validate); complements miller
+# F · verify & supply-chain (fits image build+push flow)
+osv-scanner = "latest"       # dep + container CVE scan vs OSV DB (Google); complements trivy
+hadolint = "latest"          # Dockerfile linter (lints RUN Bash too)
+git-cliff = "latest"         # changelog from Conventional Commits (feat|fix(scope): …)
+bats = "latest"              # bash test framework — agent tests the shell it writes
+"github:lycheeverse/lychee" = "latest"  # async link checker for md/html docs (aqua macOS asset misnamed)
+# G · service/API & logs
+oha = "latest"               # HTTP load generator; perf-check endpoints (complements hurl)
+grpcurl = "latest"           # `curl` for gRPC — exercise gRPC services from CLI
+"github:tstack/lnav" = "latest"  # log viewer with SQL queries over log files (aqua macOS asset misnamed)
+vale = "latest"              # prose/style linter for docs & markdown
 
 [settings]
 idiomatic_version_file_enable_tools = []
