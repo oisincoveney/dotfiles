@@ -21,6 +21,13 @@ export GUM_CHOOSE_CURSOR_FOREGROUND='#f5e0dc'
 export GUM_CHOOSE_SELECTED_FOREGROUND='#a6e3a1'
 export GUM_FILTER_INDICATOR_FOREGROUND='#cba6f7'
 
+# ── coder: redirect its generated SSH block out of the chezmoi-managed base ────
+# `coder config-ssh` rewrites its host block into this file (default ~/.ssh/config).
+# Pointing it at the tool-owned include dir (base config does `Include
+# ~/.ssh/config.d/*.conf`) keeps ~/.ssh/config stable, so it never drifts and
+# headless `chezmoi apply` never hits the "has changed" TTY prompt.
+export CODER_SSH_CONFIG_FILE="$HOME/.ssh/config.d/coder.conf"
+
 # ── cached tool init: fork the binary once, cache its shell output, re-source ──
 # `eval "$(starship init zsh)"` forks a process every startup. Caching the output
 # and regenerating only when the binary is newer turns N forks into zero on warm

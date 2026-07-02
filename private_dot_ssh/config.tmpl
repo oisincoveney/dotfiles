@@ -3,6 +3,13 @@
 Include ~/.orbstack/ssh/config
 
 {{ end -}}
+# Tool-managed host blocks live in their own files so they never rewrite this
+# chezmoi-managed base (which otherwise drifts every apply and prompts/fails).
+# Point each generator at its own file, e.g.:
+#   coder config-ssh --ssh-config-file ~/.ssh/config.d/coder.conf
+# (glob matching nothing is not an error, so the dir may be empty.)
+Include ~/.ssh/config.d/*.conf
+
 Host *
   AddKeysToAgent yes
 {{- if eq .chezmoi.os "darwin" }}
