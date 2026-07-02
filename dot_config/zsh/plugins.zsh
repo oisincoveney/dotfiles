@@ -28,7 +28,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#6c7086'   # catppuccin mocha: overlay0
 # --- turbo block: interactive widgets, loaded after the prompt appears ---
 zinit wait lucid for \
     Aloxaf/fzf-tab \
-    atload'_zsh_autosuggest_start' \
+    atload'_zsh_autosuggest_start; (( $+functions[_zsh_keybindings_install_completion_keys] )) && _zsh_keybindings_install_completion_keys' \
       zsh-users/zsh-autosuggestions \
     zdharma-continuum/fast-syntax-highlighting \
     olets/zsh-abbr
