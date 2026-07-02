@@ -21,11 +21,15 @@ LICENSE.md
 .config/opencode/node_modules
 .config/opencode/plugins
 
-# AGENTS.md / CLAUDE.md / global instruction files are owned by moka (moka init,
-# sourced from oisin-ee/agent) — not deployed as static chezmoi files; ignore so
-# chezmoi never manages or clobbers them.
+# Global instruction files (CLAUDE.md / AGENTS.md / GEMINI.md) are generated and
+# owned by the agent harness installer (bin/install-harness.mjs from
+# oisin-ee/agent, run by run_after_10-agent-harness.sh) — NOT deployed as static
+# chezmoi files. Ignore so chezmoi never manages or clobbers them; otherwise the
+# target drifts from chezmoi's stale source every apply and `chezmoi apply` on a
+# TTY-less pod fails ("has changed since chezmoi last wrote it?" → exit 1).
 .claude/CLAUDE.md
 .codex/AGENTS.md
+.gemini/GEMINI.md
 
 # codex state — cache, logs, sessions, tmp, sqlite, memories, vendor imports
 .codex/cache
