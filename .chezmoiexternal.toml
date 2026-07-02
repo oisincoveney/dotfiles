@@ -1,0 +1,13 @@
+# Agent harness source — the oisin-ee/agent git repo, cloned into a chezmoi-owned
+# consumer checkout on every machine (laptop + runner pods). Single source of
+# truth for skills/hooks/rules/settings and the self-contained bin/install-harness.
+# chezmoi clones it if absent and `git pull --ff-only`s it on every apply; the
+# run_after_10-agent-harness script then (re)installs the harness from it.
+#
+# This file is template-processed by chezmoi, so .agentRepoUrl (from
+# .chezmoi.toml.tmpl) resolves per machine (ssh on the laptop, https+token in the
+# runner-image build).
+[".local/share/agent"]
+    type = "git-repo"
+    url = {{ .agentRepoUrl | quote }}
+    pull.args = ["--ff-only"]

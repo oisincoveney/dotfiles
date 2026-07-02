@@ -8,7 +8,6 @@ tap "hashicorp/tap", trusted: true
 tap "khoi/sand", trusted: true
 tap "muxy-app/tap"
 tap "oven-sh/bun", trusted: true
-tap "satococoa/tap", trusted: true
 tap "sst/tap", "https://github.com/anomalyco/homebrew-tap.git", trusted: true
 tap "stablyai/orca"
 tap "stacklok/tap", trusted: true
@@ -133,7 +132,6 @@ brew "facebook/fb/idb-companion"
 # Terraform
 brew "hashicorp/tap/terraform"
 # Worktree Plus - Enhanced worktree management with automated setup and hooks
-brew "satococoa/tap/wtp"
 # ToolHive (thv) is a lightweight, secure, and fast manager for MCP (Model Context Protocol) servers
 brew "stacklok/tap/thv"
 # Fresh directories for every vibe - lightweight experiments for people with ADHD

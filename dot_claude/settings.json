@@ -1,7 +1,0 @@
-{
-  "effortLevel": "high",
-  "promptSuggestionEnabled": false,
-  "awaySummaryEnabled": false,
-  "skipDangerousModePermissionPrompt": true,
-  "theme": "dark"
-}

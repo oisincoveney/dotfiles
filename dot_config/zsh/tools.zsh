@@ -52,7 +52,10 @@ _evalcache() {
 _evalcache mise activate zsh
 _evalcache starship init zsh
 _evalcache zoxide init zsh
-_evalcache wtp shell-init zsh
+# gwq: git-worktree manager (replaces wtp). Its completion doubles as the shell
+# integration — with cd.launch_shell=false (see ~/.config/gwq/config.toml) it
+# defines the wrapper that makes `gwq cd`/`gwq add -s` change the current shell.
+_evalcache gwq completion zsh
 
 # zen kit: universal completions (carapace), tree-nav (broot `br`), cheatsheets
 # (navi, ctrl-g), command-fix (pay-respects `f`), fuzzy switchboard (television).
@@ -109,18 +112,10 @@ fi
 # --disable-up-arrow keeps the Up key as plain previous-line history. Cached.
 _evalcache atuin init zsh --disable-up-arrow
 
-# moka: refresh the global agent harness (~/.claude, ~/.config/opencode, ~/.codex)
-# only when the moka package version changes. The whole check is forked and
-# disowned (&!), so it never blocks the prompt — startup pays nothing.
-if command -v moka >/dev/null 2>&1; then
-  {
-    _moka_vf="${XDG_STATE_HOME:-$HOME/.local/state}/moka-harness-version"
-    _moka_cur="$(moka --version 2>/dev/null)"
-    if [[ -n "$_moka_cur" && "$_moka_cur" != "$(cat "$_moka_vf" 2>/dev/null)" ]]; then
-      moka init --force >/dev/null 2>&1 && { mkdir -p "${_moka_vf:h}"; print -r -- "$_moka_cur" >| "$_moka_vf"; }
-    fi
-  } &!
-fi
+# The agent harness (~/.claude, ~/.config/opencode, ~/.codex) is owned by chezmoi:
+# .chezmoiexternal clones oisin-ee/agent and run_after_10-agent-harness installs
+# from it on `chezmoi apply`. No shell-startup trigger — the old `moka init --force`
+# auto-fork (which silently nuked skills when it ran without GitHub auth) is gone.
 
 # yazi: `y` opens the file manager and cd's to wherever you quit it.
 if command -v yazi >/dev/null 2>&1; then

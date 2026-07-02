@@ -12,3 +12,8 @@ sourceDir = {{ (joinPath .chezmoi.homeDir ".dotfiles") | quote }}
 [data]
     name = {{ env "CHEZMOI_NAME" | default "Oisin Coveney" | quote }}
     email = {{ env "CHEZMOI_EMAIL" | default "git@oisin.ee" | quote }}
+    # Source of the agent harness (skills/hooks/rules/settings + bin/install-harness),
+    # cloned by .chezmoiexternal into ~/.local/share/agent on every machine. Defaults
+    # to ssh; runner-image builds set AGENT_REPO_URL to an https+token URL (or rely on
+    # a git insteadOf rewrite) so the private repo clones non-interactively.
+    agentRepoUrl = {{ env "AGENT_REPO_URL" | default "git@github.com:oisin-ee/agent.git" | quote }}

@@ -54,6 +54,7 @@ television = "latest"
 dust = "latest"
 duf = "latest"
 "aqua:dalance/procs" = "latest"
+"aqua:d-kuro/gwq" = "latest"           # git-worktree manager (replaces wtp)
 sd = "latest"
 choose = "latest"
 hyperfine = "latest"

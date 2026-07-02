@@ -1,0 +1,6 @@
+# gwq — git-worktree manager (replaces wtp). See `gwq config --help`.
+[cd]
+# Change the CURRENT shell's directory instead of spawning a nested shell — the
+# wtp-equivalent behavior. The wrapper is provided by `gwq completion zsh`
+# (sourced in ~/.config/zsh/tools.zsh); this flag is what makes it in-shell.
+launch_shell = false
