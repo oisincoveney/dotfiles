@@ -89,6 +89,8 @@ brew "mkcert"
 brew "neonctl"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Capability-based sandbox shell for AI agents with OS-enforced isolation
+brew "nono"
 # Build better apps by developing and testing code directly in Kubernetes
 brew "okteto"
 # Create, run, and share large language models (LLMs)

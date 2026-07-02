@@ -91,6 +91,12 @@ alias unstage="git restore --staged ."
 alias wip="commit wip"
 
 # Agents
+# These run their agent with sandbox/approvals OFF. To opt INTO a sandbox for a
+# single run (not wired in by default — it's a deliberate behaviour change):
+#   • srt "<cmd>"         — OS-level fs/net sandbox (srt, @anthropic-ai/sandbox-runtime);
+#                           e.g. `srt "claude --dangerously-skip-permissions"`, restrictions in ~/.srt-settings.json
+#   • container-use / cu  — run the agent inside a disposable dagger dev container
+#   • nono <cmd>          — capability-based sandbox shell (mac; profile-driven)
 alias cc="CLAUDE_CODE_NO_FLICKER=1 claude --dangerously-skip-permissions"
 alias co="codex --dangerously-bypass-approvals-and-sandbox"
 alias ki="kimi --yolo"

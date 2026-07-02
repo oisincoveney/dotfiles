@@ -167,5 +167,13 @@ hexyl = "latest"             # colored hex viewer for binary/unknown formats
 "pipx:litecli" = "latest"    # SQLite CLI (dbcli)
 "pipx:mycli" = "latest"      # MySQL/MariaDB CLI (dbcli)
 
+# ── Agent dev-sandboxes — isolate what an autonomous agent can touch. Installed
+#    but deliberately NOT auto-wired into the cc/co/ki/oc aliases (opt-in per
+#    invocation — see the note by the Agents aliases in ~/.config/zsh/aliases.zsh).
+#    nono (mac-only capability sandbox) lives in the Brewfile.
+# N · sandboxes
+"aqua:dagger/container-use" = "latest"  # `cu`/`container-use` — per-agent containerized dev envs (dagger)
+"npm:@anthropic-ai/sandbox-runtime" = "latest"  # `srt` — OS-level fs/net sandbox (sandbox-exec/bubblewrap), no container
+
 [settings]
 idiomatic_version_file_enable_tools = []
