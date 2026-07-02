@@ -1,0 +1,8 @@
+# Global git attributes (core.attributesFile → ~/.gitconfig).
+#
+# mergiraf: AST-aware merge driver defined in ~/.gitconfig ([merge "mergiraf"]).
+# `* merge=mergiraf` routes every merge through mergiraf; it detects the file's
+# language and resolves structurally, delegating to git's default merge for any
+# file type it doesn't support. Regenerate the explicit language list any time
+# with `mergiraf languages --gitattributes`. https://mergiraf.org/
+* merge=mergiraf

@@ -12,6 +12,7 @@
     pager = delta
     hooksPath = ~/.git-hooks
     excludesFile = ~/.gitignore_global
+    attributesFile = ~/.config/git/attributes
 
 [interactive]
     diffFilter = delta --color-only
@@ -43,6 +44,14 @@
 
 [merge]
     conflictStyle = zdiff3
+
+# mergiraf — syntax-aware (AST) merge driver. Resolves structural conflicts git's
+# line-based merge reports as conflicts (reordered imports, adjacent edits, etc.)
+# and falls back to git's merge for unsupported file types. Enabled per-path via
+# ~/.config/git/attributes (`* merge=mergiraf`). https://mergiraf.org/
+[merge "mergiraf"]
+    name = mergiraf
+    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
 
 # difftastic — syntax-aware diff on demand via `git dft`. Default `git diff`
 # stays on delta above; this is opt-in so nothing surprises existing muscle memory.

@@ -87,6 +87,7 @@ difftastic = "latest"        # `difft` — syntax-aware diff (git dft); agent re
 semgrep = "latest"           # taint/bug patterns text-search can't express (pipx)
 gitleaks = "latest"          # block secret commits
 "cargo:git-absorb" = "latest"  # auto-fixup hunks into the right ancestor (no arm64-darwin prebuilt; compiles native)
+"forgejo:mergiraf/mergiraf" = "latest"  # AST-aware git merge driver — Codeberg prebuilt binary (forgejo backend, mac+Linux; cargo build needs nightly). Driver + attributes wired in ~/.gitconfig + ~/.config/git/attributes
 shellcheck = "latest"        # lint agent-written shell before CI
 shfmt = "latest"             # format agent-written shell
 # B · agent context + data
