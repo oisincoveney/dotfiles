@@ -37,6 +37,7 @@ if command -v kubecolor >/dev/null 2>&1 && command -v kubectl >/dev/null 2>&1; t
 fi
 
 # Shortcuts
+alias cza="chezmoi apply --refresh-externals=always"
 alias reloadshell="exec zsh"
 alias compile="commit 'compile'"
 alias timestamp="date +%s"

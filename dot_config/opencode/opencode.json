@@ -49,6 +49,39 @@
             "store": false,
             "textVerbosity": "medium"
           }
+        },
+        "gpt-5.5-low": {
+          "options": {
+            "include": [
+              "reasoning.encrypted_content"
+            ],
+            "reasoningEffort": "low",
+            "reasoningSummary": "auto",
+            "store": false,
+            "textVerbosity": "medium"
+          }
+        },
+        "gpt-5.5-high": {
+          "options": {
+            "include": [
+              "reasoning.encrypted_content"
+            ],
+            "reasoningEffort": "high",
+            "reasoningSummary": "auto",
+            "store": false,
+            "textVerbosity": "medium"
+          }
+        },
+        "gpt-5.5-xhigh": {
+          "options": {
+            "include": [
+              "reasoning.encrypted_content"
+            ],
+            "reasoningEffort": "xhigh",
+            "reasoningSummary": "auto",
+            "store": false,
+            "textVerbosity": "medium"
+          }
         }
       }
     }

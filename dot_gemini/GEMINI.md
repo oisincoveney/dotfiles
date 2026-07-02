@@ -21,14 +21,15 @@ This names the moving parts that affect agent behaviour. No vague “be discipli
 ## Installed rule source
 
 - Global rules come from `oisin-ee/agent/rules`, concatenated from `rules/*.md` by filename.
-- Moka installs the same rule text to Claude Code `~/.claude/CLAUDE.md`, Codex `~/.codex/AGENTS.md`, Gemini
-  `~/.gemini/GEMINI.md`, and OpenCode `~/.config/opencode/AGENTS.md`.
+- Chezmoi runs `bin/install-harness.mjs`, which installs the same rule text to Claude Code
+  `~/.claude/CLAUDE.md`, Codex `~/.codex/AGENTS.md`, Gemini `~/.gemini/GEMINI.md`, and OpenCode
+  `~/.config/opencode/AGENTS.md`.
 - If a hook/skill is missing in one host, these rules are still binding. Execute required workflow steps manually;
   missing host support is not permission to skip them.
 
 ## Hook inventory agents must expect
 
-Bundled hooks are authored in `oisin-ee/agent/hooks` and overlaid into each harness by Moka.
+Bundled hooks are authored in `oisin-ee/agent/hooks` and overlaid into each harness by `bin/install-harness.mjs`.
 
 | Trigger | Host | Hook/plugin | What it does | Required agent response |
 | --- | --- | --- | --- | --- |
