@@ -7,7 +7,7 @@ bindkey -e   # emacs keymap
 bindkey '^?' backward-delete-char
 bindkey '^H' backward-delete-char
 bindkey '^[[3~' delete-char
-bindkey '^[3;5~' delete-char
+bindkey '^[[3;5~' delete-char
 
 [[ -n "${terminfo[kdch1]:-}" ]] && bindkey "${terminfo[kdch1]}" delete-char
 [[ -n "${terminfo[khome]:-}" ]] && bindkey "${terminfo[khome]}" beginning-of-line

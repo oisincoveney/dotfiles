@@ -11,6 +11,10 @@ setopt EXTENDED_GLOB       # #, ~, ^ operators in globs
 setopt GLOB_DOTS           # match dotfiles without a leading-dot in the pattern
 setopt NUMERIC_GLOB_SORT   # sort numeric filenames numerically
 
+# Word boundaries: only alphanumerics are word chars, so backward-kill-word
+# stops at / . - _ etc. (restores oh-my-zsh behavior)
+WORDCHARS=''
+
 # Misc quality-of-life
 setopt INTERACTIVE_COMMENTS  # allow `# comments` at the prompt
 setopt COMPLETE_IN_WORD      # complete from both ends of the cursor
