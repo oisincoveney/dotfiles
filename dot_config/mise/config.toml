@@ -151,5 +151,20 @@ golangci-lint = "latest"     # Go meta-linter (you scaffold Go via go-blueprint)
 "pipx:files-to-prompt" = "latest"  # fd/rg output → LLM prompt (pairs with repomix)
 hexyl = "latest"             # colored hex viewer for binary/unknown formats
 
+# ── Agent-native kit — tools an agent reaches for directly: plain-text notes,
+#    a scriptable LLM CLI, and TUI HTTP/DB clients (the CLI half of the GUI-only
+#    dbeaver/tableplus/posting workflow). Same portability rule: aqua prebuilts
+#    win; pipx (PyPI) only where the tool is Python and has no aqua binary.
+# L · notes + LLM
+"aqua:zk-org/zk" = "latest"       # plain-text zettelkasten/notes CLI (zk-org maintained fork)
+"aqua:sigoden/aichat" = "latest"  # all-in-one LLM CLI: REPL, shell-assistant, RAG, agents
+# M · HTTP + DB clients (agent-scriptable; complement hurl/usql + GUI db tools)
+"pipx:posting" = "latest"    # terminal HTTP client — Postman/Insomnia in a TUI (darrenburns)
+# pgcli's psycopg dep uses the system libpq on non-Windows; inject psycopg[binary]
+# so it ships the libpq-bundled wheel and is self-contained on mac + Linux pods.
+"pipx:pgcli" = { version = "latest", uvx_args = "--with psycopg[binary]" }  # Postgres CLI: autocompletion + syntax highlight (dbcli)
+"pipx:litecli" = "latest"    # SQLite CLI (dbcli)
+"pipx:mycli" = "latest"      # MySQL/MariaDB CLI (dbcli)
+
 [settings]
 idiomatic_version_file_enable_tools = []

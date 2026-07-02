@@ -77,6 +77,8 @@ brew "kubeseal"
 brew "lefthook"
 # Library to render SVG files using Cairo
 brew "librsvg"
+# Sudoless performance monitoring for Apple Silicon processors
+brew "macmon"
 # Mac App Store command-line interface
 brew "mas"
 # Polyglot runtime manager (asdf rust clone)
