@@ -12,6 +12,10 @@ uv = "latest"
 "npm:opencode-ai" = "latest"
 "npm:@oisincoveney/pipeline" = "latest"   # moka
 "npm:@mariozechner/pi-coding-agent" = "latest"  # pi
+# yeet — Rust agent-spawn binary: drives claude/codex/opencode over native wire
+# protocols (no SDKs), durable auto-resume of transient flakes. `yeet run|chat|
+# resume|serve`. Source-built from git until a release pipeline lands (PIPE-104).
+"cargo:https://github.com/oisin-ee/yeet" = { version = "branch:main", bin = "yeet" }
 "npm:agent-browser" = "latest"
 "npm:eas-cli" = "latest"
 # Codegen / scaffolding / lint
