@@ -181,3 +181,7 @@ hexyl = "latest"             # colored hex viewer for binary/unknown formats
 
 [settings]
 idiomatic_version_file_enable_tools = []
+# Private github: backends (e.g. oisin-ee/yeet) need a token to read releases.
+# mise runs this via `sh -c` and reads the token from stdout — sourced from the
+# already-authenticated gh, so nothing is stored and no shell env noise is needed.
+github.credential_command = "gh auth token"
