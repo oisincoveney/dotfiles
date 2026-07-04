@@ -15,6 +15,7 @@ tap "stripe/stripe-cli", trusted: true
 tap "thdxg/tap", trusted: true
 tap "tobi/try", "https://github.com/tobi/try", trusted: true
 tap "xykong/tap", trusted: true
+tap "yakitrak/yakitrak"
 # Run your GitHub Actions locally
 brew "act"
 # Static checker for GitHub Actions workflow files

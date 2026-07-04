@@ -3,8 +3,9 @@
 # source of truth. This is a run_onchange script: the embedded content hashes
 # make chezmoi re-run it whenever either Brewfile changes, so the machine stays
 # in sync with the source. Reads from the source dir (not the deployed copy) so
-# it never depends on file-apply ordering. Install-only (no --cleanup), so it
-# never uninstalls anything you added out of band.
+# it never depends on file-apply ordering. Install-only (no --cleanup), and
+# --no-upgrade avoids replacing installed app bundles just because newer versions
+# exist.
 #
 # Brewfile hash:       {{ include "dot_config/Brewfile" | sha256sum }}
 # Brewfile.fonts hash: {{ include "dot_config/Brewfile.fonts" | sha256sum }}
@@ -13,9 +14,15 @@ set -euo pipefail
 {{ if eq .chezmoi.os "darwin" -}}
 command -v brew >/dev/null 2>&1 || { echo "brew not installed; skipping bundle."; exit 0; }
 
-echo "Applying ~/.config/Brewfile …"
-brew bundle --file="{{ .chezmoi.sourceDir }}/dot_config/Brewfile" || true
-echo "Applying ~/.config/Brewfile.fonts …"
-brew bundle --file="{{ .chezmoi.sourceDir }}/dot_config/Brewfile.fonts" || true
+apply_brewfile() {
+  local label="$1"
+  local file="$2"
+
+  echo "Applying $label …"
+  brew bundle install --no-upgrade --file="$file"
+}
+
+apply_brewfile "~/.config/Brewfile" "{{ .chezmoi.sourceDir }}/dot_config/Brewfile"
+apply_brewfile "~/.config/Brewfile.fonts" "{{ .chezmoi.sourceDir }}/dot_config/Brewfile.fonts"
 echo "Brewfile bundle complete."
 {{ end -}}
