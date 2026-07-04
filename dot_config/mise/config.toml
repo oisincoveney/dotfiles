@@ -15,7 +15,7 @@ uv = "latest"
 # yeet — Rust agent-spawn binary: drives claude/codex/opencode over native wire
 # protocols (no SDKs), durable auto-resume of transient flakes. `yeet run|chat|
 # resume|serve`. Source-built from git until a release pipeline lands (PIPE-104).
-"github:oisin-ee/yeet" = "0.1.0"
+"github:oisin-ee/yeet" = "0.1.1"
 "npm:agent-browser" = "latest"
 "npm:eas-cli" = "latest"
 # Codegen / scaffolding / lint
