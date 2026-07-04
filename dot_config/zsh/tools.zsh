@@ -54,6 +54,13 @@ _evalcache() {
 
 # One concept ("activate shell integration if the binary exists, cached") owns
 # this axis, instead of a stack of near-identical `if command -v X` blocks.
+# mise needs a GitHub token to fetch prebuilt binaries from PRIVATE release repos
+# via the github: backend (e.g. github:oisin-ee/yeet). Source it from gh — already
+# authenticated — instead of storing a token; MISE_-scoped so it never shadows gh's
+# own auth the way a bare GITHUB_TOKEN would. Skips cleanly if gh is absent/logged out.
+if command -v gh >/dev/null 2>&1; then
+  export MISE_GITHUB_TOKEN="${MISE_GITHUB_TOKEN:-$(gh auth token 2>/dev/null)}"
+fi
 # mise FIRST — it puts starship/zoxide/atuin/… on PATH, so their inits below can
 # actually find them (they're mise-managed now, not brew/always-on-PATH).
 _evalcache mise activate zsh
