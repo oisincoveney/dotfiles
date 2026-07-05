@@ -28,6 +28,7 @@ uv = "latest"
 "npm:expo-doctor" = "latest"
 "npm:ajv-cli" = "latest"
 "npm:wscat" = "latest"
+"npm:@playwright/mcp" = "latest"
 "npm:strip-json-comments-cli" = "latest"
 # Zed ACP bridges
 "npm:@zed-industries/claude-agent-acp" = "latest"

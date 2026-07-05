@@ -24,6 +24,10 @@ chezmoi:modify-template
 {{- $config = deleteValueAtPath "model_provider" $config -}}
 {{- $config = deleteValueAtPath "model_providers.broker" $config -}}
 {{- end -}}
+{{- $config = setValueAtPath "mcp_servers.playwright.command" "mise" $config -}}
+{{- $config = setValueAtPath "mcp_servers.playwright.args" (list "exec" "--" "playwright-mcp") $config -}}
+{{- $config = setValueAtPath "mcp_servers.playwright.enabled" true $config -}}
+{{- $config = setValueAtPath "mcp_servers.playwright.startup_timeout_sec" 20 $config -}}
 {{- if env "REPO_DIR" -}}
 {{- $config = setValueAtPath (list "projects" (env "REPO_DIR") "trust_level") "trusted" $config -}}
 {{- end -}}

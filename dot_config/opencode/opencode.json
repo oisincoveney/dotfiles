@@ -24,6 +24,17 @@
       "oauth": false,
       "type": "remote",
       "url": "https://pipeline-mcp.momokaya.ee/mcp/"
+    },
+    "playwright": {
+      "command": [
+        "mise",
+        "exec",
+        "--",
+        "playwright-mcp"
+      ],
+      "enabled": true,
+      "timeout": 20000,
+      "type": "local"
     }
   },
   "plugin": [
