@@ -50,8 +50,6 @@ brew "ffmpeg"
 brew "flyctl"
 # Command-line outline and bitmap font editor/converter
 brew "fontforge"
-# GitHub command-line tool
-brew "gh"
 # Distributed revision control system
 brew "git"
 # Quickly rewrite git repository history
@@ -64,12 +62,8 @@ brew "gnupg"
 brew "grep"
 # Popular GNU data compression program
 brew "gzip"
-# Kubernetes package manager
-brew "helm"
 # Agent multiplexer that lives in your terminal
 brew "herdr"
-# Lightweight and flexible command-line JSON processor
-brew "jq"
 # Little helper to run CNCF's k3s in Docker
 brew "k3d"
 # Kubernetes controller and tool for one-way encrypted Secrets
@@ -150,8 +144,6 @@ cask "background-music"
 cask "bitwarden"
 # Scriptable scratchpad for developers
 cask "boop"
-# OpenAI's coding agent that runs in your terminal
-cask "codex"
 # Allows switching between application windows
 cask "contexts"
 # Universal database tool and SQL client
