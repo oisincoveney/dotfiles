@@ -3,11 +3,18 @@
 # dependency of backlog-md/neonctl/oxfmt/etc). Projects still pin their own via
 # .node-version / mise.toml; nub reads whatever PATH node matches the pin.
 #
-# uv, npm:@nubjs/nub, npm:opencode-ai, npm:fallow, ripgrep moved to the
-# oisin-ee/agent platform toolset (mise/mise.toml, ENG-24) — single source of
-# truth, merged in via ~/.config/mise/conf.d/platform-toolset.toml (a symlink
-# into ~/.local/share/agent, see .chezmoiexternal.toml). Do not re-add them here.
 node = "lts"
+uv = "latest"
+ripgrep = "latest"
+gh = "latest"
+helm = "latest"
+kubectl = "latest"
+jq = "latest"
+claude = "latest"
+codex = "latest"
+"npm:opencode-ai" = "latest"
+"npm:fallow" = "latest"
+"npm:@nubjs/nub" = "latest"
 
 # ── Global JS CLIs — single source of truth (was scattered across Homebrew's
 #    node prefix + bun global). mise installs each and shims its bin on PATH.

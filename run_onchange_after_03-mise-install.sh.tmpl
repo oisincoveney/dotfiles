@@ -8,14 +8,7 @@
 # unauthenticated GitHub rate limit while fetching ~35 tools (best-effort: uses an
 # existing $GITHUB_TOKEN, else the gh CLI login, else proceeds unauthenticated).
 #
-# Also tracks the oisin-ee/agent platform toolset (mise/mise.toml, ENG-24), which
-# ~/.config/mise/conf.d/platform-toolset.toml symlinks to. run_after_ scripts may
-# freely depend on .chezmoiexternal content — externals sync during the update
-# phase, strictly before run_after_ scripts run (chezmoi application order docs:
-# https://www.chezmoi.io/reference/application-order/) — so this always reads the
-# freshly `git pull --ff-only`d checkout, not stale content.
-#
-# mise config hash: {{ include "dot_config/mise/config.toml" | sha256sum }} {{ include (joinPath .chezmoi.homeDir ".local/share/agent/mise/mise.toml") | sha256sum }}
+# mise config hash: {{ include "dot_config/mise/config.toml" | sha256sum }}
 set -euo pipefail
 
 command -v mise >/dev/null 2>&1 || { echo "mise not installed; skipping tool sync."; exit 0; }
