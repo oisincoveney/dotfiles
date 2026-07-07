@@ -1,8 +1,17 @@
-# Agent harness source — the oisin-ee/agent git repo, cloned into a chezmoi-owned
-# consumer checkout on every machine (laptop + runner pods). Single source of
-# truth for skills/hooks/rules/settings and the self-contained bin/install-harness.
-# chezmoi clones it if absent and `git pull --ff-only`s it on every apply; the
-# run_after_10-agent-harness script then (re)installs the harness from it.
+# oisin-ee/agent checkout — cloned into a chezmoi-owned consumer checkout on every
+# machine (laptop + runner pods). chezmoi clones it if absent and `git pull --ff-only`s
+# it on every apply.
+#
+# Harness install (skills/hooks/rules/settings) is NO LONGER chezmoi's job: yeet is the
+# sole harness installer (ENG-25), acquiring its own pinned oisin-ee/agent cache and
+# syncing the harness before it spawns any agent. The old run_after_10-agent-harness.sh
+# trigger has been removed.
+#
+# This checkout now exists solely as the mise platform-toolset source (ENG-24):
+# dot_config/mise/conf.d/symlink_platform-toolset.toml.tmpl symlinks
+# ~/.local/share/agent/mise/mise.toml into the mise conf.d merge point, and
+# run_onchange_after_03-mise-install re-runs when that file's hash changes. Removing this
+# external would dangle that symlink, so it stays until the toolset source is repointed.
 #
 # This file is template-processed by chezmoi, so .agentRepoUrl (from
 # .chezmoi.toml.tmpl) resolves per machine (ssh on the laptop, https+token in the

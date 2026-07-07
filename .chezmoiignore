@@ -22,8 +22,7 @@ LICENSE.md
 .config/opencode/plugins
 
 # Global instruction files (CLAUDE.md / AGENTS.md / GEMINI.md) are generated and
-# owned by the agent harness installer (bin/install-harness.mjs from
-# oisin-ee/agent, run by run_after_10-agent-harness.sh) — NOT deployed as static
+# owned by yeet, the sole harness installer (ENG-25) — NOT deployed as static
 # chezmoi files. Ignore so chezmoi never manages or clobbers them; otherwise the
 # target drifts from chezmoi's stale source every apply and `chezmoi apply` on a
 # TTY-less pod fails ("has changed since chezmoi last wrote it?" → exit 1).
