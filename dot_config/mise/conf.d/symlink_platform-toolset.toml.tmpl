@@ -1,0 +1,7 @@
+{{/* Symlink into the mise conf.d merge point (~/.config/mise/conf.d/*.toml loads
+     alphabetically alongside dot_config/mise/config.toml — see
+     https://mise.jdx.dev/configuration.html#config-file-locations) so laptop
+     tool resolution reads the oisin-ee/agent platform toolset (mise/mise.toml,
+     ENG-24) with zero copying: the file chezmoi's .chezmoiexternal.toml already
+     keeps synced at ~/.local/share/agent stays the single source of truth. */ -}}
+{{ joinPath .chezmoi.homeDir ".local/share/agent/mise/mise.toml" }}
