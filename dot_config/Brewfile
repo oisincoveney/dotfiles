@@ -16,14 +16,6 @@ tap "thdxg/tap", trusted: true
 tap "tobi/try", "https://github.com/tobi/try", trusted: true
 tap "xykong/tap", trusted: true
 tap "yakitrak/yakitrak"
-# Run your GitHub Actions locally
-brew "act"
-# Static checker for GitHub Actions workflow files
-brew "actionlint"
-# Simple, modern, secure file encryption
-brew "age"
-# GitOps Continuous Delivery for Kubernetes
-brew "argocd"
 # General-purpose data compression with high compression ratio
 brew "xz"
 # Markdown‑native Task Manager & Kanban visualizer for any Git repository
@@ -38,22 +30,14 @@ brew "btop"
 brew "chezmoi"
 # Dependency manager for Cocoa projects
 brew "cocoapods"
-# Tool for provisioning self-hosted development environments with Terraform
-brew "coder"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
-# Tool for interacting with remote images and registries
-brew "crane"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
-# Command-line tools for fly.io services
-brew "flyctl"
 # Command-line outline and bitmap font editor/converter
 brew "fontforge"
 # Distributed revision control system
 brew "git"
-# Quickly rewrite git repository history
-brew "git-filter-repo"
 # Manage stacked Git branches
 brew "git-spice"
 # GNU Privacy Guard (OpenPGP)
@@ -62,12 +46,6 @@ brew "gnupg"
 brew "grep"
 # Popular GNU data compression program
 brew "gzip"
-# Agent multiplexer that lives in your terminal
-brew "herdr"
-# Little helper to run CNCF's k3s in Docker
-brew "k3d"
-# Kubernetes controller and tool for one-way encrypted Secrets
-brew "kubeseal"
 # Fast and powerful Git hooks manager for any type of projects
 brew "lefthook"
 # Library to render SVG files using Cairo
@@ -78,50 +56,28 @@ brew "macmon"
 brew "mas"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
-# Simple tool to make locally trusted development certificates
-brew "mkcert"
-# Neon CLI tool
-brew "neonctl"
-# Ambitious Vim-fork focused on extensibility and agility
-brew "neovim"
 # Capability-based sandbox shell for AI agents with OS-enforced isolation
 brew "nono"
-# Build better apps by developing and testing code directly in Kubernetes
-brew "okteto"
 # Create, run, and share large language models (LLMs)
 brew "ollama", restart_service: :changed
-# Provides a software solution to manage, store, and distribute sensitive data
-brew "openbao"
 # Terminal client for Ollama
 brew "oterm"
 # High-performance formatting tool for JavaScript and TypeScript
 brew "oxfmt"
-# Swiss-army knife of markup format conversion
-brew "pandoc"
 # PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
-# Protocol buffers (Google's data interchange format)
-brew "protobuf"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.12"
 # QR Code generation
 brew "qrencode"
-# Nodejs-based tool for optimizing SVG vector graphics files
-brew "svgo"
 # Modernized, complete, self-contained TeX/LaTeX engine
 brew "tectonic"
-# Markup-based typesetting system
-brew "typst"
 # Extraction utility for .zip compressed archives
 brew "unzip"
-# Command-line client for WebSockets
-brew "websocat"
 # Tools for the WireGuard secure network tunnel
 brew "wireguard-tools"
 # Generate your Xcode project from a spec file and your folder structure
 brew "xcodegen"
-# Process YAML, JSON, XML, CSV and properties documents from the CLI
-brew "yq"
 # Pluggable terminal workspace, with terminal multiplexer as the base feature
 brew "zellij"
 # Watcher for macOS 10.14+ light/dark mode changes

@@ -1,29 +1,44 @@
+# GENERATED — DO NOT EDIT.
+# Source: oisin-ee/agent mise/mise.toml (agent-functional toolset) merged with
+# this repo's dot_config/mise/human-toolset.toml (human/portable CLIs + overrides
+# + laptop [settings]). Regenerate: node scripts/gen-mise-dotfiles.mjs (agent repo).
+# Add an agent tool -> agent mise/mise.toml; a laptop tool -> human-toolset.toml;
+# then regenerate. Drift is caught by `--check` (ENG-24/25).
+
 [tools]
-# node: mise owns the default `node` on PATH (brew's node stays only as a silent
-# dependency of backlog-md/neonctl/oxfmt/etc). Projects still pin their own via
-# .node-version / mise.toml; nub reads whatever PATH node matches the pin.
-#
-node = "lts"
-uv = "latest"
+# Already-shared CLIs, single source of truth for agent/runner consumers.
 ripgrep = "latest"
+fd = "latest" # fast file find — agent's primary path search alongside ripgrep
+"npm:fallow" = "latest"
+"npm:@nubjs/nub" = "latest"
+uv = "latest"
+"npm:opencode-ai" = "latest"
 gh = "latest"
 helm = "latest"
 kubectl = "latest"
 jq = "latest"
 claude = "latest"
 codex = "latest"
-"npm:opencode-ai" = "latest"
-"npm:fallow" = "latest"
-"npm:@nubjs/nub" = "latest"
+
+# ── Language toolchains — Layer-2 shared source (doc-2 decision 1: toolchains
+#    lock via mise, not an npm/nub catalog entry — go/rust/python have no
+#    catalog equivalent). This file + mise.lock is the ONE place fleet
+#    language versions are pinned; a newly stamped repo does not point back
+#    at this file live, it birth-seeds a copy of these exact resolved
+#    versions into its own mise.toml (see docs/mise-birth-seed.md), then
+#    Renovate's mise manager bumps each repo's copy forward in lockstep.
+#    python pairs with `uv` (already pinned above) for venv creation —
+#    mise's python core tool still owns interpreter version resolution.
+go = "latest"
+rust = "latest"
+python = "latest"
+node = "lts"
 
 # ── Global JS CLIs — single source of truth (was scattered across Homebrew's
 #    node prefix + bun global). mise installs each and shims its bin on PATH.
 # Dev toolkit / agents
-"npm:@oisincoveney/pipeline" = "latest"   # moka
-"npm:@mariozechner/pi-coding-agent" = "latest"  # pi
-# yeet — Rust agent-spawn binary: drives claude/codex/opencode over native wire
-# protocols (no SDKs), durable auto-resume of transient flakes. `yeet run|chat|
-# resume|serve`. Source-built from git until a release pipeline lands (PIPE-104).
+"npm:@oisincoveney/pipeline" = "latest"        # moka
+"npm:@mariozechner/pi-coding-agent" = "latest" # pi
 "github:oisin-ee/yeet" = "0.1.1"
 "npm:agent-browser" = "latest"
 "npm:eas-cli" = "latest"
@@ -42,150 +57,172 @@ codex = "latest"
 "npm:@zed-industries/claude-agent-acp" = "latest"
 "npm:@zed-industries/claude-code-acp" = "latest"
 
-# ── Portable CLI kit — installed identically on macOS + every Linux SSH box via
-#    mise's aqua backend (prebuilt binaries, no compile, no Homebrew-on-Linux).
-#    This is the cross-platform source of truth; brew = macOS GUI casks only.
-# core replacements
-eza = "latest"
-bat = "latest"
-fd = "latest"
-fzf = "latest"
-zoxide = "latest"
-starship = "latest"
-atuin = "latest"
-delta = "latest"
-# zen TUIs
-yazi = "latest"
-lazygit = "latest"
-lazydocker = "latest"
-television = "latest"
-# btop: no macOS prebuilt exists (aqua = linux-only). It's brew on mac +
-# distro/aqua on Linux — the one unavoidable platform split. See run_once_01.
-"github:Canop/broot" = "latest"
-# modern-unix drop-ins
-dust = "latest"
-duf = "latest"
-"aqua:dalance/procs" = "latest"
-"aqua:d-kuro/gwq" = "latest"           # git-worktree manager (replaces wtp)
-sd = "latest"
-choose = "latest"
-hyperfine = "latest"
-tokei = "latest"
-# charm + fetch (the sexy)
-fastfetch = "latest"
-"aqua:o2sh/onefetch" = "latest"
-glow = "latest"
-gum = "latest"
-# data / http / net
-xh = "latest"
-jless = "latest"
-"github:mr-karan/doggo" = "latest"
-gping = "latest"
-dasel = "latest"
-# shell UX
-carapace = "latest"
-"cargo:tealdeer" = "latest"   # builds a binary named `tldr`
-"cargo:navi" = "latest"
-"cargo:pay-respects" = "latest"
-
 # ── Agent-augmenting kit — tools an autonomous coding agent shells out to for
 #    better work: structural edits, self-review diffs, secret/lint gates, repo→
-#    context packing, k8s inspection, verify loops. Same portability rule as
-#    above: aqua prebuilts win; npm/pipx/ubi only where no aqua binary exists.
+#    context packing, k8s inspection, verify loops. Same portability rule:
+#    aqua prebuilts win; npm/pipx/ubi only where no aqua binary exists.
 #    All zero-config / inert-until-keyed — nothing here nags or needs upkeep.
 # A · code-intel + edit-safety
-ast-grep = "latest"          # `sg`/`ast-grep` — AST search+rewrite, no regex hell
-difftastic = "latest"        # `difft` — syntax-aware diff (git dft); agent reviews own edits
-semgrep = "latest"           # taint/bug patterns text-search can't express (pipx)
-gitleaks = "latest"          # block secret commits
-"cargo:git-absorb" = "latest"  # auto-fixup hunks into the right ancestor (no arm64-darwin prebuilt; compiles native)
-"forgejo:mergiraf/mergiraf" = "latest"  # AST-aware git merge driver — Codeberg prebuilt binary (forgejo backend, mac+Linux; cargo build needs nightly). Driver + attributes wired in ~/.gitconfig + ~/.config/git/attributes
-shellcheck = "latest"        # lint agent-written shell before CI
-shfmt = "latest"             # format agent-written shell
+ast-grep = "latest"                    # `sg`/`ast-grep` — AST search+rewrite, no regex hell
+difftastic = "latest"                  # `difft` — syntax-aware diff (git dft); agent reviews own edits
+semgrep = "latest"                     # taint/bug patterns text-search can't express (pipx)
+gitleaks = "latest"                    # block secret commits
+"cargo:git-absorb" = "latest"          # auto-fixup hunks into the right ancestor (no arm64-darwin prebuilt; compiles native)
+"forgejo:mergiraf/mergiraf" = "latest" # AST-aware git merge driver — Codeberg prebuilt binary (forgejo backend, mac+Linux; cargo build needs nightly). Driver + attributes wired in ~/.gitconfig + ~/.config/git/attributes
+shellcheck = "latest"                  # lint agent-written shell before CI
+shfmt = "latest"                       # format agent-written shell
 # B · agent context + data
-"npm:repomix" = "latest"     # pack a repo into one LLM-context file
-"pipx:jc" = "latest"         # any CLI output (ps/dig/ls/…) → JSON for piping (aqua darwin-arm64 asset missing)
-miller = "latest"            # `mlr` — awk/sed/cut for CSV/TSV/JSON
-ripgrep-all = "latest"       # `rga` — ripgrep over PDF/docx/zip (poppler already present)
-"pipx:llm" = "latest"        # simonw llm — scriptable one-shot LLM calls in pipes/hooks
+"npm:repomix" = "latest" # pack a repo into one LLM-context file
+"pipx:jc" = "latest"     # any CLI output (ps/dig/ls/…) → JSON for piping (aqua darwin-arm64 asset missing)
+miller = "latest"        # `mlr` — awk/sed/cut for CSV/TSV/JSON
+dasel = "latest"         # query/convert JSON/YAML/TOML/CSV/XML with one selector syntax
+ripgrep-all = "latest"   # `rga` — ripgrep over PDF/docx/zip (poppler already present)
+"pipx:llm" = "latest"    # simonw llm — scriptable one-shot LLM calls in pipes/hooks
 # C · kubernetes / infra CLI kit (had GUI freelens only)
-k9s = "latest"               # cluster TUI
-stern = "latest"             # multi-pod multi-container log tail
-kubectx = "latest"           # fast context switch (auto-uses fzf)
-kubens = "latest"            # fast namespace switch
-dive = "latest"              # OCI image-layer bloat inspector
-trivy = "latest"             # CVE/secret/misconfig scanner (self-updating DB)
-kubecolor = "latest"         # colorized kubectl passthrough
+k9s = "latest"       # cluster TUI
+stern = "latest"     # multi-pod multi-container log tail
+kubectx = "latest"   # fast context switch (auto-uses fzf)
+kubens = "latest"    # fast namespace switch
+dive = "latest"      # OCI image-layer bloat inspector
+trivy = "latest"     # CVE/secret/misconfig scanner (self-updating DB)
+kubecolor = "latest" # colorized kubectl passthrough
 # D · dev workflow / verify
-just = "latest"              # task runner; `just --dump` is agent-discoverable
-watchexec = "latest"         # re-run a command on file change
-hurl = "latest"              # plain-text HTTP tests — agent verifies APIs
-mprocs = "latest"            # run parallel procs in split panes
-direnv = "latest"            # per-directory env (hook wired in tools.zsh)
-sops = "latest"              # encrypted secrets in git (age key; GitOps-native)
+just = "latest"                 # task runner; `just --dump` is agent-discoverable
+watchexec = "latest"            # re-run a command on file change
+hurl = "latest"                 # plain-text HTTP tests — agent verifies APIs
+direnv = "latest"               # per-directory env (hook wired in tools.zsh)
+sops = "latest"                 # encrypted secrets in git (age key; GitOps-native)
+"aqua:d-kuro/gwq" = "latest"    # git-worktree manager — agents isolate parallel lanes in worktrees
 # E · data & DB (agents had GUI-only db clients before)
-duckdb = "latest"            # in-process analytical SQL; query CSV/JSON/Parquet files directly
-usql = "latest"              # universal DB CLI — one binary, any DB, scriptable queries
-"github:dathere/qsv" = "latest"  # fast CSV toolkit (stats/dedup/join/validate); complements miller
+duckdb = "latest"               # in-process analytical SQL; query CSV/JSON/Parquet files directly
+usql = "latest"                 # universal DB CLI — one binary, any DB, scriptable queries
+"github:dathere/qsv" = "latest" # fast CSV toolkit (stats/dedup/join/validate); complements miller
 # F · verify & supply-chain (fits image build+push flow)
-osv-scanner = "latest"       # dep + container CVE scan vs OSV DB (Google); complements trivy
-hadolint = "latest"          # Dockerfile linter (lints RUN Bash too)
-git-cliff = "latest"         # changelog from Conventional Commits (feat|fix(scope): …)
-bats = "latest"              # bash test framework — agent tests the shell it writes
-"github:lycheeverse/lychee" = "latest"  # async link checker for md/html docs (aqua macOS asset misnamed)
+osv-scanner = "latest"                 # dep + container CVE scan vs OSV DB (Google); complements trivy
+hadolint = "latest"                    # Dockerfile linter (lints RUN Bash too)
+git-cliff = "latest"                   # changelog from Conventional Commits (feat|fix(scope): …)
+bats = "latest"                        # bash test framework — agent tests the shell it writes
+"github:lycheeverse/lychee" = "latest" # async link checker for md/html docs (aqua macOS asset misnamed)
 # G · service/API & logs
-oha = "latest"               # HTTP load generator; perf-check endpoints (complements hurl)
-grpcurl = "latest"           # `curl` for gRPC — exercise gRPC services from CLI
-"github:tstack/lnav" = "latest"  # log viewer with SQL queries over log files (aqua macOS asset misnamed)
-vale = "latest"              # prose/style linter for docs & markdown
+oha = "latest"     # HTTP load generator; perf-check endpoints (complements hurl)
+grpcurl = "latest" # `curl` for gRPC — exercise gRPC services from CLI
+vale = "latest"    # prose/style linter for docs & markdown
 # H · infra manifest validation & diff (argocd/helm/k3d/terraform CI gates)
-kubeconform = "latest"       # validate k8s manifests against schema
-kube-linter = "latest"       # lint k8s / Helm / Kustomize for misconfigs
-conftest = "latest"          # OPA/Rego policy tests on any config
-kustomize = "latest"         # render/patch k8s config (argocd renders this)
-tflint = "latest"            # Terraform linter (provider-aware)
-dyff = "latest"              # semantic YAML diff (manifest drift, not line noise)
-jd = "latest"                # semantic JSON diff/patch (compare API responses/state)
+kubeconform = "latest" # validate k8s manifests against schema
+kube-linter = "latest" # lint k8s / Helm / Kustomize for misconfigs
+conftest = "latest"    # OPA/Rego policy tests on any config
+kustomize = "latest"   # render/patch k8s config (argocd renders this)
+tflint = "latest"      # Terraform linter (provider-aware)
+dyff = "latest"        # semantic YAML diff (manifest drift, not line noise)
+jd = "latest"          # semantic JSON diff/patch (compare API responses/state)
 # I · supply-chain hardening (GitOps + image push)
-trufflehog = "latest"        # secret scan that verifies creds are still LIVE (vs gitleaks detect-only)
-syft = "latest"              # SBOM generator (feeds trivy/attestation)
-cosign = "latest"            # Sigstore sign/verify artifacts & images
+trufflehog = "latest" # secret scan that verifies creds are still LIVE (vs gitleaks detect-only)
+syft = "latest"       # SBOM generator (feeds trivy/attestation)
+cosign = "latest"     # Sigstore sign/verify artifacts & images
 # J · multi-repo & release (~30 repos in ~/dev)
-ghorg = "latest"             # bulk-clone an entire org/user
-mani = "latest"              # run one command across many repos
-"github:goreleaser/goreleaser" = "latest"  # build+release binaries and images (github backend skips the nightly prereleases aqua interleaves)
-k6 = "latest"                # scriptable HTTP load testing
+ghorg = "latest"                          # bulk-clone an entire org/user
+mani = "latest"                           # run one command across many repos
+"github:goreleaser/goreleaser" = "latest" # build+release binaries and images (github backend skips the nightly prereleases aqua interleaves)
+k6 = "latest"                             # scriptable HTTP load testing
 # K · config-format + agent extras
-taplo = "latest"             # TOML formatter/linter (Cargo.toml, pyproject.toml)
-yamlfmt = "latest"           # YAML formatter
-cue = "latest"               # typed config validation / generation
-helmfile = "latest"          # declarative multi-Helm release management
-golangci-lint = "latest"     # Go meta-linter (you scaffold Go via go-blueprint)
-"pipx:files-to-prompt" = "latest"  # fd/rg output → LLM prompt (pairs with repomix)
-hexyl = "latest"             # colored hex viewer for binary/unknown formats
-
-# ── Agent-native kit — tools an agent reaches for directly: plain-text notes,
-#    a scriptable LLM CLI, and TUI HTTP/DB clients (the CLI half of the GUI-only
-#    dbeaver/tableplus/posting workflow). Same portability rule: aqua prebuilts
-#    win; pipx (PyPI) only where the tool is Python and has no aqua binary.
-# L · notes + LLM
-"aqua:zk-org/zk" = "latest"       # plain-text zettelkasten/notes CLI (zk-org maintained fork)
-"aqua:sigoden/aichat" = "latest"  # all-in-one LLM CLI: REPL, shell-assistant, RAG, agents
-# M · HTTP + DB clients (agent-scriptable; complement hurl/usql + GUI db tools)
-"pipx:posting" = "latest"    # terminal HTTP client — Postman/Insomnia in a TUI (darrenburns)
-# pgcli's psycopg dep uses the system libpq on non-Windows; inject psycopg[binary]
-# so it ships the libpq-bundled wheel and is self-contained on mac + Linux pods.
-"pipx:pgcli" = { version = "latest", uvx_args = "--with psycopg[binary]" }  # Postgres CLI: autocompletion + syntax highlight (dbcli)
-"pipx:litecli" = "latest"    # SQLite CLI (dbcli)
-"pipx:mycli" = "latest"      # MySQL/MariaDB CLI (dbcli)
+taplo = "latest"                  # TOML formatter/linter (Cargo.toml, pyproject.toml)
+yamlfmt = "latest"                # YAML formatter
+cue = "latest"                    # typed config validation / generation
+helmfile = "latest"               # declarative multi-Helm release management
+golangci-lint = "latest"          # Go meta-linter (you scaffold Go via go-blueprint)
+"pipx:files-to-prompt" = "latest" # fd/rg output → LLM prompt (pairs with repomix)
+hexyl = "latest"                  # colored hex viewer for binary/unknown formats
 
 # ── Agent dev-sandboxes — isolate what an autonomous agent can touch. Installed
 #    but deliberately NOT auto-wired into the cc/co/ki/oc aliases (opt-in per
 #    invocation — see the note by the Agents aliases in ~/.config/zsh/aliases.zsh).
 #    nono (mac-only capability sandbox) lives in the Brewfile.
 # N · sandboxes
-"aqua:dagger/container-use" = "latest"  # `cu`/`container-use` — per-agent containerized dev envs (dagger)
-"npm:@anthropic-ai/sandbox-runtime" = "latest"  # `srt` — OS-level fs/net sandbox (sandbox-exec/bubblewrap), no container
+"aqua:dagger/container-use" = "latest"         # `cu`/`container-use` — per-agent containerized dev envs (dagger)
+"npm:@anthropic-ai/sandbox-runtime" = "latest" # `srt` — OS-level fs/net sandbox (sandbox-exec/bubblewrap), no container
+
+# ══════════ human toolset (from dotfiles human-toolset.toml) — laptop + user-facing Linux only, not agent pods ══════════
+# ── core replacements (shell UX) ──
+eza = "latest"
+bat = "latest"
+fzf = "latest"
+zoxide = "latest"
+starship = "latest"
+atuin = "latest"
+delta = "latest"
+# ── zen TUIs ──
+yazi = "latest"
+lazygit = "latest"
+lazydocker = "latest"
+television = "latest"
+"github:Canop/broot" = "latest"
+mprocs = "latest" # run parallel procs in split panes
+# ── modern-unix drop-ins ──
+dust = "latest"
+duf = "latest"
+"aqua:dalance/procs" = "latest"
+sd = "latest"
+choose = "latest"
+hyperfine = "latest"
+tokei = "latest"
+# ── charm + fetch (the sexy) ──
+fastfetch = "latest"
+"aqua:o2sh/onefetch" = "latest"
+glow = "latest"
+gum = "latest"
+# ── data / http / net (interactive viewers) ──
+xh = "latest"
+jless = "latest"
+"github:mr-karan/doggo" = "latest"
+gping = "latest"
+# ── shell UX ──
+carapace = "latest"
+"cargo:tealdeer" = "latest" # builds a binary named `tldr`
+"cargo:navi" = "latest"
+"cargo:pay-respects" = "latest"
+# ── notes + LLM REPL ──
+"aqua:zk-org/zk" = "latest"      # plain-text zettelkasten/notes CLI (zk-org maintained fork)
+"aqua:sigoden/aichat" = "latest" # all-in-one LLM CLI: REPL, shell-assistant, RAG, agents
+# ── logs ──
+"github:tstack/lnav" = "latest" # log viewer with SQL queries over log files
+# ── HTTP + DB TUIs (CLI half of the GUI dbeaver/tableplus/posting workflow) ──
+"pipx:posting" = "latest" # terminal HTTP client — Postman/Insomnia in a TUI (darrenburns)
+# pgcli's psycopg dep uses the system libpq on non-Windows; inject psycopg[binary]
+# so it ships the libpq-bundled wheel and is self-contained on mac + Linux.
+"pipx:pgcli" = { version = "latest", uvx_args = "--with psycopg[binary]" } # Postgres CLI: autocompletion + syntax highlight (dbcli)
+"pipx:litecli" = "latest"                                                  # SQLite CLI (dbcli)
+"pipx:mycli" = "latest"                                                    # MySQL/MariaDB CLI (dbcli)
+
+# ── reclaimed from the mac-only Brewfile — portable human CLIs a user-facing
+#    Linux box needs via mise (brew is macOS-only). Only tools with a maintained
+#    mise/aqua backend moved; brew keeps GUI casks, mac utils, and tools with no
+#    portable backend (git-spice, tectonic, qrencode, bitwarden-cli, backlog-md,
+#    obsidian-cli, gnupg, thv).
+# editors / docs / markup
+neovim = "latest"
+pandoc = "latest"
+typst = "latest"
+svgo = "latest"
+# git / secrets / certs
+git-filter-repo = "latest"
+age = "latest"
+mkcert = "latest"
+# CI / build / net
+act = "latest"        # run GitHub Actions locally
+actionlint = "latest" # lint GitHub Actions workflows
+websocat = "latest"   # WebSocket client
+protobuf = "latest"   # protoc
+# infra / platform CLIs (dev-facing; agents' k8s kit lives in the agent file)
+argocd = "latest"
+crane = "latest"    # container registry client
+k3d = "latest"      # local k3s in Docker
+kubeseal = "latest" # sealed-secrets client
+flyctl = "latest"
+coder = "latest"
+okteto = "latest"
+openbao = "latest" # `bao`
+neonctl = "latest"
+herdr = "latest" # terminal agent multiplexer
 
 [settings]
 idiomatic_version_file_enable_tools = []

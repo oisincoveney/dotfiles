@@ -1,0 +1,103 @@
+# Human toolset — the interactive/portable CLIs for HUMAN environments only: this
+# mac laptop and any user-facing Linux box (which has no Homebrew, so its human
+# CLIs must come from mise). Headless agent runner pods do NOT get these — they
+# get only oisin-ee/agent mise/mise.toml (the agent-functional kit).
+#
+# This is the ONLY hand-edited mise file on the laptop. It is merged with the
+# agent toolset into ../config.toml by oisin-ee/agent scripts/gen-mise-dotfiles.mjs:
+#   [tools] entries whose key matches an agent tool OVERRIDE it (e.g. node);
+#   the rest are emitted as the human-portable section;
+#   [settings] is emitted verbatim (laptop owns its mise settings — the agent
+#   repo's lockfile/birth-seed settings never reach the laptop).
+# After editing, regenerate from the agent repo: node scripts/gen-mise-dotfiles.mjs
+[tools]
+# ── override of an agent tool ──
+node = "lts" # laptop tracks LTS; the agent repo pins node=latest for birth-seeding
+
+# ── core replacements (shell UX) ──
+eza = "latest"
+bat = "latest"
+fzf = "latest"
+zoxide = "latest"
+starship = "latest"
+atuin = "latest"
+delta = "latest"
+# ── zen TUIs ──
+yazi = "latest"
+lazygit = "latest"
+lazydocker = "latest"
+television = "latest"
+"github:Canop/broot" = "latest"
+mprocs = "latest" # run parallel procs in split panes
+# ── modern-unix drop-ins ──
+dust = "latest"
+duf = "latest"
+"aqua:dalance/procs" = "latest"
+sd = "latest"
+choose = "latest"
+hyperfine = "latest"
+tokei = "latest"
+# ── charm + fetch (the sexy) ──
+fastfetch = "latest"
+"aqua:o2sh/onefetch" = "latest"
+glow = "latest"
+gum = "latest"
+# ── data / http / net (interactive viewers) ──
+xh = "latest"
+jless = "latest"
+"github:mr-karan/doggo" = "latest"
+gping = "latest"
+# ── shell UX ──
+carapace = "latest"
+"cargo:tealdeer" = "latest" # builds a binary named `tldr`
+"cargo:navi" = "latest"
+"cargo:pay-respects" = "latest"
+# ── notes + LLM REPL ──
+"aqua:zk-org/zk" = "latest"      # plain-text zettelkasten/notes CLI (zk-org maintained fork)
+"aqua:sigoden/aichat" = "latest" # all-in-one LLM CLI: REPL, shell-assistant, RAG, agents
+# ── logs ──
+"github:tstack/lnav" = "latest" # log viewer with SQL queries over log files
+# ── HTTP + DB TUIs (CLI half of the GUI dbeaver/tableplus/posting workflow) ──
+"pipx:posting" = "latest" # terminal HTTP client — Postman/Insomnia in a TUI (darrenburns)
+# pgcli's psycopg dep uses the system libpq on non-Windows; inject psycopg[binary]
+# so it ships the libpq-bundled wheel and is self-contained on mac + Linux.
+"pipx:pgcli" = { version = "latest", uvx_args = "--with psycopg[binary]" } # Postgres CLI: autocompletion + syntax highlight (dbcli)
+"pipx:litecli" = "latest"                                                  # SQLite CLI (dbcli)
+"pipx:mycli" = "latest"                                                    # MySQL/MariaDB CLI (dbcli)
+
+# ── reclaimed from the mac-only Brewfile — portable human CLIs a user-facing
+#    Linux box needs via mise (brew is macOS-only). Only tools with a maintained
+#    mise/aqua backend moved; brew keeps GUI casks, mac utils, and tools with no
+#    portable backend (git-spice, tectonic, qrencode, bitwarden-cli, backlog-md,
+#    obsidian-cli, gnupg, thv).
+# editors / docs / markup
+neovim = "latest"
+pandoc = "latest"
+typst = "latest"
+svgo = "latest"
+# git / secrets / certs
+git-filter-repo = "latest"
+age = "latest"
+mkcert = "latest"
+# CI / build / net
+act = "latest"        # run GitHub Actions locally
+actionlint = "latest" # lint GitHub Actions workflows
+websocat = "latest"   # WebSocket client
+protobuf = "latest"   # protoc
+# infra / platform CLIs (dev-facing; agents' k8s kit lives in the agent file)
+argocd = "latest"
+crane = "latest"    # container registry client
+k3d = "latest"      # local k3s in Docker
+kubeseal = "latest" # sealed-secrets client
+flyctl = "latest"
+coder = "latest"
+okteto = "latest"
+openbao = "latest" # `bao`
+neonctl = "latest"
+herdr = "latest" # terminal agent multiplexer
+
+[settings]
+idiomatic_version_file_enable_tools = []
+# Private github: backends (e.g. oisin-ee/yeet) resolve their token through git's
+# existing gh credential helper (~/.gitconfig already sets gh auth git-credential).
+github.use_git_credentials = true
