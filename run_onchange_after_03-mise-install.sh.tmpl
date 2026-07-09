@@ -20,5 +20,6 @@ command -v mise >/dev/null 2>&1 || { echo "mise not installed; skipping tool syn
 export GITHUB_TOKEN="${GITHUB_TOKEN:-$(gh auth token 2>/dev/null || true)}"
 
 echo "Syncing mise tools…"
-mise install -y || true
+mise install -y 
+mise up
 echo "mise tool sync complete."
