@@ -1,0 +1,13 @@
+# Agent-functional mise toolset — pulled from the canonical GitHub oisin-ee/agent
+# repo (NOT the local ~/dev/agent checkout) and dropped into mise's conf.d as a
+# fragment. mise merges conf.d/*.toml natively (alphabetical, later filename wins),
+# so this 10-agent fragment composes with the hand-authored conf.d/20-human.toml —
+# no generator, no committed merged config. `cza` (chezmoi apply
+# --refresh-externals=always) re-pulls this every apply, so the environment's agent
+# toolset regenerates from GitHub on each cza. .chezmoiexternal.$FORMAT is always a
+# template, so the private-repo token is injected from `gh auth token` at apply time.
+[".config/mise/conf.d/10-agent.toml"]
+    type = "archive-file"
+    url = "https://oauth2:{{ output "gh" "auth" "token" | trim }}@github.com/oisin-ee/agent/archive/refs/heads/main.tar.gz"
+    path = "agent-main/mise/mise.toml"
+    refreshPeriod = "24h"

@@ -1,15 +1,12 @@
-# Human toolset — the interactive/portable CLIs for HUMAN environments only: this
-# mac laptop and any user-facing Linux box (which has no Homebrew, so its human
-# CLIs must come from mise). Headless agent runner pods do NOT get these — they
-# get only oisin-ee/agent mise/mise.toml (the agent-functional kit).
+# Human toolset — interactive/portable CLIs for HUMAN environments (this mac laptop
+# and any user-facing Linux box, which has no Homebrew so its human CLIs come from
+# mise). Headless agent runner pods do NOT get these.
 #
-# This is the ONLY hand-edited mise file on the laptop. It is merged with the
-# agent toolset into ../config.toml by oisin-ee/agent scripts/gen-mise-dotfiles.mjs:
-#   [tools] entries whose key matches an agent tool OVERRIDE it (e.g. node);
-#   the rest are emitted as the human-portable section;
-#   [settings] is emitted verbatim (laptop owns its mise settings — the agent
-#   repo's lockfile/birth-seed settings never reach the laptop).
-# After editing, regenerate from the agent repo: node scripts/gen-mise-dotfiles.mjs
+# mise merges conf.d/*.toml natively (alphabetical, later filename wins). This file
+# (20-) sits ABOVE 10-agent.toml — the agent-functional toolset pulled from the
+# GitHub oisin-ee/agent repo by a chezmoi external (see ~/.dotfiles/.chezmoiexternal.toml.tmpl).
+# So [tools] entries here override the agent's (e.g. node), and [settings] here win.
+# Edit this file directly and `cza` — no generator, no merge step.
 [tools]
 # ── override of an agent tool ──
 node = "lts" # laptop tracks LTS; the agent repo pins node=latest for birth-seeding
@@ -101,3 +98,6 @@ idiomatic_version_file_enable_tools = []
 # Private github: backends (e.g. oisin-ee/yeet) resolve their token through git's
 # existing gh credential helper (~/.gitconfig already sets gh auth git-credential).
 github.use_git_credentials = true
+# Neutralize the agent fragment's lockfile=true: the laptop tracks latest/lts and
+# pins nothing. This higher-precedence fragment wins, so mise consults no lockfile.
+lockfile = false

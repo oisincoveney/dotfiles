@@ -1,14 +1,18 @@
 #!/bin/bash
-# Install/sync the mise tool set whenever the global mise config changes. This is
-# the cross-platform half of the setup: the same ~/.config/mise/config.toml drives
-# identical tools on macOS and every Linux box, via mise's aqua/github/cargo
+# Install/sync the mise tool set whenever the human mise fragment changes. This is
+# the cross-platform half of the setup: mise merges conf.d/*.toml (the human
+# fragment here + the agent fragment pulled from GitHub by the chezmoi external) and
+# drives identical tools on macOS and every Linux box, via mise's aqua/github/cargo
 # backends (prebuilt binaries, no Homebrew-on-Linux needed).
 #
 # A GitHub token is passed through so mise's github/aqua backends don't trip the
 # unauthenticated GitHub rate limit while fetching ~35 tools (best-effort: uses an
 # existing $GITHUB_TOKEN, else the gh CLI login, else proceeds unauthenticated).
 #
-# mise config hash: {{ include "dot_config/mise/config.toml" | sha256sum }}
+# `cza` refreshes the agent fragment (10-agent.toml) via the external in the same
+# apply, so `mise install` below picks up both fragments. Hash keys off the human
+# fragment (the agent fragment lives on GitHub, outside this source tree).
+# mise config hash: {{ include "dot_config/mise/conf.d/20-human.toml" | sha256sum }}
 set -euo pipefail
 
 command -v mise >/dev/null 2>&1 || { echo "mise not installed; skipping tool sync."; exit 0; }
