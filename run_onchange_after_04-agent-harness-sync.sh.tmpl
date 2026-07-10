@@ -1,0 +1,29 @@
+#!/bin/bash
+# Sync the agent harness (~/.claude, ~/.codex, ~/.config/opencode) whenever the
+# canonical oisin-ee/agent `main` advances. yeet is the SOLE harness installer
+# (ENG-25): this script does NOT reimplement install — it only invokes
+# `yeet agent sync`, which acquires yeet's own pinned oisin-ee/agent cache and
+# writes skills/hooks/rules/settings. chezmoi merely triggers it on the same
+# cadence as the rest of the environment.
+#
+# Trigger: the remote `main` SHA is embedded in the hash line below. chezmoi
+# re-runs a run_onchange script only when its rendered content changes, so this
+# fires exactly when oisin-ee/agent main moves — not on every apply. The SHA is
+# fetched best-effort (|| unknown) so a transient network/gh failure degrades to
+# a stable "unknown" line instead of aborting `cza`; the next apply that can
+# reach GitHub re-resolves the real SHA and syncs.
+#
+# Ordering: numbered after 03-mise-install so `yeet` (installed via the mise
+# agent toolset) exists before this calls it.
+#
+# Caveat: `yeet agent sync` rewrites live harness files. On `cza` this runs
+# against whatever agent session may be open; a live `claude`/`codex` picks up
+# hook/settings changes on its next tool call, not mid-call.
+# oisin-ee/agent main: {{ output "sh" "-c" "gh api repos/oisin-ee/agent/commits/main --jq .sha 2>/dev/null || echo unknown" | trim }}
+set -euo pipefail
+
+command -v yeet >/dev/null 2>&1 || { echo "yeet not installed; skipping agent harness sync."; exit 0; }
+
+echo "Syncing agent harness via yeet…"
+yeet agent sync
+echo "Agent harness sync complete."
