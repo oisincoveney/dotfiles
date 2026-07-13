@@ -12,7 +12,7 @@
 node = "lts" # laptop tracks LTS; the agent repo pins node=latest for birth-seeding
 
 # ── core replacements (shell UX) ──
-eza = "latest"
+"cargo:eza" = "latest"
 bat = "latest"
 fzf = "latest"
 zoxide = "latest"
