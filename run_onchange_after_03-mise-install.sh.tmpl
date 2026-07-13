@@ -9,10 +9,11 @@
 # unauthenticated GitHub rate limit while fetching ~35 tools (best-effort: uses an
 # existing $GITHUB_TOKEN, else the gh CLI login, else proceeds unauthenticated).
 #
-# `cza` refreshes the agent fragment (10-agent.toml) via the external in the same
-# apply, so `mise install` below picks up both fragments. Hash keys off the human
-# fragment (the agent fragment lives on GitHub, outside this source tree).
-# mise config hash: {{ include "dot_config/mise/conf.d/20-human.toml" | sha256sum }}
+# `cza` refreshes the agent fragment (10-agent.toml) via the external before this
+# after-script runs, so `mise install` below sees both current fragments. Track both
+# inputs in this script's rendered content so either toolset change triggers it.
+# human mise config hash: {{ include "dot_config/mise/conf.d/20-human.toml" | sha256sum }}
+# agent mise config blob: {{ output "sh" "-c" "gh api 'repos/oisin-ee/agent/contents/mise/mise.toml?ref=main' --jq .sha 2>/dev/null || echo unknown" | trim }}
 set -euo pipefail
 
 command -v mise >/dev/null 2>&1 || { echo "mise not installed; skipping tool sync."; exit 0; }
