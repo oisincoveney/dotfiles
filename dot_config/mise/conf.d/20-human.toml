@@ -25,7 +25,7 @@ lazygit = "latest"
 lazydocker = "latest"
 television = "latest"
 "github:Canop/broot" = "latest"
-mprocs = "latest" # run parallel procs in split panes
+mprocs = "latest"               # run parallel procs in split panes
 # ── modern-unix drop-ins ──
 dust = "latest"
 duf = "latest"
@@ -46,7 +46,7 @@ jless = "latest"
 gping = "latest"
 # ── shell UX ──
 carapace = "latest"
-"cargo:tealdeer" = "latest" # builds a binary named `tldr`
+"cargo:tealdeer" = "latest"     # builds a binary named `tldr`
 "cargo:navi" = "latest"
 "cargo:pay-respects" = "latest"
 # ── notes + LLM REPL ──
@@ -89,9 +89,8 @@ kubeseal = "latest" # sealed-secrets client
 flyctl = "latest"
 coder = "latest"
 okteto = "latest"
-openbao = "latest" # `bao`
+openbao = "latest"  # `bao`
 neonctl = "latest"
-herdr = "latest" # terminal agent multiplexer
 
 [settings]
 idiomatic_version_file_enable_tools = []
