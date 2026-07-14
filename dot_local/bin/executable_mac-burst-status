@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# mac-burst-status — read-only report for the local k3d ARC burst runner lease.
+set -euo pipefail
+
+# shellcheck disable=SC1090
+source "${MAC_BURST_LIB:-${XDG_DATA_HOME:-$HOME/.local/share}/mac-burst/lib.sh}"
+
+mb_use_kubeconfig
+printf 'cluster: '
+if command -v k3d >/dev/null 2>&1 && k3d cluster list "$MAC_BURST_CLUSTER" >/dev/null 2>&1; then
+  printf 'present name=%s k3s=%s kubeconfig=%s\n' \
+    "$MAC_BURST_CLUSTER" "$MAC_BURST_K3S_IMAGE" "$MAC_BURST_KUBECONFIG"
+else
+  printf 'absent name=%s kubeconfig=%s\n' "$MAC_BURST_CLUSTER" "$MAC_BURST_KUBECONFIG"
+fi
+
+printf 'runner: '
+if [ -s "$MAC_BURST_KUBECONFIG" ] && command -v kubectl >/dev/null 2>&1; then
+  kubectl get autoscalingrunnersets.actions.github.com "$MAC_BURST_RUNNER_SCALE_SET_NAME" \
+    --namespace "$MAC_BURST_RUNNER_NAMESPACE" \
+    -o jsonpath='{.status.phase}' 2>/dev/null || printf 'unknown'
+  printf '\n'
+else
+  printf 'unknown (no kubeconfig or kubectl)\n'
+fi
+
+printf 'pods:\n'
+if [ -s "$MAC_BURST_KUBECONFIG" ] && command -v kubectl >/dev/null 2>&1; then
+  kubectl get pods --namespace "$MAC_BURST_RUNNER_NAMESPACE" 2>/dev/null || printf '  unavailable\n'
+else
+  printf '  unavailable\n'
+fi
+
+printf 'caffeinate: %s' "$(mb_caffeinate_status)"
+printf 'digest: %s\n' "$(mb_digest_report)"

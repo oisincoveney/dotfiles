@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# mac-burst-up — start the local k3d ARC burst runner lease. Do not run from automation.
+set -euo pipefail
+
+# shellcheck disable=SC1090
+source "${MAC_BURST_LIB:-${XDG_DATA_HOME:-$HOME/.local/share}/mac-burst/lib.sh}"
+
+usage() {
+  cat >&2 <<'USAGE'
+usage: mac-burst-up --mode canary|production|capacity
+
+Starts an isolated k3d cluster, installs ARC 0.14.2, and registers infra-k8s-runner in the Mac Burst group.
+USAGE
+}
+
+mode=""
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --mode)
+      [ "$#" -ge 2 ] || { usage; exit 2; }
+      mode="$2"
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      usage
+      exit 2
+      ;;
+  esac
+done
+
+[ -n "$mode" ] || { usage; exit 2; }
+mb_select_mode "$mode"
+mb_require k3d helm kubectl gh docker caffeinate
+
+if k3d cluster list "$MAC_BURST_CLUSTER" >/dev/null 2>&1; then
+  mb_die "cluster already running: $MAC_BURST_CLUSTER (run mac-burst-status or mac-burst-down)"
+fi
+
+startup_complete=0
+cleanup_on_exit() {
+  local rc="$?"
+  if [ "$startup_complete" -ne 1 ]; then
+    mb_failed_startup_cleanup
+  fi
+  exit "$rc"
+}
+trap cleanup_on_exit EXIT
+
+mb_export_kubeconfig
+mb_start_caffeinate
+mb_make_temp_credentials
+
+k3d cluster create "$MAC_BURST_CLUSTER" \
+  --image "$MAC_BURST_K3S_IMAGE" \
+  --kubeconfig-switch-context=false \
+  --kubeconfig-update-default=false \
+  --wait
+k3d kubeconfig write "$MAC_BURST_CLUSTER" >"$MAC_BURST_KUBECONFIG"
+chmod 600 "$MAC_BURST_KUBECONFIG"
+export KUBECONFIG="$MAC_BURST_KUBECONFIG"
+
+mb_apply_secret_files
+mb_install_arc
+mb_delete_temp_credentials
+
+startup_complete=1
+trap - EXIT
+mb_log "up mode=$MB_MODE labels=$MB_SCALE_SET_LABELS maxRunners=$MB_MAX_RUNNERS"
+mb_log "kubeconfig=$MAC_BURST_KUBECONFIG"
+mb_log "digest $(mb_digest_report)"
