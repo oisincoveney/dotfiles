@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# mac-burst-down — tear down the local k3d ARC burst runner lease.
+set -euo pipefail
+
+# shellcheck disable=SC1090
+source "${MAC_BURST_LIB:-${XDG_DATA_HOME:-$HOME/.local/share}/mac-burst/lib.sh}"
+
+usage() {
+  cat >&2 <<'USAGE'
+usage: mac-burst-down [--force]
+
+Refuses active Pending/Running/Unknown runner pods unless --force is supplied.
+USAGE
+}
+
+force=0
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --force)
+      force=1
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      usage
+      exit 2
+      ;;
+  esac
+done
+
+mb_require k3d helm kubectl
+mb_export_kubeconfig
+active_pods="$(mb_active_runner_pods || true)"
+if [ -n "$active_pods" ] && [ "$force" -ne 1 ]; then
+  printf 'mac-burst: error: active runner pods remain; rerun with --force to abandon deregistration\n%s\n' \
+    "$active_pods" >&2
+  exit 1
+fi
+if [ -n "$active_pods" ]; then
+  mb_warn "forced teardown with active runner pods; GitHub deregistration may be incomplete"
+fi
+
+if ! mb_uninstall_arc; then
+  mb_warn "teardown stopped; retained controller=$MAC_BURST_CONTROLLER_RELEASE cluster=$MAC_BURST_CLUSTER"
+  mb_warn "retained kubeconfig=$MAC_BURST_KUBECONFIG state=$MAC_BURST_STATE_DIR for diagnosis and retry"
+  exit 1
+fi
+if ! mb_delete_cluster; then
+  mb_warn "cluster deletion failed; retained cluster=$MAC_BURST_CLUSTER kubeconfig=$MAC_BURST_KUBECONFIG"
+  mb_warn "retained state=$MAC_BURST_STATE_DIR for diagnosis and retry"
+  exit 1
+fi
+mb_cleanup_local_state
+
+mb_log "down complete; cluster, kubeconfig, temp credentials, and caffeinate state removed"

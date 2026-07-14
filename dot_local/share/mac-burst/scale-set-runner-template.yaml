@@ -1,0 +1,82 @@
+# Full chart-derived dind pod template for gha-runner-scale-set chart 0.14.2.
+# This explicitly expands containerMode.type=dind so local resource/storage changes are visible.
+template:
+  spec:
+    imagePullSecrets:
+      - name: ghcr-pull-secret
+    initContainers:
+      - name: init-dind-externals
+        image: __MAC_BURST_RUNNER_IMAGE__
+        command: ["cp", "-r", "/home/runner/externals/.", "/home/runner/tmpDir/"]
+        volumeMounts:
+          - name: dind-externals
+            mountPath: /home/runner/tmpDir
+      - name: dind
+        image: docker:dind
+        args:
+          - dockerd
+          - --host=unix:///var/run/docker.sock
+          - --group=$(DOCKER_GROUP_GID)
+        env:
+          - name: DOCKER_GROUP_GID
+            value: "123"
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+          limits:
+            cpu: "4"
+            memory: 2Gi
+        securityContext:
+          privileged: true
+        restartPolicy: Always
+        startupProbe:
+          exec:
+            command:
+              - docker
+              - info
+          initialDelaySeconds: 0
+          failureThreshold: 24
+          periodSeconds: 5
+        volumeMounts:
+          - name: work
+            mountPath: /home/runner/_work
+          - name: dind-sock
+            mountPath: /var/run
+          - name: dind-externals
+            mountPath: /home/runner/externals
+          - name: docker-storage
+            mountPath: /var/lib/docker
+    containers:
+      - name: runner
+        image: __MAC_BURST_RUNNER_IMAGE__
+        imagePullPolicy: Always
+        command: ["/home/runner/run.sh"]
+        env:
+          - name: DOCKER_HOST
+            value: unix:///var/run/docker.sock
+          - name: RUNNER_WAIT_FOR_DOCKER_IN_SECONDS
+            value: "120"
+        resources:
+          requests:
+            cpu: 500m
+            memory: 2Gi
+          limits:
+            cpu: "4"
+            memory: 4Gi
+        volumeMounts:
+          - name: work
+            mountPath: /home/runner/_work
+          - name: dind-sock
+            mountPath: /var/run
+    volumes:
+      - name: work
+        emptyDir:
+          sizeLimit: 10Gi
+      - name: dind-sock
+        emptyDir: {}
+      - name: dind-externals
+        emptyDir: {}
+      - name: docker-storage
+        emptyDir:
+          sizeLimit: 10Gi
