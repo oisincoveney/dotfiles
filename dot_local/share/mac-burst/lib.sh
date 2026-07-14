@@ -190,16 +190,17 @@ mb_install_arc() {
 }
 
 mb_uninstall_arc() {
-  local incomplete=0
-  if ! helm uninstall "$MAC_BURST_SCALE_SET_RELEASE" --namespace "$MAC_BURST_RUNNER_NAMESPACE" --wait; then
-    mb_warn "scale set uninstall failed; deregistration may be incomplete"
-    incomplete=1
+  if ! helm uninstall "$MAC_BURST_SCALE_SET_RELEASE" \
+    --namespace "$MAC_BURST_RUNNER_NAMESPACE" --wait --ignore-not-found; then
+    mb_warn "scale set uninstall failed; retained scale-set=$MAC_BURST_SCALE_SET_RELEASE" \
+      "controller=$MAC_BURST_CONTROLLER_RELEASE"
+    return 1
   fi
-  if ! helm uninstall "$MAC_BURST_CONTROLLER_RELEASE" --namespace "$MAC_BURST_CONTROLLER_NAMESPACE" --wait; then
-    mb_warn "controller uninstall failed; deregistration may be incomplete"
-    incomplete=1
+  if ! helm uninstall "$MAC_BURST_CONTROLLER_RELEASE" \
+    --namespace "$MAC_BURST_CONTROLLER_NAMESPACE" --wait --ignore-not-found; then
+    mb_warn "controller uninstall failed; retained controller=$MAC_BURST_CONTROLLER_RELEASE"
+    return 1
   fi
-  return "$incomplete"
 }
 
 mb_delete_cluster() {
@@ -244,5 +245,6 @@ mb_caffeinate_status() {
 }
 
 mb_digest_report() {
-  printf 'controller=%s scale-set=%s\n' "$MAC_BURST_CONTROLLER_DIGEST" "$MAC_BURST_SCALE_SET_DIGEST"
+  printf 'controller-chart=%s scale-set-chart=%s\n' \
+    "$MAC_BURST_CONTROLLER_DIGEST" "$MAC_BURST_SCALE_SET_DIGEST"
 }

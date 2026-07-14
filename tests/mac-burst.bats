@@ -74,6 +74,15 @@ if [ "${1:-}" = "upgrade" ]; then
     fi
   done
 fi
+if [ "${1:-}" = "uninstall" ] && [ "${STUB_HELM_FAIL_UNINSTALL_RELEASE:-}" = "${2:-}" ]; then
+  exit 43
+fi
+if [ "${1:-}" = "uninstall" ] && [ "${STUB_HELM_NOT_FOUND_RELEASE:-}" = "${2:-}" ]; then
+  case " $* " in
+    *' --ignore-not-found '*) exit 0 ;;
+    *) exit 44 ;;
+  esac
+fi
 STUB
 
   write_stub kubectl <<'STUB'
@@ -218,7 +227,70 @@ assert scale < controller < cluster, log
 PY
 }
 
-@test "mac-burst-status reports cluster runner pods caffeinate and chart digest" {
+@test "mac-burst-down retains controller cluster and local state when scale set uninstall fails" {
+  export STUB_HELM_FAIL_UNINSTALL_RELEASE=arc-runner-set
+  mkdir -p "$MAC_BURST_STATE_DIR/docker-config.test"
+  ln -s "$MAC_BURST_STATE_DIR/docker-config.test" "$MAC_BURST_STATE_DIR/docker-config"
+  printf 'apiVersion: v1\n' >"$MAC_BURST_STATE_DIR/kubeconfig"
+  printf 'githubConfigUrl: https://github.com/oisin-ee\n' >"$MAC_BURST_STATE_DIR/scale-set-values.yaml"
+  printf '999999\n' >"$MAC_BURST_STATE_DIR/caffeinate.pid"
+
+  run "$ROOT/dot_local/bin/executable_mac-burst-down"
+
+  [ "$status" -ne 0 ]
+  assert_output_contains 'scale set uninstall failed; retained scale-set=arc-runner-set controller=arc-controller'
+  assert_output_contains 'retained controller=arc-controller cluster=mac-burst'
+  assert_output_contains "kubeconfig=$MAC_BURST_STATE_DIR/kubeconfig"
+  assert_output_contains "state=$MAC_BURST_STATE_DIR"
+  [ -e "$MAC_BURST_STATE_DIR/kubeconfig" ]
+  [ -L "$MAC_BURST_STATE_DIR/docker-config" ]
+  [ -f "$MAC_BURST_STATE_DIR/scale-set-values.yaml" ]
+  [ -f "$MAC_BURST_STATE_DIR/caffeinate.pid" ]
+  grep -q 'helm uninstall arc-runner-set' "$CMD_LOG"
+  refute_file_contains 'helm uninstall arc-controller' "$CMD_LOG"
+  refute_file_contains 'k3d cluster delete' "$CMD_LOG"
+}
+
+@test "mac-burst-down retains cluster and local state when controller uninstall fails" {
+  export STUB_HELM_FAIL_UNINSTALL_RELEASE=arc-controller
+  mkdir -p "$MAC_BURST_STATE_DIR/docker-config.test"
+  ln -s "$MAC_BURST_STATE_DIR/docker-config.test" "$MAC_BURST_STATE_DIR/docker-config"
+  printf 'apiVersion: v1\n' >"$MAC_BURST_STATE_DIR/kubeconfig"
+  printf 'githubConfigUrl: https://github.com/oisin-ee\n' >"$MAC_BURST_STATE_DIR/scale-set-values.yaml"
+  printf '999999\n' >"$MAC_BURST_STATE_DIR/caffeinate.pid"
+
+  run "$ROOT/dot_local/bin/executable_mac-burst-down"
+
+  [ "$status" -ne 0 ]
+  assert_output_contains 'controller uninstall failed; retained controller=arc-controller'
+  assert_output_contains 'retained controller=arc-controller cluster=mac-burst'
+  [ -e "$MAC_BURST_STATE_DIR/kubeconfig" ]
+  [ -L "$MAC_BURST_STATE_DIR/docker-config" ]
+  [ -f "$MAC_BURST_STATE_DIR/scale-set-values.yaml" ]
+  [ -f "$MAC_BURST_STATE_DIR/caffeinate.pid" ]
+  grep -q 'helm uninstall arc-runner-set' "$CMD_LOG"
+  grep -q 'helm uninstall arc-controller' "$CMD_LOG"
+  refute_file_contains 'k3d cluster delete' "$CMD_LOG"
+}
+
+@test "mac-burst-down retries controller teardown after scale set was already removed" {
+  export STUB_HELM_NOT_FOUND_RELEASE=arc-runner-set
+  mkdir -p "$MAC_BURST_STATE_DIR/docker-config"
+  printf 'apiVersion: v1\n' >"$MAC_BURST_STATE_DIR/kubeconfig"
+  printf '999999\n' >"$MAC_BURST_STATE_DIR/caffeinate.pid"
+
+  run "$ROOT/dot_local/bin/executable_mac-burst-down"
+
+  [ "$status" -eq 0 ]
+  grep -q 'helm uninstall arc-runner-set' "$CMD_LOG"
+  grep -q 'helm uninstall arc-controller' "$CMD_LOG"
+  grep -q 'k3d cluster delete mac-burst' "$CMD_LOG"
+  [ ! -e "$MAC_BURST_STATE_DIR/kubeconfig" ]
+  [ ! -d "$MAC_BURST_STATE_DIR/docker-config" ]
+  [ ! -f "$MAC_BURST_STATE_DIR/caffeinate.pid" ]
+}
+
+@test "mac-burst-status labels configured chart digests as expected not live verified" {
   export STUB_K3D_CLUSTER_EXISTS=1
   mkdir -p "$MAC_BURST_STATE_DIR"
   printf 'apiVersion: v1\n' >"$MAC_BURST_STATE_DIR/kubeconfig"
@@ -231,6 +303,8 @@ PY
   assert_output_contains 'runner:'
   assert_output_contains 'pods:'
   assert_output_contains 'caffeinate:'
-  assert_output_contains 'digest:'
-  assert_output_contains 'sha256:'
+  assert_output_contains 'configured chart digests (expected, not live-verified):'
+  assert_output_contains 'controller-chart=sha256:'
+  assert_output_contains 'scale-set-chart=sha256:'
+  refute_output_contains 'digest: controller='
 }

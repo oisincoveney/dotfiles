@@ -32,4 +32,4 @@ else
 fi
 
 printf 'caffeinate: %s' "$(mb_caffeinate_status)"
-printf 'digest: %s\n' "$(mb_digest_report)"
+printf 'configured chart digests (expected, not live-verified): %s\n' "$(mb_digest_report)"

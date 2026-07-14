@@ -71,4 +71,4 @@ startup_complete=1
 trap - EXIT
 mb_log "up mode=$MB_MODE labels=$MB_SCALE_SET_LABELS maxRunners=$MB_MAX_RUNNERS"
 mb_log "kubeconfig=$MAC_BURST_KUBECONFIG"
-mb_log "digest $(mb_digest_report)"
+mb_log "configured chart digests (expected, not live-verified): $(mb_digest_report)"
