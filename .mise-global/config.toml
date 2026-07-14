@@ -2,11 +2,13 @@
 # and any user-facing Linux box, which has no Homebrew so its human CLIs come from
 # mise). Headless agent runner pods do NOT get these.
 #
-# mise merges conf.d/*.toml natively (alphabetical, later filename wins). This file
-# (20-) sits ABOVE 10-agent.toml — the agent-functional toolset pulled from the
-# GitHub oisin-ee/agent repo by a chezmoi external (see ~/.dotfiles/.chezmoiexternal.toml.tmpl).
-# So [tools] entries here override the agent's (e.g. node), and [settings] here win.
-# Edit this file directly and `cza` — no generator, no merge step.
+# Chezmoi exposes this tracked source as ~/.config/mise/config.toml. The agent-functional
+# toolset pulled from GitHub is loaded as mise's lower-precedence system config. Human
+# [tools] entries therefore override the agent's (e.g. node), and human [settings] win.
+#
+# Normal `mise use --global` writes through the symlink to this file. Normal `mise up`
+# records the merged human and agent resolutions in the tracked global mise.lock. Run
+# `cza` to install the committed manifest and lockfile on another host.
 [tools]
 # ── override of an agent tool ──
 node = "lts" # laptop tracks LTS; the agent repo pins node=latest for birth-seeding
@@ -97,6 +99,6 @@ idiomatic_version_file_enable_tools = []
 # Private github: backends (e.g. oisin-ee/yeet) resolve their token through git's
 # existing gh credential helper (~/.gitconfig already sets gh auth git-credential).
 github.use_git_credentials = true
-# Neutralize the agent fragment's lockfile=true: the laptop tracks latest/lts and
-# pins nothing. This higher-precedence fragment wins, so mise consults no lockfile.
-lockfile = false
+# Keep readable latest/lts policy here while mise records exact resolved versions and
+# checksums in the tracked global mise.lock.
+lockfile = true

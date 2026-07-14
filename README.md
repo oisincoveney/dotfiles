@@ -33,6 +33,21 @@ Do not commit tokens or machine-local credentials. Put local shell secrets in:
 
 The main zsh config sources that file when it exists.
 
+## Mise
+
+The human global manifest and merged lockfile are tracked under `.mise-global/`.
+Chezmoi exposes them as `~/.config/mise/config.toml` and `~/.config/mise/mise.lock`
+symlinks. The agent manifest is installed as mise's lower-precedence system config,
+so normal global commands write directly back to this repository:
+
+```sh
+mise use --global bat@latest
+mise up
+```
+
+Commit those manifest or lockfile changes normally. After pulling them on another
+host, run `cza` to refresh the agent manifest and install the committed tool state.
+
 ## Useful commands
 
 ```sh

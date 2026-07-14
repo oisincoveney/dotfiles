@@ -1,26 +1,29 @@
 #!/bin/bash
-# Install/sync the mise tool set whenever the human mise fragment changes. This is
-# the cross-platform half of the setup: mise merges conf.d/*.toml (the human
-# fragment here + the agent fragment pulled from GitHub by the chezmoi external) and
-# drives identical tools on macOS and every Linux box, via mise's aqua/github/cargo
-# backends (prebuilt binaries, no Homebrew-on-Linux needed).
+# Install the committed mise tool set whenever the human manifest, merged global
+# lockfile, or agent manifest changes. Mise composes the writable human global config
+# with the agent system config pulled from GitHub and drives identical tools on macOS
+# and every Linux box via its aqua/github/cargo backends.
 #
 # A GitHub token is passed through so mise's github/aqua backends don't trip the
 # unauthenticated GitHub rate limit while fetching ~35 tools (best-effort: uses an
 # existing $GITHUB_TOKEN, else the gh CLI login, else proceeds unauthenticated).
 #
-# `cza` refreshes the agent fragment (10-agent.toml) via the external before this
-# after-script runs, so `mise install` below sees both current fragments. Track both
-# inputs in this script's rendered content so either toolset change triggers it.
-# human mise config hash: {{ include "dot_config/mise/conf.d/20-human.toml" | sha256sum }}
+# `cza` refreshes the agent system config and creates the global manifest
+# and lockfile symlinks before this after-script runs. Track every input in the
+# rendered script so any committed tool-state change triggers an install.
+# human mise config hash: {{ include ".mise-global/config.toml" | sha256sum }}
+# global mise lock hash: {{ include ".mise-global/mise.lock" | sha256sum }}
 # agent mise config blob: {{ output "sh" "-c" "gh api 'repos/oisin-ee/agent/contents/mise/mise.toml?ref=main' --jq .sha 2>/dev/null || echo unknown" | trim }}
 set -euo pipefail
 
-command -v mise >/dev/null 2>&1 || { echo "mise not installed; skipping tool sync."; exit 0; }
+if ! command -v mise >/dev/null 2>&1; then
+	echo "mise not installed; skipping tool sync."
+	exit 0
+fi
 
 export GITHUB_TOKEN="${GITHUB_TOKEN:-$(gh auth token 2>/dev/null || true)}"
+export MISE_SYSTEM_CONFIG_FILE="$HOME/.config/mise/agent.toml"
 
 echo "Syncing mise tools…"
-mise install -y 
-mise up
+mise install -y
 echo "mise tool sync complete."

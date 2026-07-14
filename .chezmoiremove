@@ -1,5 +1,4 @@
-# Retired: the generated merged mise config. The agent + human toolsets now live as
-# separate mise conf.d fragments (10-agent.toml via the GitHub external, 20-human.toml
-# from dotfiles) that mise merges natively. Removing a source file does not delete its
-# target, so list it here to drop the stale artifact on every `chezmoi apply`.
-.config/mise/config.toml
+# Retired conf.d composition. The agent manifest is now mise's system config and the
+# human manifest is its normal writable global config.
+.config/mise/conf.d/10-agent.toml
+.config/mise/conf.d/20-human.toml

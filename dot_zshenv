@@ -2,6 +2,7 @@
 
 # uv
 export PATH="$HOME/.local/bin:$PATH"
+export MISE_SYSTEM_CONFIG_FILE="$HOME/.config/mise/agent.toml"
 
 # Machine-local, non-public overrides (e.g. internal infra endpoints). Not
 # tracked here — this dotfiles repo is public. See ~/.zshenv.local.
