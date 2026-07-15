@@ -215,18 +215,23 @@ mb_cleanup_local_state() {
 }
 
 mb_failed_startup_cleanup() {
-  mb_warn "startup failed; cleaning cluster, kubeconfig, temp credentials, and caffeinate"
-  helm uninstall "$MAC_BURST_SCALE_SET_RELEASE" --namespace "$MAC_BURST_RUNNER_NAMESPACE" --wait >/dev/null 2>&1 || true
-  helm uninstall "$MAC_BURST_CONTROLLER_RELEASE" \
-    --namespace "$MAC_BURST_CONTROLLER_NAMESPACE" \
-    --wait >/dev/null 2>&1 || true
-  mb_delete_cluster >/dev/null 2>&1 || true
+  mb_warn "startup failed; attempting ordered Helm, cluster, and local-state cleanup"
+  if ! mb_uninstall_arc; then
+    mb_warn "startup cleanup stopped; retained controller=$MAC_BURST_CONTROLLER_RELEASE cluster=$MAC_BURST_CLUSTER"
+    mb_warn "retained kubeconfig=$MAC_BURST_KUBECONFIG state=$MAC_BURST_STATE_DIR for diagnosis and retry"
+    return 1
+  fi
+  if ! mb_delete_cluster; then
+    mb_warn "startup cluster deletion failed; retained cluster=$MAC_BURST_CLUSTER kubeconfig=$MAC_BURST_KUBECONFIG"
+    mb_warn "retained state=$MAC_BURST_STATE_DIR for diagnosis and retry"
+    return 1
+  fi
   mb_cleanup_local_state
 }
 
 mb_active_runner_pods() {
   [ -s "$MAC_BURST_KUBECONFIG" ] || return 0
-  kubectl get pods --namespace "$MAC_BURST_RUNNER_NAMESPACE" --no-headers 2>/dev/null \
+  kubectl get pods --namespace "$MAC_BURST_RUNNER_NAMESPACE" --no-headers \
     | awk '$3 ~ /^(Pending|Running|Unknown)$/ { print $1 " " $3 }'
 }
 

@@ -44,7 +44,9 @@ startup_complete=0
 cleanup_on_exit() {
   local rc="$?"
   if [ "$startup_complete" -ne 1 ]; then
-    mb_failed_startup_cleanup
+    if ! mb_failed_startup_cleanup; then
+      mb_warn "startup cleanup incomplete; original startup exit=$rc"
+    fi
   fi
   exit "$rc"
 }

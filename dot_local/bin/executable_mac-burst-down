@@ -33,7 +33,20 @@ done
 
 mb_require k3d helm kubectl
 mb_export_kubeconfig
-active_pods="$(mb_active_runner_pods || true)"
+if active_pods="$(mb_active_runner_pods)"; then
+  :
+else
+  pod_discovery_status="$?"
+  printf 'mac-burst: error: runner pod discovery failed status=%s; teardown refused because runner state is unknown\n' \
+    "$pod_discovery_status" >&2
+  if [ "$force" -eq 1 ]; then
+    mb_warn "--force does not override unknown runner state"
+  fi
+  mb_warn "retained scale-set=$MAC_BURST_SCALE_SET_RELEASE controller=$MAC_BURST_CONTROLLER_RELEASE" \
+    "cluster=$MAC_BURST_CLUSTER"
+  mb_warn "retained kubeconfig=$MAC_BURST_KUBECONFIG state=$MAC_BURST_STATE_DIR for diagnosis and retry"
+  exit "$pod_discovery_status"
+fi
 if [ -n "$active_pods" ] && [ "$force" -ne 1 ]; then
   printf 'mac-burst: error: active runner pods remain; rerun with --force to abandon deregistration\n%s\n' \
     "$active_pods" >&2
