@@ -31,6 +31,7 @@ MAC_BURST_TEMPLATE_FILE="${MAC_BURST_TEMPLATE_FILE:-$MAC_BURST_DATA_DIR/scale-se
 MAC_BURST_KUBECONFIG="$MAC_BURST_STATE_DIR/kubeconfig"
 MAC_BURST_CAFFEINATE_PID_FILE="$MAC_BURST_STATE_DIR/caffeinate.pid"
 MAC_BURST_DOCKER_CONFIG_LINK="$MAC_BURST_STATE_DIR/docker-config"
+MAC_BURST_STARTUP_PHASE_FILE="$MAC_BURST_STATE_DIR/startup-phase"
 
 MAC_BURST_MODE_ROWS='canary|self-hosted linux arm64 mac-burst-canary|1
 production|self-hosted linux k8s-runner arm64|1
@@ -129,6 +130,17 @@ mb_delete_temp_credentials() {
   rm -rf "$MAC_BURST_STATE_DIR"/docker-config.*
 }
 
+mb_record_startup_phase() {
+  local phase="$1"
+  case "$phase" in
+    local|cluster-create-attempted|cluster-created|kubeconfig-ready|controller-ready|arc-ready) ;;
+    cluster-delete-required) ;;
+    *) mb_die "invalid startup phase: $phase" ;;
+  esac
+  mkdir -p "$MAC_BURST_STATE_DIR"
+  printf '%s\n' "$phase" >"$MAC_BURST_STARTUP_PHASE_FILE"
+}
+
 mb_create_namespace() {
   local namespace="$1"
   kubectl create namespace "$namespace" --dry-run=client -o yaml | kubectl apply -f - >/dev/null
@@ -173,14 +185,21 @@ mb_render_scale_set_values() {
   }
 }
 
-mb_install_arc() {
+mb_write_scale_set_values() {
   local values_file="$MAC_BURST_STATE_DIR/scale-set-values.yaml"
   mb_render_scale_set_values >"$values_file"
+}
+
+mb_install_arc_controller() {
   helm upgrade --install "$MAC_BURST_CONTROLLER_RELEASE" "$MAC_BURST_CONTROLLER_CHART" \
     --namespace "$MAC_BURST_CONTROLLER_NAMESPACE" \
     --create-namespace \
     --version "$MAC_BURST_ARC_VERSION" \
     --atomic --wait
+}
+
+mb_install_arc_scale_set() {
+  local values_file="$MAC_BURST_STATE_DIR/scale-set-values.yaml"
   helm upgrade --install "$MAC_BURST_SCALE_SET_RELEASE" "$MAC_BURST_SCALE_SET_CHART" \
     --namespace "$MAC_BURST_RUNNER_NAMESPACE" \
     --create-namespace \
@@ -196,6 +215,10 @@ mb_uninstall_arc() {
       "controller=$MAC_BURST_CONTROLLER_RELEASE"
     return 1
   fi
+  mb_uninstall_arc_controller
+}
+
+mb_uninstall_arc_controller() {
   if ! helm uninstall "$MAC_BURST_CONTROLLER_RELEASE" \
     --namespace "$MAC_BURST_CONTROLLER_NAMESPACE" --wait --ignore-not-found; then
     mb_warn "controller uninstall failed; retained controller=$MAC_BURST_CONTROLLER_RELEASE"
@@ -207,23 +230,55 @@ mb_delete_cluster() {
   k3d cluster delete "$MAC_BURST_CLUSTER"
 }
 
-mb_cleanup_local_state() {
+mb_cleanup_disposable_local_state() {
   mb_stop_caffeinate
   mb_delete_temp_credentials
-  rm -f "$MAC_BURST_KUBECONFIG" "$MAC_BURST_STATE_DIR/scale-set-values.yaml"
+  rm -f "$MAC_BURST_STATE_DIR/scale-set-values.yaml"
+}
+
+mb_cleanup_local_state() {
+  mb_cleanup_disposable_local_state
+  rm -f "$MAC_BURST_KUBECONFIG" "$MAC_BURST_STARTUP_PHASE_FILE"
   rmdir "$MAC_BURST_STATE_DIR" 2>/dev/null || true
 }
 
 mb_failed_startup_cleanup() {
-  mb_warn "startup failed; attempting ordered Helm, cluster, and local-state cleanup"
-  if ! mb_uninstall_arc; then
-    mb_warn "startup cleanup stopped; retained controller=$MAC_BURST_CONTROLLER_RELEASE cluster=$MAC_BURST_CLUSTER"
-    mb_warn "retained kubeconfig=$MAC_BURST_KUBECONFIG state=$MAC_BURST_STATE_DIR for diagnosis and retry"
-    return 1
-  fi
+  local phase="$1"
+  mb_warn "startup failed phase=$phase; attempting phase-aware remote and local-state cleanup"
+  case "$phase" in
+    local)
+      mb_cleanup_local_state
+      return 0
+      ;;
+    controller-ready)
+      if ! mb_uninstall_arc_controller; then
+        mb_warn "startup cleanup stopped; retained controller=$MAC_BURST_CONTROLLER_RELEASE cluster=$MAC_BURST_CLUSTER"
+        mb_warn "retained kubeconfig=$MAC_BURST_KUBECONFIG state=$MAC_BURST_STATE_DIR for diagnosis and retry"
+        return 1
+      fi
+      ;;
+    arc-ready)
+      if ! mb_uninstall_arc; then
+        mb_warn "startup cleanup stopped; retained controller=$MAC_BURST_CONTROLLER_RELEASE cluster=$MAC_BURST_CLUSTER"
+        mb_warn "retained kubeconfig=$MAC_BURST_KUBECONFIG state=$MAC_BURST_STATE_DIR for diagnosis and retry"
+        return 1
+      fi
+      ;;
+    cluster-create-attempted|cluster-created|kubeconfig-ready|cluster-delete-required) ;;
+  esac
+  mb_record_startup_phase cluster-delete-required
   if ! mb_delete_cluster; then
-    mb_warn "startup cluster deletion failed; retained cluster=$MAC_BURST_CLUSTER kubeconfig=$MAC_BURST_KUBECONFIG"
-    mb_warn "retained state=$MAC_BURST_STATE_DIR for diagnosis and retry"
+    mb_cleanup_disposable_local_state
+    if [ ! -s "$MAC_BURST_KUBECONFIG" ]; then
+      rm -f "$MAC_BURST_KUBECONFIG"
+    fi
+    mb_warn "startup cluster deletion failed; retained cluster=$MAC_BURST_CLUSTER"
+    if [ -s "$MAC_BURST_KUBECONFIG" ]; then
+      mb_warn "retained kubeconfig=$MAC_BURST_KUBECONFIG for retry"
+    else
+      mb_warn "kubeconfig not created; retry k3d cluster delete $MAC_BURST_CLUSTER"
+    fi
+    mb_warn "retained startup-phase=$MAC_BURST_STARTUP_PHASE_FILE state=$MAC_BURST_STATE_DIR for retry"
     return 1
   fi
   mb_cleanup_local_state
