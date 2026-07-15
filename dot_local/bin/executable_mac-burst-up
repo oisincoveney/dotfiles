@@ -41,10 +41,16 @@ if k3d cluster list "$MAC_BURST_CLUSTER" >/dev/null 2>&1; then
 fi
 
 startup_complete=0
+MB_STARTUP_PHASE=local
+set_startup_phase() {
+  MB_STARTUP_PHASE="$1"
+  mb_record_startup_phase "$MB_STARTUP_PHASE"
+}
+
 cleanup_on_exit() {
   local rc="$?"
   if [ "$startup_complete" -ne 1 ]; then
-    if ! mb_failed_startup_cleanup; then
+    if ! mb_failed_startup_cleanup "$MB_STARTUP_PHASE"; then
       mb_warn "startup cleanup incomplete; original startup exit=$rc"
     fi
   fi
@@ -52,25 +58,34 @@ cleanup_on_exit() {
 }
 trap cleanup_on_exit EXIT
 
+set_startup_phase local
 mb_export_kubeconfig
 mb_start_caffeinate
 mb_make_temp_credentials
 
+set_startup_phase cluster-create-attempted
 k3d cluster create "$MAC_BURST_CLUSTER" \
   --image "$MAC_BURST_K3S_IMAGE" \
   --kubeconfig-switch-context=false \
   --kubeconfig-update-default=false \
   --wait
+set_startup_phase cluster-created
 k3d kubeconfig write "$MAC_BURST_CLUSTER" >"$MAC_BURST_KUBECONFIG"
 chmod 600 "$MAC_BURST_KUBECONFIG"
 export KUBECONFIG="$MAC_BURST_KUBECONFIG"
+set_startup_phase kubeconfig-ready
 
 mb_apply_secret_files
-mb_install_arc
+mb_write_scale_set_values
+mb_install_arc_controller
+set_startup_phase controller-ready
+mb_install_arc_scale_set
+set_startup_phase arc-ready
 mb_delete_temp_credentials
 
 startup_complete=1
 trap - EXIT
+rm -f "$MAC_BURST_STARTUP_PHASE_FILE"
 mb_log "up mode=$MB_MODE labels=$MB_SCALE_SET_LABELS maxRunners=$MB_MAX_RUNNERS"
 mb_log "kubeconfig=$MAC_BURST_KUBECONFIG"
 mb_log "configured chart digests (expected, not live-verified): $(mb_digest_report)"

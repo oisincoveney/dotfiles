@@ -44,6 +44,9 @@ if [ "${1:-}" = "cluster" ] && [ "${2:-}" = "list" ]; then
   fi
   exit 1
 fi
+if [ "${1:-}" = "cluster" ] && [ "${2:-}" = "create" ] && [ "${STUB_K3D_FAIL_CREATE:-0}" = 1 ]; then
+  exit 46
+fi
 if [ "${1:-}" = "cluster" ] && [ "${2:-}" = "delete" ] && [ "${STUB_K3D_FAIL_DELETE:-0}" = 1 ]; then
   exit 45
 fi
@@ -79,6 +82,10 @@ if [ "${1:-}" = "upgrade" ]; then
 fi
 if [ "${1:-}" = "uninstall" ] && [ "${STUB_HELM_FAIL_UNINSTALL_RELEASE:-}" = "${2:-}" ]; then
   exit 43
+fi
+if [ "${1:-}" = "uninstall" ] && [ "${STUB_HELM_REQUIRE_KUBECONFIG:-0}" = 1 ] \
+  && [ ! -s "${KUBECONFIG:-}" ]; then
+  exit 48
 fi
 if [ "${1:-}" = "uninstall" ] && [ "${STUB_HELM_NOT_FOUND_RELEASE:-}" = "${2:-}" ]; then
   case " $* " in
@@ -187,6 +194,47 @@ refute_file_contains() {
   grep -q 'memory: 2Gi' "$CAPTURE_DIR/arc-runner-set.values.yaml"
 }
 
+@test "mac-burst-up cluster-create failure skips Helm and deletes a possible partial cluster" {
+  export STUB_K3D_FAIL_CREATE=1
+  export STUB_HELM_REQUIRE_KUBECONFIG=1
+
+  run "$ROOT/dot_local/bin/executable_mac-burst-up" --mode canary
+
+  [ "$status" -eq 46 ]
+  refute_file_contains 'helm uninstall' "$CMD_LOG"
+  grep -q 'k3d cluster delete mac-burst' "$CMD_LOG"
+  [ ! -e "$MAC_BURST_STATE_DIR/kubeconfig" ]
+}
+
+@test "mac-burst-up reports partial cluster retention when create and delete both fail" {
+  export STUB_K3D_FAIL_CREATE=1
+  export STUB_K3D_FAIL_DELETE=1
+  export STUB_HELM_REQUIRE_KUBECONFIG=1
+
+  run "$ROOT/dot_local/bin/executable_mac-burst-up" --mode canary
+
+  [ "$status" -eq 46 ]
+  assert_output_contains 'startup cluster deletion failed; retained cluster=mac-burst'
+  assert_output_contains 'kubeconfig not created; retry k3d cluster delete mac-burst'
+  assert_output_contains "startup-phase=$MAC_BURST_STATE_DIR/startup-phase"
+  [ "$(cat "$MAC_BURST_STATE_DIR/startup-phase")" = 'cluster-delete-required' ]
+  refute_file_contains 'helm uninstall' "$CMD_LOG"
+  grep -q 'k3d cluster delete mac-burst' "$CMD_LOG"
+}
+
+@test "mac-burst-up removes local credentials and caffeinate after pre-kubeconfig failure" {
+  export STUB_K3D_FAIL_CREATE=1
+  export STUB_HELM_REQUIRE_KUBECONFIG=1
+
+  run "$ROOT/dot_local/bin/executable_mac-burst-up" --mode capacity
+
+  [ "$status" -eq 46 ]
+  [ ! -e "$MAC_BURST_STATE_DIR/docker-config" ]
+  [ -z "$(find "$MAC_BURST_STATE_DIR" -maxdepth 1 -name 'docker-config.*' -print -quit 2>/dev/null)" ]
+  [ ! -f "$MAC_BURST_STATE_DIR/caffeinate.pid" ]
+  [ ! -d "$MAC_BURST_STATE_DIR" ]
+}
+
 @test "mac-burst-up failed startup removes kubeconfig, temp creds, caffeinate, and cluster" {
   export STUB_HELM_FAIL_RELEASE=arc-runner-set
 
@@ -201,12 +249,12 @@ refute_file_contains() {
 
 @test "mac-burst-up retains cluster and local state when startup Helm cleanup fails" {
   export STUB_HELM_FAIL_RELEASE=arc-runner-set
-  export STUB_HELM_FAIL_UNINSTALL_RELEASE=arc-runner-set
+  export STUB_HELM_FAIL_UNINSTALL_RELEASE=arc-controller
 
   run "$ROOT/dot_local/bin/executable_mac-burst-up" --mode production
 
   [ "$status" -eq 42 ]
-  assert_output_contains 'scale set uninstall failed; retained scale-set=arc-runner-set controller=arc-controller'
+  assert_output_contains 'controller uninstall failed; retained controller=arc-controller'
   assert_output_contains 'retained controller=arc-controller cluster=mac-burst'
   assert_output_contains "kubeconfig=$MAC_BURST_STATE_DIR/kubeconfig"
   assert_output_contains "state=$MAC_BURST_STATE_DIR"
@@ -214,12 +262,12 @@ refute_file_contains() {
   [ -L "$MAC_BURST_STATE_DIR/docker-config" ]
   [ -f "$MAC_BURST_STATE_DIR/scale-set-values.yaml" ]
   [ -f "$MAC_BURST_STATE_DIR/caffeinate.pid" ]
-  grep -q 'helm uninstall arc-runner-set' "$CMD_LOG"
-  refute_file_contains 'helm uninstall arc-controller' "$CMD_LOG"
+  refute_file_contains 'helm uninstall arc-runner-set' "$CMD_LOG"
+  grep -q 'helm uninstall arc-controller' "$CMD_LOG"
   refute_file_contains 'k3d cluster delete' "$CMD_LOG"
 }
 
-@test "mac-burst-up retains local state when startup cluster deletion fails" {
+@test "mac-burst-up retains retry state but removes disposable local state when startup cluster deletion fails" {
   export STUB_HELM_FAIL_RELEASE=arc-runner-set
   export STUB_K3D_FAIL_DELETE=1
 
@@ -230,10 +278,11 @@ refute_file_contains() {
   assert_output_contains "kubeconfig=$MAC_BURST_STATE_DIR/kubeconfig"
   assert_output_contains "state=$MAC_BURST_STATE_DIR"
   [ -e "$MAC_BURST_STATE_DIR/kubeconfig" ]
-  [ -L "$MAC_BURST_STATE_DIR/docker-config" ]
-  [ -f "$MAC_BURST_STATE_DIR/scale-set-values.yaml" ]
-  [ -f "$MAC_BURST_STATE_DIR/caffeinate.pid" ]
-  grep -q 'helm uninstall arc-runner-set' "$CMD_LOG"
+  [ ! -e "$MAC_BURST_STATE_DIR/docker-config" ]
+  [ ! -f "$MAC_BURST_STATE_DIR/scale-set-values.yaml" ]
+  [ ! -f "$MAC_BURST_STATE_DIR/caffeinate.pid" ]
+  [ "$(cat "$MAC_BURST_STATE_DIR/startup-phase")" = 'cluster-delete-required' ]
+  refute_file_contains 'helm uninstall arc-runner-set' "$CMD_LOG"
   grep -q 'helm uninstall arc-controller' "$CMD_LOG"
   grep -q 'k3d cluster delete mac-burst' "$CMD_LOG"
 }
