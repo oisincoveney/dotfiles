@@ -1484,23 +1484,23 @@ url = "https://github.com/mr-karan/doggo/releases/download/v1.2.0/doggo-windows-
 url_api = "https://api.github.com/repos/mr-karan/doggo/releases/assets/455378190"
 
 [[tools."github:oisin-ee/yeet"]]
-version = "0.5.3"
+version = "0.7.3"
 backend = "github:oisin-ee/yeet"
 
 [tools."github:oisin-ee/yeet"."platforms.linux-x64"]
-checksum = "sha256:14125ce4b3c080769a32c6c468caefce2d240ba58c4e5fa9b94dfc2d49c380e0"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.5.3/yeet-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/476425101"
+checksum = "sha256:7660094dbf5f6f4156921f4c8efc381e7c7ae17772b4278b956bdcce7922d739"
+url = "https://github.com/oisin-ee/yeet/releases/download/v0.7.3/yeet-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/479621846"
 
 [tools."github:oisin-ee/yeet"."platforms.linux-x64-musl"]
-checksum = "sha256:14125ce4b3c080769a32c6c468caefce2d240ba58c4e5fa9b94dfc2d49c380e0"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.5.3/yeet-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/476425101"
+checksum = "sha256:7660094dbf5f6f4156921f4c8efc381e7c7ae17772b4278b956bdcce7922d739"
+url = "https://github.com/oisin-ee/yeet/releases/download/v0.7.3/yeet-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/479621846"
 
 [tools."github:oisin-ee/yeet"."platforms.macos-arm64"]
-checksum = "sha256:33114b7b1b641dcea31c47ef342ed041eb987fd7f7ee025be8600d73f171b7dd"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.5.3/yeet-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/476420765"
+checksum = "sha256:43125c5045347d33058c382bf6a83b7d6e30ffed3ad4e2a4913586f5ef273ed9"
+url = "https://github.com/oisin-ee/yeet/releases/download/v0.7.3/yeet-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/479627298"
 
 [[tools."github:tstack/lnav"]]
 version = "0.14.0"
