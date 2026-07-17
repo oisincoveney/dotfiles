@@ -8,7 +8,10 @@ sourceDir = {{ (joinPath .chezmoi.homeDir ".dotfiles") | quote }}
 
 # Provide chezmoi template data (name/email used by dot_gitconfig.tmpl etc.)
 # without ever prompting, so `chezmoi apply` / `coder dotfiles` run cleanly in
-# headless environments. Override per-machine with CHEZMOI_NAME / CHEZMOI_EMAIL.
+# headless environments. Override per-machine with CHEZMOI_NAME / CHEZMOI_EMAIL;
+# otherwise reuse git's configured identity before falling back to portable defaults.
+{{- $gitName := output "sh" "-c" "git config --global --get user.name 2>/dev/null || true" | trim }}
+{{- $gitEmail := output "sh" "-c" "git config --global --get user.email 2>/dev/null || true" | trim }}
 [data]
-    name = {{ env "CHEZMOI_NAME" | default "Oisin Coveney" | quote }}
-    email = {{ env "CHEZMOI_EMAIL" | default "git@oisin.ee" | quote }}
+    name = {{ env "CHEZMOI_NAME" | default $gitName | default "Oisin Coveney" | quote }}
+    email = {{ env "CHEZMOI_EMAIL" | default $gitEmail | default "git@oisin.ee" | quote }}

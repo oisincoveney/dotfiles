@@ -1,0 +1,22 @@
+chezmoi:modify-template
+{{- $config := dict -}}
+{{- if .chezmoi.stdin -}}
+{{- $config = fromToml .chezmoi.stdin -}}
+{{- end -}}
+{{- $config = deleteValueAtPath "projects" $config -}}
+{{- $config = deleteValueAtPath "model_instructions_file" $config -}}
+{{- $config = setValueAtPath "personality" "pragmatic" $config -}}
+{{- $config = setValueAtPath "model_reasoning_effort" "high" $config -}}
+{{- $config = setValueAtPath "plan_mode_reasoning_effort" "high" $config -}}
+{{- $config = setValueAtPath "tui.status_line" (list "model-with-reasoning" "current-dir" "model" "git-branch" "pull-request-number" "five-hour-limit" "weekly-limit" "context-remaining" "context-used" "context-window-size") $config -}}
+{{- $config = setValueAtPath "tui.status_line_use_colors" true $config -}}
+{{- $config = setValueAtPath "notice.hide_rate_limit_model_nudge" true $config -}}
+{{- $config = setValueAtPath "features.hooks" true $config -}}
+{{- $config = setValueAtPath "features.apps" false $config -}}
+{{- $config = setValueAtPath "features.memories" true $config -}}
+{{- $config = setValueAtPath "features.prevent_idle_sleep" true $config -}}
+{{- $config = setValueAtPath "mcp_servers.playwright.command" "mise" $config -}}
+{{- $config = setValueAtPath "mcp_servers.playwright.args" (list "exec" "--" "playwright-mcp" "--headless" "--browser" "chromium") $config -}}
+{{- $config = setValueAtPath "mcp_servers.playwright.enabled" true $config -}}
+{{- $config = setValueAtPath "mcp_servers.playwright.startup_timeout_sec" 20 $config -}}
+{{ $config | toToml }}

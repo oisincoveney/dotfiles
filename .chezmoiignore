@@ -3,12 +3,17 @@ LICENSE.md
 
 # Never track AI-tool state, history, caches, or secrets that live alongside
 # the configs we manage (these dirs hold multi-GB sqlite logs + auth tokens).
-**/*.sqlite
-**/*.sqlite-shm
-**/*.sqlite-wal
+**/*.sqlite*
 **/auth.json
 **/*.credentials.json
 **/history.jsonl
+**/sessions
+**/sessions/**
+**/projects
+**/projects/**
+**/cache*
+**/cache*/
+**/logs*
 .claude/projects
 .claude/sessions
 .claude/session-env
@@ -19,7 +24,6 @@ LICENSE.md
 .claude/todos
 .claude/statsig
 .config/opencode/node_modules
-.config/opencode/plugins
 
 # Global instruction files (CLAUDE.md / AGENTS.md / GEMINI.md) are generated and
 # owned by yeet, the sole harness installer (ENG-25) — NOT deployed as static
@@ -61,8 +65,8 @@ LICENSE.md
 # Coder dev-workspace only (REPO_DIR set): the codex coder module owns
 # ~/.codex/config.toml — it writes the dev model provider (OpenRouter) and the
 # cloned-repo trust entry there BEFORE codex starts. chezmoi must not clobber it
-# with the laptop config (gpt-5.5 + no provider), which both breaks the model and
-# re-introduces the "Do you trust this directory?" prompt. No-op on laptops.
+# with portable preferences, which would break the model provider and re-introduce
+# the "Do you trust this directory?" prompt. No-op on laptops.
 {{ if env "REPO_DIR" }}
 .codex/config.toml
 {{ end }}
