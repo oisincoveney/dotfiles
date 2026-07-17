@@ -1,0 +1,15 @@
+chezmoi:modify-template
+{{- $settings := dict -}}
+{{- if .chezmoi.stdin -}}
+{{- $settings = fromJson .chezmoi.stdin -}}
+{{- end -}}
+{{- $settings = setValueAtPath "effortLevel" "high" $settings -}}
+{{- $settings = setValueAtPath "promptSuggestionEnabled" false $settings -}}
+{{- $settings = setValueAtPath "awaySummaryEnabled" false $settings -}}
+{{- $settings = setValueAtPath "skipDangerousModePermissionPrompt" true $settings -}}
+{{- $settings = setValueAtPath "theme" "dark" $settings -}}
+{{- $settings = setValueAtPath "skillListingBudgetFraction" 0.02 $settings -}}
+{{- $settings = setValueAtPath "skillOverrides.codebase-design" "name-only" $settings -}}
+{{- $settings = setValueAtPath "skillOverrides.inspect" "name-only" $settings -}}
+{{- $settings = setValueAtPath "skillOverrides.schedule-graph-shaping" "name-only" $settings -}}
+{{ $settings | toPrettyJson }}

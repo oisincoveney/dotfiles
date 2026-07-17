@@ -71,12 +71,6 @@ LICENSE.md
 .codex/config.toml
 {{ end }}
 
-# The Mac's Claude settings.json is managed by local apps (Muxy/herdr/orca
-# hooks with Mac-absolute paths); only deploy the portable settings off-darwin.
-{{ if eq .chezmoi.os "darwin" }}
-.claude/settings.json
-{{ end }}
-
 # AI-config-only mode (CHEZMOI_AI_ONLY=1): used by the headless moka
 # pipeline-runner. Deploy ONLY the AI tool config (rules + opencode/codex/gemini)
 # and exclude git identity/hooks, ssh, and the interactive shell/editor setup so
