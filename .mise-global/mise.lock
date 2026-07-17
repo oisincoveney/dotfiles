@@ -1486,23 +1486,23 @@ url = "https://github.com/mr-karan/doggo/releases/download/v1.2.0/doggo-windows-
 url_api = "https://api.github.com/repos/mr-karan/doggo/releases/assets/455378190"
 
 [[tools."github:oisin-ee/yeet"]]
-version = "0.7.5"
+version = "0.8.1"
 backend = "github:oisin-ee/yeet"
 
 [tools."github:oisin-ee/yeet"."platforms.linux-x64"]
-checksum = "sha256:61106a16c5e22b29d5e540ccc9f4f96e0bb71499ad1eacf051ec67aaed7e6502"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.7.5/yeet-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/479740769"
+checksum = "sha256:8cfa71ea9c86cfe10faffbf4a73a2c7b290134fe009dbfce8a8f1c3921d9563f"
+url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.1/yeet-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/479836774"
 
 [tools."github:oisin-ee/yeet"."platforms.linux-x64-musl"]
-checksum = "sha256:61106a16c5e22b29d5e540ccc9f4f96e0bb71499ad1eacf051ec67aaed7e6502"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.7.5/yeet-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/479740769"
+checksum = "sha256:8cfa71ea9c86cfe10faffbf4a73a2c7b290134fe009dbfce8a8f1c3921d9563f"
+url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.1/yeet-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/479836774"
 
 [tools."github:oisin-ee/yeet"."platforms.macos-arm64"]
-checksum = "sha256:5741683e1c406ff5bfbdb7f235840bb3b164e05c1c261515abd8e848124d74ab"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.7.5/yeet-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/479730453"
+checksum = "sha256:04a6fc84d8d82a068a4888177350156735202661c86054d9e7c8a3df65b0d183"
+url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.1/yeet-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/479835546"
 
 [[tools."github:tstack/lnav"]]
 version = "0.14.0"
@@ -3219,7 +3219,7 @@ checksum = "sha256:59837c2e7c911099aca1cc46b663bcdc5a949fd3e9fbbaf34fc73e5d5d710
 url = "https://github.com/chmln/sd/releases/download/v1.1.0/sd-v1.1.0-x86_64-pc-windows-msvc.zip"
 
 [[tools.semgrep]]
-version = "1.169.0"
+version = "1.170.0"
 backend = "pipx:semgrep"
 
 [[tools.shellcheck]]
