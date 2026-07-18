@@ -93,6 +93,7 @@ coder = "latest"
 okteto = "latest"
 openbao = "latest"  # `bao`
 neonctl = "latest"
+"github:oisin-ee/yeet" = "0.8.8"
 
 [settings]
 idiomatic_version_file_enable_tools = []
