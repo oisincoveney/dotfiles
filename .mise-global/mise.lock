@@ -528,27 +528,27 @@ checksum = "sha256:9233beade020c3e74854911a15aa973f7dc9f4253abe8856b8c273579a555
 url = "https://github.com/theryangeary/choose/releases/download/v1.3.7/choose-x86_64-pc-windows-gnu.exe"
 
 [[tools.claude]]
-version = "2.1.211"
+version = "2.1.212"
 backend = "aqua:anthropics/claude-code"
 
 [tools.claude."platforms.linux-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.211/linux-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.212/linux-arm64/claude"
 
 [tools.claude."platforms.linux-arm64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.211/linux-arm64-musl/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.212/linux-arm64-musl/claude"
 
 [tools.claude."platforms.linux-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.211/linux-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.212/linux-x64/claude"
 
 [tools.claude."platforms.linux-x64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.211/linux-x64-musl/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.212/linux-x64-musl/claude"
 
 [tools.claude."platforms.macos-arm64"]
-checksum = "blake3:d96b156d8af4dcfa650125dc8cc811f345754264af047624dd9de4c74cc90dde"
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.211/darwin-arm64/claude"
+checksum = "blake3:88592d51a8ae65cf873db7edccd2e95d3c26063f31b89536f891cf3b5b1c16bc"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.212/darwin-arm64/claude"
 
 [tools.claude."platforms.macos-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.211/darwin-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.212/darwin-x64/claude"
 
 [[tools.cocogitto]]
 version = "7.0.0"
@@ -753,36 +753,36 @@ checksum = "sha256:88a1693e8d49298f9c44c81fbca55efea8f5ab1be3c760534cfb8d932ca88
 url = "https://github.com/google/go-containerregistry/releases/download/v0.21.7/go-containerregistry_Windows_x86_64.tar.gz"
 
 [[tools.cue]]
-version = "0.17.0"
+version = "0.17.1"
 backend = "aqua:cue-lang/cue"
 
 [tools.cue."platforms.linux-arm64"]
-checksum = "sha256:f4218d82d2903700ee44615172642146f49c8ddcc3809a46fce6cbd0e5baefa6"
-url = "https://github.com/cue-lang/cue/releases/download/v0.17.0/cue_v0.17.0_linux_arm64.tar.gz"
+checksum = "sha256:0d729be30d52c952ca38fc9dcb692caa09d8463fa0b64df5781312779183fbcd"
+url = "https://github.com/cue-lang/cue/releases/download/v0.17.1/cue_v0.17.1_linux_arm64.tar.gz"
 
 [tools.cue."platforms.linux-arm64-musl"]
-checksum = "sha256:f4218d82d2903700ee44615172642146f49c8ddcc3809a46fce6cbd0e5baefa6"
-url = "https://github.com/cue-lang/cue/releases/download/v0.17.0/cue_v0.17.0_linux_arm64.tar.gz"
+checksum = "sha256:0d729be30d52c952ca38fc9dcb692caa09d8463fa0b64df5781312779183fbcd"
+url = "https://github.com/cue-lang/cue/releases/download/v0.17.1/cue_v0.17.1_linux_arm64.tar.gz"
 
 [tools.cue."platforms.linux-x64"]
-checksum = "sha256:e22219a1cb520ab3d660a486ed2222bb7b8e9cb9502a951ce6b8ac668695713f"
-url = "https://github.com/cue-lang/cue/releases/download/v0.17.0/cue_v0.17.0_linux_amd64.tar.gz"
+checksum = "sha256:a39b0c97695069d95d276d99be0f5dbabb081d801bfdc9ba49b76efaf94e2369"
+url = "https://github.com/cue-lang/cue/releases/download/v0.17.1/cue_v0.17.1_linux_amd64.tar.gz"
 
 [tools.cue."platforms.linux-x64-musl"]
-checksum = "sha256:e22219a1cb520ab3d660a486ed2222bb7b8e9cb9502a951ce6b8ac668695713f"
-url = "https://github.com/cue-lang/cue/releases/download/v0.17.0/cue_v0.17.0_linux_amd64.tar.gz"
+checksum = "sha256:a39b0c97695069d95d276d99be0f5dbabb081d801bfdc9ba49b76efaf94e2369"
+url = "https://github.com/cue-lang/cue/releases/download/v0.17.1/cue_v0.17.1_linux_amd64.tar.gz"
 
 [tools.cue."platforms.macos-arm64"]
-checksum = "sha256:d49d4f97ec1db68f1b3e527a78be06a28f3f1b1ca7b5e6902a605450162e5314"
-url = "https://github.com/cue-lang/cue/releases/download/v0.17.0/cue_v0.17.0_darwin_arm64.tar.gz"
+checksum = "sha256:64921403f012a97f89494c03605db2fbf7d9daa77dc2631819ac4406cb2e8074"
+url = "https://github.com/cue-lang/cue/releases/download/v0.17.1/cue_v0.17.1_darwin_arm64.tar.gz"
 
 [tools.cue."platforms.macos-x64"]
-checksum = "sha256:f308f5189b5fd233d5af807a7d86d4106ec73c247852eff50245820af49b4b46"
-url = "https://github.com/cue-lang/cue/releases/download/v0.17.0/cue_v0.17.0_darwin_amd64.tar.gz"
+checksum = "sha256:80aa026c3f47400c7bfc228b3422fd56b7c6c5ea4d70686f8d8f01ced716d3de"
+url = "https://github.com/cue-lang/cue/releases/download/v0.17.1/cue_v0.17.1_darwin_amd64.tar.gz"
 
 [tools.cue."platforms.windows-x64"]
-checksum = "sha256:5ee7c2a1ad13b8ed7521b164532e48c8bc1618b500ac3c5808cbbd47d4c9ccb8"
-url = "https://github.com/cue-lang/cue/releases/download/v0.17.0/cue_v0.17.0_windows_amd64.zip"
+checksum = "sha256:9f15378dc52b9a1bb6fa1755adc0410c9f17f330a621b784a5b31fdbc91c6d7a"
+url = "https://github.com/cue-lang/cue/releases/download/v0.17.1/cue_v0.17.1_windows_amd64.zip"
 
 [[tools.dasel]]
 version = "3.11.2"
@@ -1486,42 +1486,13 @@ url = "https://github.com/mr-karan/doggo/releases/download/v1.2.0/doggo-windows-
 url_api = "https://api.github.com/repos/mr-karan/doggo/releases/assets/455378190"
 
 [[tools."github:oisin-ee/yeet"]]
-version = "0.8.8"
+version = "0.8.9"
 backend = "github:oisin-ee/yeet"
 
-[tools."github:oisin-ee/yeet"."platforms.linux-x64"]
-checksum = "sha256:9e177d43cbee2f4262641a6859e1d4b40963def53c1300158af46a27906c80d5"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.8/yeet-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/481336323"
-
-[tools."github:oisin-ee/yeet"."platforms.linux-x64-musl"]
-checksum = "sha256:9e177d43cbee2f4262641a6859e1d4b40963def53c1300158af46a27906c80d5"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.8/yeet-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/481336323"
-
 [tools."github:oisin-ee/yeet"."platforms.macos-arm64"]
-checksum = "sha256:ecdbd89066ce406cc07cf7346a2f0ab2acd87fbd07c1bcfaa536f8fb489efc92"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.8/yeet-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/481320245"
-
-[[tools."github:oisin-ee/yeet"]]
-version = "0.8.1"
-backend = "github:oisin-ee/yeet"
-
-[tools."github:oisin-ee/yeet"."platforms.linux-x64"]
-checksum = "sha256:8cfa71ea9c86cfe10faffbf4a73a2c7b290134fe009dbfce8a8f1c3921d9563f"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.1/yeet-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/479836774"
-
-[tools."github:oisin-ee/yeet"."platforms.linux-x64-musl"]
-checksum = "sha256:8cfa71ea9c86cfe10faffbf4a73a2c7b290134fe009dbfce8a8f1c3921d9563f"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.1/yeet-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/479836774"
-
-[tools."github:oisin-ee/yeet"."platforms.macos-arm64"]
-checksum = "sha256:04a6fc84d8d82a068a4888177350156735202661c86054d9e7c8a3df65b0d183"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.1/yeet-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/479835546"
+checksum = "sha256:2aa5b6723d7e1fa56f705ae4bf7b5858507af78b3b8e3d5fd214d983f39bb0b4"
+url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.9/yeet-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/481512401"
 
 [[tools."github:tstack/lnav"]]
 version = "0.14.0"
@@ -1858,36 +1829,36 @@ checksum = "sha256:02c6137bb5f050479193afad5a28804e9edc3beeab7e7b53a6e1499c9ba38
 url = "https://get.helm.sh/helm-v4.2.3-windows-amd64.tar.gz"
 
 [[tools.helmfile]]
-version = "1.7.0"
+version = "1.7.1"
 backend = "aqua:helmfile/helmfile"
 
 [tools.helmfile."platforms.linux-arm64"]
-checksum = "sha256:2b674b68ed5a6ff628c4800cd369051176bf98dffe596d6db426422916d4195d"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.7.0/helmfile_1.7.0_linux_arm64.tar.gz"
+checksum = "sha256:c957e2a07469b535b427e9838e6edd30202366bd5a06e0aa3aaa6f562deeb29e"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.7.1/helmfile_1.7.1_linux_arm64.tar.gz"
 
 [tools.helmfile."platforms.linux-arm64-musl"]
-checksum = "sha256:2b674b68ed5a6ff628c4800cd369051176bf98dffe596d6db426422916d4195d"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.7.0/helmfile_1.7.0_linux_arm64.tar.gz"
+checksum = "sha256:c957e2a07469b535b427e9838e6edd30202366bd5a06e0aa3aaa6f562deeb29e"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.7.1/helmfile_1.7.1_linux_arm64.tar.gz"
 
 [tools.helmfile."platforms.linux-x64"]
-checksum = "sha256:cac1f5f851ba5d3aa4ad06373752a69132c0ad70171bc45275ec4c014877c8a3"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.7.0/helmfile_1.7.0_linux_amd64.tar.gz"
+checksum = "sha256:d84a8e5ffdbfd66f1bfb4b11967b9d2981d8515c7d6e312ee0cd89b613c8b352"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.7.1/helmfile_1.7.1_linux_amd64.tar.gz"
 
 [tools.helmfile."platforms.linux-x64-musl"]
-checksum = "sha256:cac1f5f851ba5d3aa4ad06373752a69132c0ad70171bc45275ec4c014877c8a3"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.7.0/helmfile_1.7.0_linux_amd64.tar.gz"
+checksum = "sha256:d84a8e5ffdbfd66f1bfb4b11967b9d2981d8515c7d6e312ee0cd89b613c8b352"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.7.1/helmfile_1.7.1_linux_amd64.tar.gz"
 
 [tools.helmfile."platforms.macos-arm64"]
-checksum = "sha256:cadabe6b7df68366ac43edc17145d9bd55d0934428d064b8bb671d845f0df715"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.7.0/helmfile_1.7.0_darwin_arm64.tar.gz"
+checksum = "sha256:96588f4f413ef5d4a3709013a52de73b41a845e6cf83c7ba9bab3266c8225730"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.7.1/helmfile_1.7.1_darwin_arm64.tar.gz"
 
 [tools.helmfile."platforms.macos-x64"]
-checksum = "sha256:cdf782db13a0dcd5c17973796e03d0d2068433b09d78511fb79976b238718f77"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.7.0/helmfile_1.7.0_darwin_amd64.tar.gz"
+checksum = "sha256:af46902ff69e9df2cb6bff69d3aa1fd7e8ffa357a3a4c889257a7bd40e27c01a"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.7.1/helmfile_1.7.1_darwin_amd64.tar.gz"
 
 [tools.helmfile."platforms.windows-x64"]
-checksum = "sha256:9ccda9d8049a2e2a1a912b001a705cfe293e859679f024bc5457f5e3041b2566"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.7.0/helmfile_1.7.0_windows_amd64.tar.gz"
+checksum = "sha256:51d0d83c2923e7f0ab064761b3013117e717e8076ab05bdda55f5b6c30f96f71"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.7.1/helmfile_1.7.1_windows_amd64.tar.gz"
 
 [[tools.hexyl]]
 version = "0.17.0"
@@ -2766,7 +2737,7 @@ version = "0.16.2"
 backend = "npm:@zed-industries/claude-code-acp"
 
 [[tools."npm:agent-browser"]]
-version = "0.32.0"
+version = "0.32.1"
 backend = "npm:agent-browser"
 
 [[tools."npm:ajv-cli"]]
@@ -2778,7 +2749,7 @@ version = "0.1.1"
 backend = "npm:context-awesome"
 
 [[tools."npm:eas-cli"]]
-version = "21.0.1"
+version = "21.0.2"
 backend = "npm:eas-cli"
 
 [[tools."npm:expo-doctor"]]
@@ -2909,36 +2880,36 @@ url = "https://github.com/openbao/openbao/releases/download/v2.5.5/bao_2.5.5_Win
 provenance = "cosign"
 
 [[tools.opencode]]
-version = "1.18.2"
+version = "1.18.3"
 backend = "aqua:anomalyco/opencode"
 
 [tools.opencode."platforms.linux-arm64"]
-checksum = "sha256:93352b30d37d8da2e5c226085f1afbf37cf57cfcecedc813520ff2d0f8581540"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.2/opencode-linux-arm64.tar.gz"
+checksum = "sha256:da0a631174eba380b2a1d51f9d364fa3812da433e72743c72471d4b5da59c69d"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.3/opencode-linux-arm64.tar.gz"
 
 [tools.opencode."platforms.linux-arm64-musl"]
-checksum = "sha256:1defc1e42ffb6cb0fd2fc345e714f516398162ca49e1f7b165e99eceae32742f"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.2/opencode-linux-arm64-musl.tar.gz"
+checksum = "sha256:e937e4149160634782c4e7c3d83245058630ce1ae67577c9e9197c3798d8933e"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.3/opencode-linux-arm64-musl.tar.gz"
 
 [tools.opencode."platforms.linux-x64"]
-checksum = "sha256:97c95e004bb73d2039f957ea33be0635ea4e22b8dceaedf8f0983765950cf1b6"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.2/opencode-linux-x64.tar.gz"
+checksum = "sha256:60f27b2679f00a511b6539f97e02448afaf58d9c66e2448285ea0c517ca84583"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.3/opencode-linux-x64.tar.gz"
 
 [tools.opencode."platforms.linux-x64-musl"]
-checksum = "sha256:36cb91ee3b6493f38bc50aa49bb241f3dbc620fcea938eb0776069213d0bb5ee"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.2/opencode-linux-x64-musl.tar.gz"
+checksum = "sha256:dc28ff8034f46eead03e54c39d435e217323474965c2da2f5eedb766bf967c1c"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.3/opencode-linux-x64-musl.tar.gz"
 
 [tools.opencode."platforms.macos-arm64"]
-checksum = "sha256:2cb1eb3301a73598890364dfeb45c535155a3855b37ed1d190172821e74e462c"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.2/opencode-darwin-arm64.zip"
+checksum = "sha256:946f62b155638b911144b7bef520ee4a6442f696297907873463bca3524e40ef"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.3/opencode-darwin-arm64.zip"
 
 [tools.opencode."platforms.macos-x64"]
-checksum = "sha256:3672491ae6383468be40e54ee5c6fcbac354eb5cfb7c6afbd0ee3ae0c6af4b2e"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.2/opencode-darwin-x64.zip"
+checksum = "sha256:4ea147867ba19e4ec03559df557811f1674f40788aea4d10326dc563b7667c6d"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.3/opencode-darwin-x64.zip"
 
 [tools.opencode."platforms.windows-x64"]
-checksum = "sha256:aca23b18d03639c6bd576a2dd23cebfa6dab80d31358f17cfa03fd1f2a5c41fd"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.2/opencode-windows-x64.zip"
+checksum = "sha256:68bc62930f6cb5755e0409aa9de0bb270a66ed2b8c9cf0c029e9f2287ed5486e"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.3/opencode-windows-x64.zip"
 
 [[tools.osv-scanner]]
 version = "2.4.0"
@@ -3060,7 +3031,7 @@ version = "0.31.1"
 backend = "pipx:llm"
 
 [[tools."pipx:mycli"]]
-version = "2.2.0"
+version = "2.3.0"
 backend = "pipx:mycli"
 
 [[tools."pipx:pgcli"]]
@@ -3202,7 +3173,7 @@ checksum = "sha256:3d9fe75878ddab6a8e7abb66ab13af1bdea2844a02c479fb293b7bfb258ab
 url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-x86_64-apple-darwin.tar.gz"
 
 [[tools.rust]]
-version = "1.97.0"
+version = "1.97.1"
 backend = "core:rust"
 
 [[tools.sd]]
@@ -3427,36 +3398,36 @@ version = "4.0.2"
 backend = "npm:svgo"
 
 [[tools.syft]]
-version = "1.46.0"
+version = "1.48.0"
 backend = "aqua:anchore/syft"
 
 [tools.syft."platforms.linux-arm64"]
-checksum = "sha256:9fafef4db4f032ce81008d3a1529985d41ceb6ccdf2b388c9ce2f1ed7d32082e"
-url = "https://github.com/anchore/syft/releases/download/v1.46.0/syft_1.46.0_linux_arm64.tar.gz"
+checksum = "sha256:6865a3d97c4e28b4b38571c17a2bf512da4494ef1d37613c3122fce0d67e63b0"
+url = "https://github.com/anchore/syft/releases/download/v1.48.0/syft_1.48.0_linux_arm64.tar.gz"
 
 [tools.syft."platforms.linux-arm64-musl"]
-checksum = "sha256:9fafef4db4f032ce81008d3a1529985d41ceb6ccdf2b388c9ce2f1ed7d32082e"
-url = "https://github.com/anchore/syft/releases/download/v1.46.0/syft_1.46.0_linux_arm64.tar.gz"
+checksum = "sha256:6865a3d97c4e28b4b38571c17a2bf512da4494ef1d37613c3122fce0d67e63b0"
+url = "https://github.com/anchore/syft/releases/download/v1.48.0/syft_1.48.0_linux_arm64.tar.gz"
 
 [tools.syft."platforms.linux-x64"]
-checksum = "sha256:d654f678b709eb53c393d38519d5ed7d2e57205529404018614cfefa0fb2b5ca"
-url = "https://github.com/anchore/syft/releases/download/v1.46.0/syft_1.46.0_linux_amd64.tar.gz"
+checksum = "sha256:6cef9a7f37220d9067eaf9cfaaa2fce986e9f320a8d42cbc36658c99af78ea04"
+url = "https://github.com/anchore/syft/releases/download/v1.48.0/syft_1.48.0_linux_amd64.tar.gz"
 
 [tools.syft."platforms.linux-x64-musl"]
-checksum = "sha256:d654f678b709eb53c393d38519d5ed7d2e57205529404018614cfefa0fb2b5ca"
-url = "https://github.com/anchore/syft/releases/download/v1.46.0/syft_1.46.0_linux_amd64.tar.gz"
+checksum = "sha256:6cef9a7f37220d9067eaf9cfaaa2fce986e9f320a8d42cbc36658c99af78ea04"
+url = "https://github.com/anchore/syft/releases/download/v1.48.0/syft_1.48.0_linux_amd64.tar.gz"
 
 [tools.syft."platforms.macos-arm64"]
-checksum = "sha256:cd4e2c40e075684a5746d8959f76b6572bb2d2dda8cf6877dbfff1cc0baeea01"
-url = "https://github.com/anchore/syft/releases/download/v1.46.0/syft_1.46.0_darwin_arm64.tar.gz"
+checksum = "sha256:fef3e6d5df336a0a4c3e421e503119d1e221cf82a3ef5e426a791fcd81667e87"
+url = "https://github.com/anchore/syft/releases/download/v1.48.0/syft_1.48.0_darwin_arm64.tar.gz"
 
 [tools.syft."platforms.macos-x64"]
-checksum = "sha256:5c983db13533de02e5331aae88091116f25365840741f86234084a30166672a7"
-url = "https://github.com/anchore/syft/releases/download/v1.46.0/syft_1.46.0_darwin_amd64.tar.gz"
+checksum = "sha256:dc7b2135fa5591003596df4ddb3408f499b68174f5e7dc1c77a373b753463182"
+url = "https://github.com/anchore/syft/releases/download/v1.48.0/syft_1.48.0_darwin_amd64.tar.gz"
 
 [tools.syft."platforms.windows-x64"]
-checksum = "sha256:1e515c1ac4bc65917f8d0a52b6ae0e611082779cbf2da9d470282158dd24ea13"
-url = "https://github.com/anchore/syft/releases/download/v1.46.0/syft_1.46.0_windows_amd64.zip"
+checksum = "sha256:b46cb02a47c5b76a1656958757d62ac07d0cb7de35f92e8a7e02d450cbb53097"
+url = "https://github.com/anchore/syft/releases/download/v1.48.0/syft_1.48.0_windows_amd64.zip"
 
 [[tools.taplo]]
 version = "0.10.0"
@@ -3626,36 +3597,36 @@ checksum = "sha256:25cc731f678922c870edba49f19c324aa6c8e7190b551c4fbe49d0c4e1c54
 url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.95.9/trufflehog_3.95.9_windows_amd64.tar.gz"
 
 [[tools.typst]]
-version = "0.15.0"
+version = "0.15.1"
 backend = "aqua:typst/typst"
 
 [tools.typst."platforms.linux-arm64"]
-checksum = "sha256:cdf50ffc7b8ba759ed02200632eda3d78eb8b99aacb6611f4f75684990647620"
-url = "https://github.com/typst/typst/releases/download/v0.15.0/typst-aarch64-unknown-linux-musl.tar.xz"
+checksum = "sha256:5aa8d74a3d906e60ea12a66ac2f37f8eef1b14cbad7182a745e393a10c23dcee"
+url = "https://github.com/typst/typst/releases/download/v0.15.1/typst-aarch64-unknown-linux-musl.tar.xz"
 
 [tools.typst."platforms.linux-arm64-musl"]
-checksum = "sha256:cdf50ffc7b8ba759ed02200632eda3d78eb8b99aacb6611f4f75684990647620"
-url = "https://github.com/typst/typst/releases/download/v0.15.0/typst-aarch64-unknown-linux-musl.tar.xz"
+checksum = "sha256:5aa8d74a3d906e60ea12a66ac2f37f8eef1b14cbad7182a745e393a10c23dcee"
+url = "https://github.com/typst/typst/releases/download/v0.15.1/typst-aarch64-unknown-linux-musl.tar.xz"
 
 [tools.typst."platforms.linux-x64"]
-checksum = "sha256:59b207df01be2dab9f13e80f73d04d7ff8273ffd46b3dd1b9eef5c60f3eeabea"
-url = "https://github.com/typst/typst/releases/download/v0.15.0/typst-x86_64-unknown-linux-musl.tar.xz"
+checksum = "sha256:a6d077d0a95eed5a2eba715b2dae06be954f624ccbf85758a03f389ded33118c"
+url = "https://github.com/typst/typst/releases/download/v0.15.1/typst-x86_64-unknown-linux-musl.tar.xz"
 
 [tools.typst."platforms.linux-x64-musl"]
-checksum = "sha256:59b207df01be2dab9f13e80f73d04d7ff8273ffd46b3dd1b9eef5c60f3eeabea"
-url = "https://github.com/typst/typst/releases/download/v0.15.0/typst-x86_64-unknown-linux-musl.tar.xz"
+checksum = "sha256:a6d077d0a95eed5a2eba715b2dae06be954f624ccbf85758a03f389ded33118c"
+url = "https://github.com/typst/typst/releases/download/v0.15.1/typst-x86_64-unknown-linux-musl.tar.xz"
 
 [tools.typst."platforms.macos-arm64"]
-checksum = "sha256:fe53838737abf93a774495952a1a797b4686e9c4a21c2d99b9fdf77f46cc3572"
-url = "https://github.com/typst/typst/releases/download/v0.15.0/typst-aarch64-apple-darwin.tar.xz"
+checksum = "sha256:48f62ed034aa3a7978309579ac6ca00045e2ef0da73114e8af27cfd8e74dc05a"
+url = "https://github.com/typst/typst/releases/download/v0.15.1/typst-aarch64-apple-darwin.tar.xz"
 
 [tools.typst."platforms.macos-x64"]
-checksum = "sha256:30210c7c539c7954db94c063cd98b43fd0a0cad285d656dbbce2a40aee2e79be"
-url = "https://github.com/typst/typst/releases/download/v0.15.0/typst-x86_64-apple-darwin.tar.xz"
+checksum = "sha256:7f9fdd9584866245de9a79e0add8f9236fae6f40a8a45e2c4771ccc14db4e0fa"
+url = "https://github.com/typst/typst/releases/download/v0.15.1/typst-x86_64-apple-darwin.tar.xz"
 
 [tools.typst."platforms.windows-x64"]
-checksum = "sha256:66ae7f0907b4b9afed5c7d6cb9b21e07f0f3c3d4e293ba3e0026a54d88202fe9"
-url = "https://github.com/typst/typst/releases/download/v0.15.0/typst-x86_64-pc-windows-msvc.zip"
+checksum = "sha256:19ce3551153c2fe7ee9fa2f95208310c8f4d3209fedb699e0333faf8913f6736"
+url = "https://github.com/typst/typst/releases/download/v0.15.1/typst-x86_64-pc-windows-msvc.zip"
 
 [[tools.usql]]
 version = "0.21.4"
