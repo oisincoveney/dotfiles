@@ -93,7 +93,7 @@ coder = "latest"
 okteto = "latest"
 openbao = "latest"  # `bao`
 neonctl = "latest"
-"github:oisin-ee/yeet" = "0.8.14"
+"github:oisin-ee/yeet" = "0.8.16"
 
 [settings]
 idiomatic_version_file_enable_tools = []
@@ -103,3 +103,4 @@ github.use_git_credentials = true
 # Keep readable latest/lts policy here while mise records exact resolved versions and
 # checksums in the tracked global mise.lock.
 lockfile = true
+trusted_config_paths = ["/Users/oisin/dev"]
