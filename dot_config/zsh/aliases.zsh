@@ -98,7 +98,8 @@ alias wip="commit wip"
 #                           e.g. `srt "claude --dangerously-skip-permissions"`, restrictions in ~/.srt-settings.json
 #   • container-use / cu  — run the agent inside a disposable dagger dev container
 #   • nono <cmd>          — capability-based sandbox shell (mac; profile-driven)
-alias cc="CLAUDE_CODE_NO_FLICKER=1 claude --dangerously-skip-permissions"
-alias co="codex --dangerously-bypass-approvals-and-sandbox"
-alias ki="kimi --yolo"
-alias oc="opencode --dangerously-skip-permissions"
+alias cc="agent-run env CLAUDE_CODE_NO_FLICKER=1 claude --dangerously-skip-permissions"
+alias co="agent-run codex --dangerously-bypass-approvals-and-sandbox"
+alias ki="agent-run kimi --yolo"
+alias oc="agent-run opencode --dangerously-skip-permissions"
+alias pi="agent-run pi"
