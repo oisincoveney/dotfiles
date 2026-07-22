@@ -39,6 +39,11 @@ STUB
   ! grep -q 'oauth2:' "$ROOT/dot_config/mise/agent.toml.tmpl"
 }
 
+@test "chezmoi never manages OpenCode auth or multi-auth account material" {
+  grep -qxF '**/auth.json' "$ROOT/.chezmoiignore"
+  grep -qxF '**/oc-codex-multi-auth-accounts.json' "$ROOT/.chezmoiignore"
+}
+
 @test "agent harness sync resolves yeet through the managed mise toolset" {
   cat >"$STUB_BIN/mise" <<'STUB'
 #!/usr/bin/env bash

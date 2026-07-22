@@ -5,6 +5,7 @@ LICENSE.md
 # the configs we manage (these dirs hold multi-GB sqlite logs + auth tokens).
 **/*.sqlite*
 **/auth.json
+**/oc-codex-multi-auth-accounts.json
 **/*.credentials.json
 **/history.jsonl
 **/sessions
