@@ -1,0 +1,24 @@
+#!/bin/bash
+# Sync the agent harness (~/.claude, ~/.codex, ~/.config/opencode) on every
+# chezmoi apply so deleted assets are restored even when canonical source has
+# not changed. yeet is the sole harness installer (ENG-25): this script invokes
+# the mise-managed `yeet agent sync`, which acquires yeet's own pinned
+# oisin-ee/agent cache and writes skills/hooks/rules/settings.
+#
+# Ordering: numbered after 03-mise-install so the agent system config and its
+# `yeet` installation exist before this calls them. `mise exec` avoids stale
+# absolute PATH entries inherited by a long-running terminal or desktop app.
+#
+# Caveat: `yeet agent sync` rewrites live harness files. On `cza` this runs
+# against whatever agent session may be open; a live `claude`/`codex` picks up
+# hook/settings changes on its next tool call, not mid-call.
+set -euo pipefail
+
+command -v mise >/dev/null 2>&1 || { echo "mise not installed; cannot sync agent harness." >&2; exit 1; }
+
+export MISE_SYSTEM_CONFIG_FILE="$HOME/.config/mise/agent.toml"
+mise which yeet >/dev/null 2>&1 || { echo "yeet not installed through mise; cannot sync agent harness." >&2; exit 1; }
+
+echo "Syncing agent harness via yeet…"
+mise exec -- yeet agent sync
+echo "Agent harness sync complete."

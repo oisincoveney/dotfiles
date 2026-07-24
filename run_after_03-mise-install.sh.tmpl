@@ -1,0 +1,25 @@
+#!/bin/bash
+# Install the committed mise tool set on every chezmoi apply so deleted tools are
+# restored even when the manifests have not changed. Mise composes the writable
+# human global config with the agent system config pulled from GitHub and drives
+# identical tools on macOS and every Linux box via its aqua/github/cargo backends.
+#
+# A GitHub token is passed through so mise's github/aqua backends don't trip the
+# unauthenticated GitHub rate limit while fetching ~35 tools (best-effort: uses an
+# existing $GITHUB_TOKEN, else the gh CLI login, else proceeds unauthenticated).
+#
+# `cza` refreshes the agent system config and creates the global manifest and
+# lockfile symlinks before this after-script runs.
+set -euo pipefail
+
+if ! command -v mise >/dev/null 2>&1; then
+	echo "mise not installed; cannot sync tools." >&2
+	exit 1
+fi
+
+export GITHUB_TOKEN="${GITHUB_TOKEN:-$(gh auth token 2>/dev/null || true)}"
+export MISE_SYSTEM_CONFIG_FILE="$HOME/.config/mise/agent.toml"
+
+echo "Syncing mise tools…"
+mise install -y
+echo "mise tool sync complete."

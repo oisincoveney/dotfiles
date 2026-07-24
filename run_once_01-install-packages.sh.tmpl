@@ -20,7 +20,7 @@ echo "Homebrew ready; packages are applied by the Brewfile bundle step."
 {{ else if eq .chezmoi.os "linux" -}}
 # ── Linux: base shell + mise bootstrap ───────────────────────────────
 # The full CLI/zen kit (eza, bat, fzf, yazi, lazygit, starship, atuin, …) is
-# installed by mise — run_onchange_after_03-mise-install — identically to macOS.
+# installed by mise through run_after_03-mise-install, identically to macOS.
 # Here we only need the base shell, git, and btop (btop ships no macOS prebuilt,
 # so it's brew on mac and distro-installed here on Linux).
 SUDO=""
@@ -44,5 +44,5 @@ if ! command -v mise &>/dev/null; then
   curl https://mise.run | sh
 fi
 
-echo "Linux base ready; run_onchange_after_03-mise-install provisions the tool kit."
+echo "Linux base ready; run_after_03-mise-install provisions the tool kit."
 {{ end -}}
