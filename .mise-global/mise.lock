@@ -544,6 +544,7 @@ url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d
 url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.212/linux-x64-musl/claude"
 
 [tools.claude."platforms.macos-arm64"]
+checksum = "blake3:88592d51a8ae65cf873db7edccd2e95d3c26063f31b89536f891cf3b5b1c16bc"
 url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.212/darwin-arm64/claude"
 
 [tools.claude."platforms.macos-x64"]
@@ -1518,23 +1519,8 @@ url = "https://github.com/mr-karan/doggo/releases/download/v1.2.0/doggo-windows-
 url_api = "https://api.github.com/repos/mr-karan/doggo/releases/assets/455378190"
 
 [[tools."github:oisin-ee/yeet"]]
-version = "0.8.18"
+version = "0.8.26"
 backend = "github:oisin-ee/yeet"
-
-[tools."github:oisin-ee/yeet"."platforms.linux-x64"]
-checksum = "sha256:3c13acf3b89b8f8c11ec52bbef7cab0cbf6caa1267962aba316119513f65a63c"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.18/yeet-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/484610463"
-
-[tools."github:oisin-ee/yeet"."platforms.linux-x64-musl"]
-checksum = "sha256:3c13acf3b89b8f8c11ec52bbef7cab0cbf6caa1267962aba316119513f65a63c"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.18/yeet-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/484610463"
-
-[tools."github:oisin-ee/yeet"."platforms.macos-arm64"]
-checksum = "sha256:f0171eed3cd80619d2e553fffa6819fa655767589520fac1f82cddd581046a02"
-url = "https://github.com/oisin-ee/yeet/releases/download/v0.8.18/yeet-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/yeet/releases/assets/484722918"
 
 [[tools."github:tstack/lnav"]]
 version = "0.14.0"
@@ -2757,6 +2743,10 @@ backend = "npm:@intellectronica/ruler"
 [[tools."npm:@melkeydev/go-blueprint"]]
 version = "0.10.11"
 backend = "npm:@melkeydev/go-blueprint"
+
+[[tools."npm:@moonshot-ai/kimi-code"]]
+version = "0.29.0"
+backend = "npm:@moonshot-ai/kimi-code"
 
 [[tools."npm:@nubjs/nub"]]
 version = "0.4.13"

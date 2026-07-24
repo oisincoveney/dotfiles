@@ -93,6 +93,7 @@ coder = "latest"
 okteto = "latest"
 openbao = "latest"  # `bao`
 neonctl = "latest"
+"npm:@moonshot-ai/kimi-code" = "0.29.0"
 
 [settings]
 idiomatic_version_file_enable_tools = []
