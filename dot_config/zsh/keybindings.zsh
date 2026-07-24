@@ -17,29 +17,15 @@ bindkey '^[[3;5~' delete-char
 bindkey '^[[1;3C' forward-word
 bindkey '^[[1;3D' backward-word
 
-_tab_accept_autosuggestion_fallback() {
-  return 0
-}
-(( ${+widgets[tab-accept-autosuggestion]} )) || zle -N tab-accept-autosuggestion _tab_accept_autosuggestion_fallback
-
-# Defining this before zsh-autosuggestions loads means we must also keep its
-# defaults; otherwise its config sees the array already set and skips them.
-typeset -Uga ZSH_AUTOSUGGEST_ACCEPT_WIDGETS
-ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
-  forward-char
-  end-of-line
-  vi-forward-char
-  vi-end-of-line
-  vi-add-eol
-  ${ZSH_AUTOSUGGEST_ACCEPT_WIDGETS[@]}
-  tab-accept-autosuggestion
-)
+# Keep Tab on native zsh completion. With the default AUTO_LIST, AUTO_MENU, and
+# LIST_AMBIGUOUS options, ambiguous paths are listed below the prompt.
+bindkey -M emacs '^I' expand-or-complete
+bindkey -M viins '^I' expand-or-complete
 
 typeset -ga _ZSH_SHORTCUT_ROWS
 _ZSH_SHORTCUT_ROWS=(
   $'Scope\tKey\tAction\tSource'
-  $'Completion\tTab\tAccept visible autosuggestion\tzsh-autosuggestions'
-  $'Completion\tShift-Tab\tOpen completion picker\tfzf-tab'
+  $'Completion\tTab\tComplete current word/path and list matches\tzsh'
   $'Picker\tCtrl-T\tOpen command-aware file/folder picker\ttelevision'
   $'Search\tCtrl-R\tSearch shell history\tatuin'
   $'Search\tCtrl-G\tOpen cheatsheet picker\tnavi'
@@ -100,39 +86,3 @@ shortcuts() {
       ;;
   esac
 }
-
-_zsh_keybindings_install_completion_keys() {
-  emulate -L zsh
-
-  if (( ${+functions[_zsh_autosuggest_bind_widget]} )) \
-    && [[ ${widgets[tab-accept-autosuggestion]-} != user:_zsh_autosuggest_bound_* ]]; then
-    _zsh_autosuggest_bind_widget tab-accept-autosuggestion accept
-  fi
-
-  if [[ ${widgets[tab-accept-autosuggestion]-} == user:_zsh_autosuggest_bound_* ]]; then
-    bindkey -M emacs '^I' tab-accept-autosuggestion
-    bindkey -M viins '^I' tab-accept-autosuggestion
-  fi
-
-  if (( ${+widgets[fzf-tab-complete]} )); then
-    typeset -Ua shift_tab_keys
-    shift_tab_keys=($'\e[Z')
-    [[ -n "${terminfo[kcbt]:-}" ]] && shift_tab_keys+=("${terminfo[kcbt]}")
-
-    local key
-    for key in "${shift_tab_keys[@]}"; do
-      bindkey -M emacs "$key" fzf-tab-complete
-      bindkey -M viins "$key" fzf-tab-complete
-    done
-  fi
-
-  if [[ ${widgets[tab-accept-autosuggestion]-} == user:_zsh_autosuggest_bound_* ]] \
-    && (( ${+widgets[fzf-tab-complete]} )); then
-    add-zsh-hook -d precmd _zsh_keybindings_install_completion_keys
-    add-zle-hook-widget -d line-init _zsh_keybindings_install_completion_keys
-  fi
-}
-
-autoload -Uz add-zsh-hook add-zle-hook-widget
-add-zsh-hook precmd _zsh_keybindings_install_completion_keys
-add-zle-hook-widget line-init _zsh_keybindings_install_completion_keys
