@@ -4,8 +4,9 @@
 #  - zsh-completions is loaded synchronously (blockf = fpath-only, cheap) so the
 #    compinit run in completion.zsh — which follows this file — sees it, and so
 #    `compdef` exists before the tool inits in tools.zsh call it.
-#  - Interactive highlighting and abbreviations are turbo-deferred past the
-#    first prompt. Native zsh owns completion and Tab behavior.
+#  - fzf-tab, interactive highlighting, and abbreviations are turbo-deferred
+#    past the first prompt. fzf-tab loads before syntax highlighting so its Tab
+#    widget can be wrapped correctly.
 
 # --- bootstrap: clone zinit on first run, no framework required ---
 ZINIT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git"
@@ -22,5 +23,6 @@ zinit light zsh-users/zsh-completions
 
 # --- turbo block: interactive widgets, loaded after the prompt appears ---
 zinit wait lucid for \
+    Aloxaf/fzf-tab \
     zdharma-continuum/fast-syntax-highlighting \
     olets/zsh-abbr

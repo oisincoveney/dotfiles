@@ -31,3 +31,14 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 # Cache slow completions (e.g. apt, brew).
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
+
+# Hand the completion menu to fzf-tab instead of zsh's built-in menu.
+zstyle ':completion:*' menu no
+
+# fzf-tab: catppuccin-consistent previews and a group switcher.
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+zstyle ':fzf-tab:*' switch-group '<' '>'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview \
+  'eza -1 --color=always --icons=always $realpath 2>/dev/null || ls -1 $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview \
+  'eza -1 --color=always --icons=always $realpath 2>/dev/null || ls -1 $realpath'

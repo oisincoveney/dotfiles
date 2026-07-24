@@ -17,15 +17,15 @@ bindkey '^[[3;5~' delete-char
 bindkey '^[[1;3C' forward-word
 bindkey '^[[1;3D' backward-word
 
-# Keep Tab on native zsh completion. With the default AUTO_LIST, AUTO_MENU, and
-# LIST_AMBIGUOUS options, ambiguous paths are listed below the prompt.
+# Give deferred fzf-tab the native completion widget to wrap when it loads.
+# Until then, Tab remains functional as standard zsh completion.
 bindkey -M emacs '^I' expand-or-complete
 bindkey -M viins '^I' expand-or-complete
 
 typeset -ga _ZSH_SHORTCUT_ROWS
 _ZSH_SHORTCUT_ROWS=(
   $'Scope\tKey\tAction\tSource'
-  $'Completion\tTab\tComplete current word/path and list matches\tzsh'
+  $'Completion\tTab\tOpen fuzzy completion picker\tfzf-tab'
   $'Picker\tCtrl-T\tOpen command-aware file/folder picker\ttelevision'
   $'Search\tCtrl-R\tSearch shell history\tatuin'
   $'Search\tCtrl-G\tOpen cheatsheet picker\tnavi'
