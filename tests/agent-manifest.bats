@@ -170,8 +170,9 @@ STUB
 $HOME/.config/mise/agent.toml|exec -- yeet agent sync" ]
 }
 
-@test "Codex config is owned only by yeet" {
+@test "harness settings are owned only by yeet" {
   [ ! -e "$ROOT/dot_codex/modify_private_config.toml" ]
+  [ ! -e "$ROOT/dot_claude/modify_private_settings.json" ]
 }
 
 @test "SSH config bootstrap preserves tool-generated hosts" {
