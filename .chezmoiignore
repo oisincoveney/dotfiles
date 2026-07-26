@@ -1,5 +1,6 @@
 README.md
 LICENSE.md
+tests
 
 # Never track AI-tool state, history, caches, or secrets that live alongside
 # the configs we manage (these dirs hold multi-GB sqlite logs + auth tokens).
