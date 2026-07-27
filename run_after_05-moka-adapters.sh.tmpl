@@ -1,0 +1,46 @@
+#!/bin/bash
+# Install package-owned Moka host adapters after the shared Yeet-owned harness.
+# The package is resolved exactly through the managed Nub toolchain so cza owns
+# both global surfaces without making any repository the adapter source of truth.
+set -euo pipefail
+
+readonly MOKA_PACKAGE="@oisincoveney/pipeline@3.24.3"
+
+command -v mise >/dev/null 2>&1 || { echo "mise not installed; cannot sync Moka adapters." >&2; exit 1; }
+
+export MISE_SYSTEM_CONFIG_FILE="$HOME/.config/mise/agent.toml"
+mise which nubx >/dev/null 2>&1 || { echo "nubx not installed through mise; cannot sync Moka adapters." >&2; exit 1; }
+
+claude_config_dir="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+opencode_config_dir="${OPENCODE_CONFIG_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/opencode}"
+
+legacy_moka_adapters_present() {
+  local adapter
+
+  shopt -s nullglob
+  for adapter in \
+    "$opencode_config_dir/commands"/moka-*.md \
+    "$opencode_config_dir/agents"/MoKa\ *.md \
+    "$claude_config_dir/commands"/moka-*.md \
+    "$claude_config_dir/agents"/moka-*.md; do
+    if grep -Fq '@oisin-ee/moka' "$adapter"; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+set --
+if legacy_moka_adapters_present; then
+  echo "Migrating legacy Moka adapter ownership to ${MOKA_PACKAGE}…"
+  set -- --force
+fi
+
+# Moka adapters are global. Discard a caller-provided project target and run
+# from HOME so cza never creates or updates repository-local files.
+unset PIPELINE_TARGET_PATH
+
+echo "Syncing Moka host adapters…"
+mise exec -- nubx -y -p "$MOKA_PACKAGE" --cwd "$HOME" moka init "$@"
+echo "Moka host adapter sync complete."

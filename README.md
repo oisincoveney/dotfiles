@@ -46,7 +46,9 @@ mise up
 ```
 
 Commit those manifest or lockfile changes normally. After pulling them on another
-host, run `cza` to refresh the agent manifest and install the committed tool state.
+host, run `cza` to refresh the agent manifest, install the committed tool state,
+reconcile the Yeet-owned shared harness, and regenerate the package-owned Moka
+3.24.3 host adapters.
 
 ## Useful commands
 
