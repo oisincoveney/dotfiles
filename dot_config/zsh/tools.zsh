@@ -119,11 +119,10 @@ fi
 # --disable-up-arrow keeps the Up key as plain previous-line history. Cached.
 _evalcache atuin init zsh --disable-up-arrow
 
-# The agent harness (~/.claude, ~/.config/opencode, ~/.codex) is owned by yeet, the
-# sole harness installer (ENG-25): yeet acquires its own pinned oisin-ee/agent cache
-# and syncs skills/hooks/rules/settings before it spawns any agent. No shell-startup
-# trigger and no chezmoi harness install — the old `moka init --force` auto-fork and the
-# run_after_10-agent-harness chezmoi trigger are both gone.
+# The Claude Code, Codex, and OMP harness is owned by yeet, the sole harness installer (ENG-25):
+# yeet acquires its own pinned oisin-ee/agent cache and syncs skills, hooks, rules, and settings before it spawns any
+# agent. No shell-startup trigger or chezmoi harness install remains; Moka's package-owned adapters are reconciled by
+# the dedicated cza after-script.
 
 # yazi: `y` opens the file manager and cd's to wherever you quit it.
 if command -v yazi >/dev/null 2>&1; then

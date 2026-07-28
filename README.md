@@ -47,8 +47,8 @@ mise up
 
 Commit those manifest or lockfile changes normally. After pulling them on another
 host, run `cza` to refresh the agent manifest, install the committed tool state,
-reconcile the Yeet-owned shared harness, and regenerate the package-owned Moka
-3.24.3 host adapters.
+reconcile the Yeet-owned Claude/Codex/OMP harness, and regenerate Moka 3.24.3's
+Claude Code adapters without recreating its retired OpenCode or Codex projections.
 
 ## Useful commands
 

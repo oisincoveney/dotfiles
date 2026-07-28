@@ -25,7 +25,6 @@ tests
 .claude/backups
 .claude/todos
 .claude/statsig
-.config/opencode/node_modules
 
 # Global instruction files (CLAUDE.md / AGENTS.md / GEMINI.md) are generated and
 # owned by yeet, the sole harness installer (ENG-25) — NOT deployed as static
@@ -73,10 +72,9 @@ tests
 .codex/config.toml
 {{ end }}
 
-# AI-config-only mode (CHEZMOI_AI_ONLY=1): used by the headless moka
-# pipeline-runner. Deploy ONLY the AI tool config (rules + opencode/codex/gemini)
-# and exclude git identity/hooks, ssh, and the interactive shell/editor setup so
-# the bot's git identity and automated git ops are never touched. Pair with
+# AI-config-only mode (CHEZMOI_AI_ONLY=1): used by the headless Moka pipeline runner.
+# Deploy only the Claude/Codex/Gemini tool config and exclude git identity/hooks, SSH, and the interactive
+# shell/editor setup so the bot's git identity and automated git ops are never touched. Pair with
 # `chezmoi apply --exclude=scripts` to skip the run_once installers.
 {{ if env "CHEZMOI_AI_ONLY" }}
 .gitconfig
