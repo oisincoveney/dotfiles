@@ -121,8 +121,7 @@ _evalcache atuin init zsh --disable-up-arrow
 
 # The Claude Code, Codex, and OMP harness is owned by yeet, the sole harness installer (ENG-25):
 # yeet acquires its own pinned oisin-ee/agent cache and syncs skills, hooks, rules, and settings before it spawns any
-# agent. No shell-startup trigger or chezmoi harness install remains; Moka's package-owned adapters are reconciled by
-# the dedicated cza after-script.
+# agent. No shell-startup trigger, separate Moka adapter install, or second harness owner remains.
 
 # yazi: `y` opens the file manager and cd's to wherever you quit it.
 if command -v yazi >/dev/null 2>&1; then

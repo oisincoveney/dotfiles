@@ -5,3 +5,9 @@
 
 # OpenCode is retired; remove its obsolete config, generated adapters, caches, and backups before after-scripts run.
 .config/opencode
+
+# Moka host adapters are retired; Yeet owns the shared Claude harness.
+.claude/commands/moka-execute.md
+.claude/commands/moka-inspect.md
+.claude/commands/moka-quick.md
+.claude/agents/moka-inspector.md
