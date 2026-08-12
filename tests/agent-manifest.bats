@@ -88,10 +88,10 @@ printf '%s\n' "$*" >>"$BATS_TEST_TMPDIR/mise-calls"
 case "$*" in
   "install -y")
     ;;
-  "which yeet")
-    printf '%s\n' '/managed/mise/yeet'
+  "which agent-sync")
+    printf '%s\n' '/managed/mise/agent-sync'
     ;;
-  "exec -- yeet agent sync")
+  "exec -- agent-sync")
     ;;
   *)
     printf 'unexpected mise invocation: %s\n' "$*" >&2
@@ -110,11 +110,11 @@ STUB
   [ "$status" -eq 0 ]
 
   [ "$(cat "$BATS_TEST_TMPDIR/mise-calls")" = "install -y
-which yeet
-exec -- yeet agent sync
+which agent-sync
+exec -- agent-sync
 install -y
-which yeet
-exec -- yeet agent sync" ]
+which agent-sync
+exec -- agent-sync" ]
 }
 
 @test "managed sync scripts fail when mise is unavailable" {
@@ -135,12 +135,12 @@ exec -- yeet agent sync" ]
   done
 }
 
-@test "agent harness sync fails when yeet is unavailable through mise" {
+@test "agent harness sync fails when agent-sync is unavailable through mise" {
   cat >"$STUB_BIN/mise" <<'STUB'
 #!/usr/bin/env bash
 set -euo pipefail
 case "$*" in
-  "which yeet")
+  "which agent-sync")
     exit 1
     ;;
   *)
@@ -157,21 +157,21 @@ STUB
   run bash "$rendered"
 
   [ "$status" -ne 0 ]
-  [[ "$output" == *"yeet not installed through mise"* ]]
+  [[ "$output" == *"agent-sync not installed through mise"* ]]
   [[ "$output" != *"skipping"* ]]
 }
 
-@test "agent harness sync resolves yeet through the managed mise toolset" {
+@test "agent harness sync resolves agent-sync through the managed mise toolset" {
   cat >"$STUB_BIN/mise" <<'STUB'
 #!/usr/bin/env bash
 set -euo pipefail
 printf '%s|%s\n' "${MISE_SYSTEM_CONFIG_FILE:-unset}" "$*" >>"$BATS_TEST_TMPDIR/mise-calls"
 case "$*" in
-  "which yeet")
-    printf '%s\n' '/managed/mise/yeet'
+  "which agent-sync")
+    printf '%s\n' '/managed/mise/agent-sync'
     ;;
-  "exec -- yeet agent sync")
-    printf '%s\n' 'managed yeet sync'
+  "exec -- agent-sync")
+    printf '%s\n' 'managed harness sync'
     ;;
   *)
     printf 'unexpected mise invocation: %s\n' "$*" >&2
@@ -179,12 +179,12 @@ case "$*" in
     ;;
 esac
 STUB
-  cat >"$STUB_BIN/yeet" <<'STUB'
+  cat >"$STUB_BIN/agent-sync" <<'STUB'
 #!/usr/bin/env bash
-printf '%s\n' 'stale PATH yeet invoked' >&2
+printf '%s\n' 'stale PATH agent-sync invoked' >&2
 exit 99
 STUB
-  chmod +x "$STUB_BIN/mise" "$STUB_BIN/yeet"
+  chmod +x "$STUB_BIN/mise" "$STUB_BIN/agent-sync"
 
   rendered="$BATS_TEST_TMPDIR/agent-harness-sync.sh"
   chezmoi execute-template <"$ROOT/run_after_04-agent-harness-sync.sh.tmpl" >"$rendered"
@@ -192,15 +192,15 @@ STUB
   run bash "$rendered"
 
   [ "$status" -eq 0 ]
-  [[ "$output" == *"managed yeet sync"* ]]
-  [[ "$output" != *"stale PATH yeet invoked"* ]]
-  [ "$(cat "$BATS_TEST_TMPDIR/mise-calls")" = "$HOME/.config/mise/agent.toml|which yeet
-$HOME/.config/mise/agent.toml|exec -- yeet agent sync" ]
+  [[ "$output" == *"managed harness sync"* ]]
+  [[ "$output" != *"stale PATH agent-sync invoked"* ]]
+  [ "$(cat "$BATS_TEST_TMPDIR/mise-calls")" = "$HOME/.config/mise/agent.toml|which agent-sync
+$HOME/.config/mise/agent.toml|exec -- agent-sync" ]
 }
 
 
 
-@test "harness settings are owned only by yeet" {
+@test "harness settings are owned only by agent-sync" {
   [ ! -e "$ROOT/dot_codex/modify_private_config.toml" ]
   [ ! -e "$ROOT/dot_claude/modify_private_settings.json" ]
 }

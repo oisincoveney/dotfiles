@@ -37,7 +37,7 @@ The main zsh config sources that file when it exists.
 
 The human global manifest and merged lockfile are tracked under `.mise-global/`.
 Chezmoi exposes them as `~/.config/mise/config.toml` and `~/.config/mise/mise.lock`
-symlinks. The agent manifest is installed as mise's lower-precedence system config,
+symlinks. The agent manifest is rendered from GitHub as mise's lower-precedence system config,
 so normal global commands write directly back to this repository:
 
 ```sh
@@ -47,7 +47,7 @@ mise up
 
 Commit those manifest or lockfile changes normally. After pulling them on another
 host, run `cza` to refresh the agent manifest, install the committed tool state,
-and reconcile the Yeet-owned Claude/Codex/OMP harness.
+and reconcile the agent-sync-owned Claude/Codex/OMP harness.
 
 ## Useful commands
 

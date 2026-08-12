@@ -1,22 +1,20 @@
 #!/bin/bash
 # Sync the Claude Code, Codex, and OMP harness on every chezmoi apply so deleted assets are restored even when the
-# canonical source has not changed. Yeet is the sole harness installer (ENG-25): this script invokes the mise-managed
-# `yeet agent sync`, which acquires Yeet's pinned oisin-ee/agent cache and writes skills, hooks, rules, and settings.
+# canonical source has not changed. agent-sync is the sole harness installer (ENG-25); mise installs the pinned
+# GitHub release from the agent manifest before this after-script runs.
 #
-# Ordering: numbered after 03-mise-install so the agent system config and its
-# `yeet` installation exist before this calls them. `mise exec` avoids stale
+# Ordering: numbered after 03-mise-install so agent-sync is installed before this calls it. `mise exec` avoids stale
 # absolute PATH entries inherited by a long-running terminal or desktop app.
 #
-# Caveat: `yeet agent sync` rewrites live harness files. On `cza` this runs
-# against whatever agent session may be open; a live `claude`/`codex` picks up
-# hook/settings changes on its next tool call, not mid-call.
+# Caveat: agent-sync rewrites live harness files. On `cza` this runs against whatever agent session may be open; a
+# live `claude`/`codex` picks up hook/settings changes on its next tool call, not mid-call.
 set -euo pipefail
 
 command -v mise >/dev/null 2>&1 || { echo "mise not installed; cannot sync agent harness." >&2; exit 1; }
 
 export MISE_SYSTEM_CONFIG_FILE="$HOME/.config/mise/agent.toml"
-mise which yeet >/dev/null 2>&1 || { echo "yeet not installed through mise; cannot sync agent harness." >&2; exit 1; }
+mise which agent-sync >/dev/null 2>&1 || { echo "agent-sync not installed through mise; cannot sync agent harness." >&2; exit 1; }
 
-echo "Syncing agent harness via yeet…"
-mise exec -- yeet agent sync
+echo "Syncing agent harness via agent-sync…"
+mise exec -- agent-sync
 echo "Agent harness sync complete."
