@@ -1,0 +1,21 @@
+#!/bin/bash
+# Provision OMP's cliproxy provider: install the plugin that registers it, then
+# point that plugin at our curated model registry (context-window ceilings from
+# oisin-ee/agent). Runs after 04-agent-harness-sync, which deploys
+# cliproxy-models.json into ~/.omp/agent/.
+set -euo pipefail
+
+# The pi-cliproxiapi-auth plugin registers the `cliproxy` provider that config.yml's
+# fallback chains reference. omp shells out to bun for plugin ops; both come from
+# mise (run_after_03), so this apply-time install is idempotent and self-contained.
+export MISE_SYSTEM_CONFIG_FILE="$HOME/.config/mise/agent.toml"
+mise exec -- omp plugin install npm:pi-cliproxiapi-auth
+
+mkdir -p "$HOME/.local/share/pi/agent"
+cat > "$HOME/.local/share/pi/agent/cliproxy.json" <<EOF
+{
+  "baseURL": "https://cliproxy.momokaya.ee/v1",
+  "apiKey": "{{ env "BROKER_API_KEY" }}",
+  "modelsJsonPath": "$HOME/.omp/agent/cliproxy-models.json"
+}
+EOF
