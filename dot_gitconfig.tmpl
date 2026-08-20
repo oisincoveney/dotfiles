@@ -16,6 +16,9 @@
     excludesFile = ~/.gitignore_global
     attributesFile = ~/.config/git/attributes
 
+[diff]
+    external = difft
+
 [interactive]
     diffFilter = delta --color-only
 
@@ -55,8 +58,7 @@
     name = mergiraf
     driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
 
-# difftastic — syntax-aware diff on demand via `git dft`. Default `git diff`
-# stays on delta above; this is opt-in so nothing surprises existing muscle memory.
+# difftastic — syntax-aware diff used by default via Git's external diff integration.
 [difftool "difftastic"]
     cmd = difft "$LOCAL" "$REMOTE"
 [difftool]
