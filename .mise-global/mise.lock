@@ -2391,33 +2391,8 @@ url = "https://github.com/mr-karan/doggo/releases/download/v1.3.0/doggo-windows-
 url_api = "https://api.github.com/repos/mr-karan/doggo/releases/assets/504896303"
 
 [[tools."github:oisin-ee/agent"]]
-version = "0.1.6"
+version = "0.1.10"
 backend = "github:oisin-ee/agent"
-
-[tools."github:oisin-ee/agent"."platforms.linux-x64"]
-checksum = "sha256:162ddc68c767cfdd42fe649939b73ce5aae1fdff1e51220020f603f198134c26"
-url = "https://github.com/oisin-ee/agent/releases/download/v0.1.6/agent-sync-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/agent/releases/assets/518565790"
-
-[tools."github:oisin-ee/agent"."platforms.linux-x64-baseline"]
-checksum = "sha256:162ddc68c767cfdd42fe649939b73ce5aae1fdff1e51220020f603f198134c26"
-url = "https://github.com/oisin-ee/agent/releases/download/v0.1.6/agent-sync-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/agent/releases/assets/518565790"
-
-[tools."github:oisin-ee/agent"."platforms.linux-x64-musl"]
-checksum = "sha256:162ddc68c767cfdd42fe649939b73ce5aae1fdff1e51220020f603f198134c26"
-url = "https://github.com/oisin-ee/agent/releases/download/v0.1.6/agent-sync-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/agent/releases/assets/518565790"
-
-[tools."github:oisin-ee/agent"."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:162ddc68c767cfdd42fe649939b73ce5aae1fdff1e51220020f603f198134c26"
-url = "https://github.com/oisin-ee/agent/releases/download/v0.1.6/agent-sync-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/agent/releases/assets/518565790"
-
-[tools."github:oisin-ee/agent"."platforms.macos-arm64"]
-checksum = "sha256:697741e352ef54e98ff002ffd1d18898a94df1f189f88c53312c9b1da0df2130"
-url = "https://github.com/oisin-ee/agent/releases/download/v0.1.6/agent-sync-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/oisin-ee/agent/releases/assets/518565791"
 
 [[tools."github:oisin-ee/yeet"]]
 version = "0.8.41"
