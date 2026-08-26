@@ -1,6 +1,6 @@
 # Modern CLI tool integrations + the catppuccin-mocha theming that ties the
 # terminal together. Two data-driven loaders own the repetitive shapes; only the
-# genuinely-unique integrations (fzf, atuin, terminal-specific) are spelled out.
+# genuinely-unique integrations (atuin, terminal-specific) are spelled out.
 
 # ── theme: catppuccin mocha, single source for fzf / bat / eza colours ────────
 export FZF_DEFAULT_OPTS=" \
@@ -64,10 +64,8 @@ _evalcache zoxide init zsh
 # defines the wrapper that makes `gwq cd`/`gwq add -s` change the current shell.
 _evalcache gwq completion zsh
 
-# zen kit: universal completions (carapace), tree-nav (broot `br`), cheatsheets
-# (navi, ctrl-g), command-fix (pay-respects `f`), fuzzy switchboard (television).
-export CARAPACE_BRIDGES='zsh,fzf'
-_evalcache carapace _carapace zsh
+# zen kit: tree-nav (broot `br`), cheatsheets (navi, ctrl-g), command-fix
+# (pay-respects `f`), fuzzy switchboard (television).
 _evalcache broot --print-shell-function zsh
 _evalcache navi widget zsh
 _evalcache pay-respects zsh --alias f
@@ -103,17 +101,6 @@ _load_deferred_completions() {
 add-zsh-hook precmd _load_deferred_completions
 
 # ── unique integrations that don't fit the table ─────────────────────────────
-
-# fzf key-bindings + completion: only in a real interactive TTY.
-if [[ -o interactive && -t 0 && -t 1 ]] && command -v fzf >/dev/null 2>&1; then
-  if [[ -r /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
-    # Debian/Ubuntu package layout (older fzf without `--zsh`).
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
-    [[ -r /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
-  else
-    _evalcache fzf --zsh   # fzf >= 0.48
-  fi
-fi
 
 # atuin LAST: it rebinds Ctrl-R / Up, so it must win over fzf's bindings.
 # --disable-up-arrow keeps the Up key as plain previous-line history. Cached.

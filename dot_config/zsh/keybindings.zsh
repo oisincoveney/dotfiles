@@ -1,6 +1,5 @@
 # Key bindings. Emacs mode plus sane Delete/Backspace/Home/End across terminals
-# and partial-terminfo SSH sessions. Kept after plugin/fzf load in the loader so
-# widget-wrapping plugins don't clobber these.
+# and partial-terminfo SSH sessions.
 
 bindkey -e   # emacs keymap
 
@@ -17,15 +16,10 @@ bindkey '^[[3;5~' delete-char
 bindkey '^[[1;3C' forward-word
 bindkey '^[[1;3D' backward-word
 
-# Give deferred fzf-tab the native completion widget to wrap when it loads.
-# Until then, Tab remains functional as standard zsh completion.
-bindkey -M emacs '^I' expand-or-complete
-bindkey -M viins '^I' expand-or-complete
-
 typeset -ga _ZSH_SHORTCUT_ROWS
 _ZSH_SHORTCUT_ROWS=(
   $'Scope\tKey\tAction\tSource'
-  $'Completion\tTab\tOpen fuzzy completion picker\tfzf-tab'
+  $'Completion\tTab\tNative zsh completion\tzsh'
   $'Picker\tCtrl-T\tOpen command-aware file/folder picker\ttelevision'
   $'Search\tCtrl-R\tSearch shell history\tatuin'
   $'Search\tCtrl-G\tOpen cheatsheet picker\tnavi'

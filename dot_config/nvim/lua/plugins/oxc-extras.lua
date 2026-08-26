@@ -4,34 +4,29 @@ end
 
 return {
   {
-    "neovim/nvim-lspconfig",
+    "mfussenegger/nvim-lint",
     opts = {
-      servers = {
+      events = {
+        "BufWritePost",
+        "BufReadPost",
+      },
+      linters_by_ft = {
+        javascript = { "oxlint" },
+        javascriptreact = { "oxlint" },
+        typescript = { "oxlint" },
+        typescriptreact = { "oxlint" },
+        vue = { "oxlint" },
+        svelte = { "oxlint" },
+        astro = { "oxlint" },
+      },
+      linters = {
         oxlint = {
-          settings = {
-            -- In push mode, this defers linting until save.
-            run = "onSave",
-            typeAware = true,
+          args = {
+            "--type-aware",
+            "--type-check",
+            "--format",
+            "github",
           },
-          before_init = function(init_params, config)
-            -- Workaround: hide pull-diagnostic support so the server uses
-            -- push mode, where `run = "onSave"` is honored. Without this,
-            -- Neovim pulls diagnostics on every change and type-aware
-            -- analysis runs on each keystroke.
-            -- See https://github.com/oxc-project/oxc/discussions/21317
-            if init_params.capabilities.textDocument then
-              init_params.capabilities.textDocument.diagnostic = nil
-            end
-            if init_params.capabilities.workspace then
-              init_params.capabilities.workspace.diagnostics = nil
-            end
-
-            -- Replicate upstream's initializationOptions plumbing, since
-            -- providing before_init replaces the upstream function.
-            local init_options = config.init_options or {}
-            init_options.settings = vim.tbl_extend("force", init_options.settings or {}, config.settings or {})
-            init_params.initializationOptions = init_options
-          end,
         },
       },
     },

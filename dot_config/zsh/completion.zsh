@@ -17,6 +17,11 @@ if [[ -s "$_zcompdump" && ( ! -s "${_zcompdump}.zwc" || "$_zcompdump" -nt "${_zc
 fi
 unset _zcompdump
 
+# Bind Tab to the standard zsh completion widget after compinit.
+zmodload -i zsh/zle 2>/dev/null
+bindkey -M emacs '^I' complete-word
+bindkey -M viins '^I' complete-word
+
 # The zstyles below are read whenever the completion system runs.
 
 # Case-insensitive, partial-word, and substring matching.
@@ -31,14 +36,3 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 # Cache slow completions (e.g. apt, brew).
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
-
-# Hand the completion menu to fzf-tab instead of zsh's built-in menu.
-zstyle ':completion:*' menu no
-
-# fzf-tab: catppuccin-consistent previews and a group switcher.
-zstyle ':fzf-tab:*' use-fzf-default-opts yes
-zstyle ':fzf-tab:*' switch-group '<' '>'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview \
-  'eza -1 --color=always --icons=always $realpath 2>/dev/null || ls -1 $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview \
-  'eza -1 --color=always --icons=always $realpath 2>/dev/null || ls -1 $realpath'

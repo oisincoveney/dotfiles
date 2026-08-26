@@ -3,7 +3,7 @@ if command -v eza >/dev/null 2>&1; then
   alias ls='eza --icons=auto --group-directories-first'
   alias l='eza -l --icons=auto --group-directories-first --git'
   alias ll='eza -lah --icons=auto --group-directories-first --git'
-  alias la='eza -a --icons=auto --group-directories-first'
+  alias la='eza -la --icons=auto --group-directories-first --git'
   alias lt='eza --tree --level=2 --icons=auto --group-directories-first'
 fi
 if command -v bat >/dev/null 2>&1; then
@@ -29,6 +29,10 @@ command -v k9s >/dev/null 2>&1         && alias k9='k9s'
 command -v just >/dev/null 2>&1        && alias j='just'
 command -v kubectx >/dev/null 2>&1     && alias kx='kubectx'
 command -v kubens >/dev/null 2>&1      && alias kn='kubens'
+# Project scripts — `nr` runs the named package.json script, `mt` lists
+# mise tasks. Lightweight, on-demand; no per-prompt enumeration.
+command -v npm >/dev/null 2>&1         && alias nr='npm run'
+command -v mise >/dev/null 2>&1        && alias mt='mise tasks'
 # kubecolor: colorized kubectl. Alias only when kubectl exists; forward its
 # completions (guarded — compdef exists only after compinit has run).
 if command -v kubecolor >/dev/null 2>&1 && command -v kubectl >/dev/null 2>&1; then
@@ -75,6 +79,20 @@ projects() {
     cd "$HOME/projects" || return
   fi
 }
+
+# Parent navigation — `..` (one up) is built into zsh; add `...` for two up.
+alias ...='cd ../..'
+
+# Worktree manager (gwq). Each guarded; relies on `gwq completion zsh` in
+# tools.zsh to wire the in-shell `gwq cd` behavior. Keep aliases concise so
+# they stay discoverable next to the existing tool handles above.
+if command -v gwq >/dev/null 2>&1; then
+  alias gwl='gwq list'
+  alias gwls='gwq list -v'
+  alias gws='gwq status'
+  alias gwc='gwq cd'
+  alias gwg='gwq get'
+fi
 
 # Git
 alias amend="git add . && git commit --amend --no-edit"

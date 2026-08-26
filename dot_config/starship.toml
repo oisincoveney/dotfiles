@@ -16,8 +16,8 @@ $git_status\
 [](fg:blue bg:teal)\
 $nodejs$bun$rust$golang$python\
 [](fg:teal)\
-$package\
-${custom.nub}\
+${custom.npm_package}\
+${custom.npm_scripts}\
 $fill\
 $git_metrics\
 $kubernetes\
@@ -25,6 +25,7 @@ $docker_context\
 ${custom.gcloud}\
 $terraform\
 $direnv\
+${custom.mise_tasks}\
 $cmd_duration\
 $jobs\
 $status\
@@ -150,13 +151,22 @@ style = "peach"
 format = '[$symbol$output]($style) '
 shell = ['bash', '--noprofile', '--norc']
 
-# custom nub: show the pinned package-manager version in JS repos.
-[custom.nub]
+# custom npm_package: show package.json identity (name@version) instead of a bare version.
+[custom.npm_package]
 detect_files = ['package.json']
-command = "nub --version 2>/dev/null | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' | head -1"
-symbol = "󰎙 "
+command = '''node -e 'const p=require("./package.json");process.stdout.write(p.name+"@"+p.version)' 2>/dev/null'''
+symbol = "󰏗 "
 style = "bg:teal fg:crust"
 format = '[ $symbol $output ]($style)'
+shell = ['bash', '--noprofile', '--norc']
+
+# custom npm_scripts: bounded count of package.json scripts (no per-prompt enumeration of names).
+[custom.npm_scripts]
+detect_files = ['package.json']
+command = '''node -e 'const p=require("./package.json");process.stdout.write(String(Object.keys(p.scripts||{}).length))' 2>/dev/null'''
+symbol = "▶ "
+style = "bg:teal fg:crust"
+format = '[ $symbol $output scripts ]($style)'
 shell = ['bash', '--noprofile', '--norc']
 
 [terraform]
@@ -173,7 +183,23 @@ allowed_msg = ""
 not_allowed_msg = "✗"
 denied_msg = "✗"
 
+# built-in mise health module is disabled: its `mise doctor` check is not useful per-prompt here.
+[mise]
+disabled = true
+
+# custom mise_tasks: bounded count of local mise tasks (no per-prompt enumeration of names).
+# Names stay explicit: run `mise tasks` on demand from the alias lane.
+[custom.mise_tasks]
+detect_files = ['mise.toml', '.mise.toml']
+detect_folders = ['mise-tasks', '.mise-tasks', 'mise/tasks', '.mise/tasks', '.config/mise/tasks']
+command = '''mise tasks --json 2>/dev/null | node -e 'let d="";process.stdin.on("data",c=>d+=c).on("end",()=>{const a=JSON.parse(d);process.stdout.write(String(Array.isArray(a)?a.length:0))})' 2>/dev/null'''
+symbol = "󰚑 "
+style = "overlay2"
+format = '[$symbol$output tasks]($style) '
+shell = ['bash', '--noprofile', '--norc']
+
 [package]
+disabled = true
 symbol = "󰏗 "
 style = "overlay2"
 format = '[$symbol$version]($style) '
