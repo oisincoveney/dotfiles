@@ -21,6 +21,27 @@ zinit ice blockf atpull'zinit creinstall -q .'
 zinit light zsh-users/zsh-completions
 
 # --- turbo block: interactive widgets, loaded after the prompt appears ---
+#
+# zsh-history-substring-search: Up/Down walk only the history entries that
+# contain what is already typed. Native `up-line-or-beginning-search` does
+# PREFIX matching; this does SUBSTRING, so typing `tar` also reaches
+# `git tarball --list`. See docs/zsh-research.md.
+#
+# The Up arrow is free: tools.zsh runs `atuin init zsh --disable-up-arrow`,
+# which suppresses exactly atuin's seven up-arrow bindings and leaves Ctrl-R
+# alone. Both `^[[A` and `^[OA` are bound because terminals emit the latter
+# in application cursor mode (atuin itself binds both).
+#
+# Keys are bound via atload' ' so they land after the deferred load.
 zinit wait lucid for \
     zdharma-continuum/fast-syntax-highlighting \
-    olets/zsh-abbr
+    olets/zsh-abbr \
+    atload'
+      HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+      bindkey -M emacs "^[[A" history-substring-search-up
+      bindkey -M emacs "^[[B" history-substring-search-down
+      bindkey -M emacs "^[OA" history-substring-search-up
+      bindkey -M emacs "^[OB" history-substring-search-down
+      bindkey -M viins "^[[A" history-substring-search-up
+      bindkey -M viins "^[[B" history-substring-search-down
+    ' zsh-users/zsh-history-substring-search
