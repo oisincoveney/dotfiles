@@ -2,44 +2,26 @@ local function project_uses_prettier(bufnr)
   return require("conform").get_formatter_info("prettier", bufnr).cwd ~= nil
 end
 
+local function oxlint_before_init(init_params, config)
+  local init_options = config.init_options or {}
+  init_options.settings = vim.tbl_extend("force", init_options.settings or {}, config.settings or {})
+  init_params.initializationOptions = init_options
+  if init_params.capabilities.textDocument then
+    init_params.capabilities.textDocument.diagnostic = nil
+  end
+end
+
 return {
-  {
-    "mfussenegger/nvim-lint",
-    opts = {
-      -- Keep the persistent LSP process syntax-only.
-      -- Run type-aware checks once per save through nvim-lint.
-      events = {
-        "BufWritePost",
-      },
-      linters_by_ft = {
-        javascript = { "oxlint" },
-        javascriptreact = { "oxlint" },
-        typescript = { "oxlint" },
-        typescriptreact = { "oxlint" },
-        vue = { "oxlint" },
-        svelte = { "oxlint" },
-        astro = { "oxlint" },
-      },
-      linters = {
-        oxlint = {
-          args = {
-            "--type-aware",
-            "--type-check",
-            "--format",
-            "github",
-          },
-        },
-      },
-    },
-  },
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
         oxlint = {
           settings = {
-            typeAware = false,
+            run = "onSave",
+            typeAware = true,
           },
+          before_init = oxlint_before_init,
         },
       },
     },
