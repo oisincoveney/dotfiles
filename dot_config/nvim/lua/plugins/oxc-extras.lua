@@ -6,9 +6,10 @@ return {
   {
     "mfussenegger/nvim-lint",
     opts = {
+      -- Keep the persistent LSP process syntax-only.
+      -- Run type-aware checks once per save through nvim-lint.
       events = {
         "BufWritePost",
-        "BufReadPost",
       },
       linters_by_ft = {
         javascript = { "oxlint" },
@@ -26,6 +27,18 @@ return {
             "--type-check",
             "--format",
             "github",
+          },
+        },
+      },
+    },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        oxlint = {
+          settings = {
+            typeAware = false,
           },
         },
       },
