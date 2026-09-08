@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Install Oh My Tmux if not present
 set -euo pipefail
 
