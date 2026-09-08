@@ -15,6 +15,12 @@ command -v mise >/dev/null 2>&1 || { echo "mise not installed; cannot sync agent
 export MISE_SYSTEM_CONFIG_FILE="$HOME/.config/mise/agent.toml"
 mise which agent-sync >/dev/null 2>&1 || { echo "agent-sync not installed through mise; cannot sync agent harness." >&2; exit 1; }
 
+# Transport: agent-sync clones the canonical source over SSH. A host with no SSH key cannot authenticate, so use the
+# documented AGENT_SYNC_URL override and clone over HTTPS with the gh credential helper instead.
+if [[ -z "${AGENT_SYNC_URL:-}" ]] && ! compgen -G "$HOME/.ssh/id_*" >/dev/null; then
+	export AGENT_SYNC_URL="https://github.com/oisin-ee/agent.git"
+fi
+
 echo "Syncing agent harness via agent-sync…"
 mise exec -- agent-sync
 echo "Agent harness sync complete."
