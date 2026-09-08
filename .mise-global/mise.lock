@@ -657,16 +657,14 @@ version = "1.14.0"
 backend = "aqua:bats-core/bats-core"
 
 [tools.bats."platforms.linux-arm64"]
-url = "https://github.com/bats-core/bats-core/archive/refs/tags/1.14.0.tar.gz"
-url_api = "https://api.github.com/repos/bats-core/bats-core/tarball/1.14.0"
+url = "https://github.com/bats-core/bats-core/archive/refs/tags/v1.14.0.tar.gz"
 
 [tools.bats."platforms.linux-arm64-musl"]
 url = "https://github.com/bats-core/bats-core/archive/refs/tags/1.14.0.tar.gz"
 url_api = "https://api.github.com/repos/bats-core/bats-core/tarball/1.14.0"
 
 [tools.bats."platforms.linux-x64"]
-url = "https://github.com/bats-core/bats-core/archive/refs/tags/1.14.0.tar.gz"
-url_api = "https://api.github.com/repos/bats-core/bats-core/tarball/1.14.0"
+url = "https://github.com/bats-core/bats-core/archive/refs/tags/v1.14.0.tar.gz"
 
 [tools.bats."platforms.linux-x64-baseline"]
 url = "https://github.com/bats-core/bats-core/archive/refs/tags/1.14.0.tar.gz"
@@ -681,8 +679,7 @@ url = "https://github.com/bats-core/bats-core/archive/refs/tags/1.14.0.tar.gz"
 url_api = "https://api.github.com/repos/bats-core/bats-core/tarball/1.14.0"
 
 [tools.bats."platforms.macos-arm64"]
-url = "https://github.com/bats-core/bats-core/archive/refs/tags/1.14.0.tar.gz"
-url_api = "https://api.github.com/repos/bats-core/bats-core/tarball/1.14.0"
+url = "https://github.com/bats-core/bats-core/archive/refs/tags/v1.14.0.tar.gz"
 
 [tools.bats."platforms.macos-x64"]
 url = "https://github.com/bats-core/bats-core/archive/refs/tags/1.14.0.tar.gz"
@@ -2046,63 +2043,63 @@ url = "https://github.com/Canop/broot/releases/download/v1.58.0/broot_1.58.0.zip
 url_api = "https://api.github.com/repos/Canop/broot/releases/assets/472859897"
 
 [[tools."github:can1357/oh-my-pi"]]
-version = "18.0.3"
+version = "18.0.11"
 backend = "github:can1357/oh-my-pi"
 
 [tools."github:can1357/oh-my-pi"."platforms.linux-arm64"]
-checksum = "sha256:3b7e6ec68175451ec0ae2e07aac042d180d6ee03dbea11851aa84c050b7995f6"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.3/omp-linux-arm64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/526043247"
+checksum = "sha256:e5f77cb65aa2dc777a8a5932be3b2e6a44271c8df2eb209cea6f04f212f3f010"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.11/omp-linux-arm64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/535576891"
 
 [tools."github:can1357/oh-my-pi"."platforms.linux-arm64-musl"]
-checksum = "sha256:fb8dbb98b63f63413c79a962f5df144eff6c6901e79b84974713f2d3b842934c"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.3/omp-linux-musl-arm64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/526043246"
+checksum = "sha256:0ac3d5dadf6dc463f26b19c75b9e8f0ff95c679c02fab220707f4815acfe00ee"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.11/omp-linux-musl-arm64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/535576883"
 
 [tools."github:can1357/oh-my-pi"."platforms.linux-x64"]
-checksum = "sha256:4733662062bfb4364e4ab387d7940e56a7143e5dc1c20726787e61bb1b52df28"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.3/omp-linux-x64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/526043244"
+checksum = "sha256:6054460b29e9bad5eba78336f291e1979c2fa0a5cd96fc2d92afd666cc681d26"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.11/omp-linux-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/535576894"
 
 [tools."github:can1357/oh-my-pi"."platforms.linux-x64-baseline"]
-checksum = "sha256:4733662062bfb4364e4ab387d7940e56a7143e5dc1c20726787e61bb1b52df28"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.3/omp-linux-x64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/526043244"
+checksum = "sha256:6054460b29e9bad5eba78336f291e1979c2fa0a5cd96fc2d92afd666cc681d26"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.11/omp-linux-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/535576894"
 
 [tools."github:can1357/oh-my-pi"."platforms.linux-x64-musl"]
-checksum = "sha256:c10dde598bf237363a00a9fe67e2e21d6f2a4e90e50a7e4b409d2e99ecaf8e38"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.3/omp-linux-musl-x64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/526043242"
+checksum = "sha256:7e76b70ad787278989923d98451a2c8d3e6b7372a82e1c6c9cb821673956a771"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.11/omp-linux-musl-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/535576884"
 
 [tools."github:can1357/oh-my-pi"."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:c10dde598bf237363a00a9fe67e2e21d6f2a4e90e50a7e4b409d2e99ecaf8e38"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.3/omp-linux-musl-x64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/526043242"
+checksum = "sha256:7e76b70ad787278989923d98451a2c8d3e6b7372a82e1c6c9cb821673956a771"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.11/omp-linux-musl-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/535576884"
 
 [tools."github:can1357/oh-my-pi"."platforms.macos-arm64"]
-checksum = "sha256:314e84a04e14839a9291cb704c98e747c69fefe2ec43e7c6a74a9e293b1f18b9"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.3/omp-darwin-arm64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/526043248"
+checksum = "sha256:88b4a3e68e19904b8fcc1ba4b319ef68795f4fe06a6d101d564fc482cb0cc252"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.11/omp-darwin-arm64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/535576888"
 
 [tools."github:can1357/oh-my-pi"."platforms.macos-x64"]
-checksum = "sha256:35aac8ae5e5b850afa183cb9d5c1e367ffe61872fbd2700b73ed5fdee817a092"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.3/omp-darwin-x64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/526043240"
+checksum = "sha256:80f7dc579b88d0e55b5ce4eb4d0e940711af69328f4ffb2c293b8e1497ff7a2d"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.11/omp-darwin-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/535576889"
 
 [tools."github:can1357/oh-my-pi"."platforms.macos-x64-baseline"]
-checksum = "sha256:35aac8ae5e5b850afa183cb9d5c1e367ffe61872fbd2700b73ed5fdee817a092"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.3/omp-darwin-x64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/526043240"
+checksum = "sha256:80f7dc579b88d0e55b5ce4eb4d0e940711af69328f4ffb2c293b8e1497ff7a2d"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.11/omp-darwin-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/535576889"
 
 [tools."github:can1357/oh-my-pi"."platforms.windows-x64"]
-checksum = "sha256:63c5bb8c517c83c838a6283e36a56faa3c1071e3a5eba145266fc723838c57b5"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.3/omp-windows-x64.exe"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/526043241"
+checksum = "sha256:3402325fff22ab8972d890af28ca4ea6670bfc43aa5a9042b9b02b7ab93e6f6a"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.11/omp-windows-x64.exe"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/535576886"
 
 [tools."github:can1357/oh-my-pi"."platforms.windows-x64-baseline"]
-checksum = "sha256:63c5bb8c517c83c838a6283e36a56faa3c1071e3a5eba145266fc723838c57b5"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.3/omp-windows-x64.exe"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/526043241"
+checksum = "sha256:3402325fff22ab8972d890af28ca4ea6670bfc43aa5a9042b9b02b7ab93e6f6a"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.0.11/omp-windows-x64.exe"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/535576886"
 
 [[tools."github:dathere/qsv"]]
 version = "22.0.1"
@@ -2391,12 +2388,33 @@ url = "https://github.com/mr-karan/doggo/releases/download/v1.3.0/doggo-windows-
 url_api = "https://api.github.com/repos/mr-karan/doggo/releases/assets/504896303"
 
 [[tools."github:oisin-ee/agent"]]
-version = "0.1.10"
+version = "0.2.0"
 backend = "github:oisin-ee/agent"
 
-[[tools."github:oisin-ee/yeet"]]
-version = "0.8.41"
-backend = "github:oisin-ee/yeet"
+[tools."github:oisin-ee/agent"."platforms.linux-x64"]
+checksum = "sha256:8e1afb7631b25d70bd008dabca85058f5e5e3abbcbe160d94236b1e7c114e065"
+url = "https://github.com/oisin-ee/agent/releases/download/v0.2.0/agent-sync-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/agent/releases/assets/537861334"
+
+[tools."github:oisin-ee/agent"."platforms.linux-x64-baseline"]
+checksum = "sha256:8e1afb7631b25d70bd008dabca85058f5e5e3abbcbe160d94236b1e7c114e065"
+url = "https://github.com/oisin-ee/agent/releases/download/v0.2.0/agent-sync-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/agent/releases/assets/537861334"
+
+[tools."github:oisin-ee/agent"."platforms.linux-x64-musl"]
+checksum = "sha256:8e1afb7631b25d70bd008dabca85058f5e5e3abbcbe160d94236b1e7c114e065"
+url = "https://github.com/oisin-ee/agent/releases/download/v0.2.0/agent-sync-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/agent/releases/assets/537861334"
+
+[tools."github:oisin-ee/agent"."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:8e1afb7631b25d70bd008dabca85058f5e5e3abbcbe160d94236b1e7c114e065"
+url = "https://github.com/oisin-ee/agent/releases/download/v0.2.0/agent-sync-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/agent/releases/assets/537861334"
+
+[tools."github:oisin-ee/agent"."platforms.macos-arm64"]
+checksum = "sha256:791c1feaecf93c4a2624608546a9a911c8ecdaa2b9665396a4b1be5bb81b86ff"
+url = "https://github.com/oisin-ee/agent/releases/download/v0.2.0/agent-sync-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/agent/releases/assets/537861332"
 
 [[tools."github:tstack/lnav"]]
 version = "0.14.0"
@@ -4049,7 +4067,7 @@ backend = "aqua:pvolok/mprocs"
 
 [tools.mprocs."platforms.linux-arm64"]
 checksum = "sha256:ebe73f04e02e2134df463c8f0a0e1c293aa3b41dd7909180687529b21780adb0"
-url = "https://github.com/pvolok/mprocs/releases/download/v0.9.6/mprocs-0.9.6-linux-aarch64-musl.tar.gz"
+url = "https://github.com/pvolok/dekit/releases/download/v0.9.6/mprocs-0.9.6-linux-aarch64-musl.tar.gz"
 
 [tools.mprocs."platforms.linux-arm64-musl"]
 checksum = "sha256:ebe73f04e02e2134df463c8f0a0e1c293aa3b41dd7909180687529b21780adb0"
@@ -4057,7 +4075,7 @@ url = "https://github.com/pvolok/mprocs/releases/download/v0.9.6/mprocs-0.9.6-li
 
 [tools.mprocs."platforms.linux-x64"]
 checksum = "sha256:52591a9aab797a5e164fa37a5f81b516fa3c25f125b59a60724e38ae98bfe77b"
-url = "https://github.com/pvolok/mprocs/releases/download/v0.9.6/mprocs-0.9.6-linux-x86_64-musl.tar.gz"
+url = "https://github.com/pvolok/dekit/releases/download/v0.9.6/mprocs-0.9.6-linux-x86_64-musl.tar.gz"
 
 [tools.mprocs."platforms.linux-x64-baseline"]
 checksum = "sha256:52591a9aab797a5e164fa37a5f81b516fa3c25f125b59a60724e38ae98bfe77b"
@@ -4073,7 +4091,7 @@ url = "https://github.com/pvolok/mprocs/releases/download/v0.9.6/mprocs-0.9.6-li
 
 [tools.mprocs."platforms.macos-arm64"]
 checksum = "sha256:6b557dc4d446009105f2ae1a33206f54f97cea72f9674af513a7279572350641"
-url = "https://github.com/pvolok/mprocs/releases/download/v0.9.6/mprocs-0.9.6-darwin-aarch64.tar.gz"
+url = "https://github.com/pvolok/dekit/releases/download/v0.9.6/mprocs-0.9.6-darwin-aarch64.tar.gz"
 
 [tools.mprocs."platforms.macos-x64"]
 checksum = "sha256:51c3b363d5a2d32ae50a5307954b8d5aa336379aa986be580e9fe27682392545"
@@ -4252,10 +4270,6 @@ backend = "npm:@melkeydev/go-blueprint"
 version = "0.29.0"
 backend = "npm:@moonshot-ai/kimi-code"
 
-[[tools."npm:@nubjs/nub"]]
-version = "0.7.5"
-backend = "npm:@nubjs/nub"
-
 [[tools."npm:ajv-cli"]]
 version = "5.0.0"
 backend = "npm:ajv-cli"
@@ -4283,6 +4297,10 @@ backend = "npm:oxlint"
 [[tools."npm:oxlint-tsgolint"]]
 version = "7.0.2001"
 backend = "npm:oxlint-tsgolint"
+
+[[tools."npm:pnpm"]]
+version = "11.8.0"
+backend = "npm:pnpm"
 
 [[tools."npm:repomix"]]
 version = "1.18.0"
@@ -4694,8 +4712,8 @@ version = "3.14.7"
 backend = "core:python"
 
 [tools.python."platforms.linux-arm64"]
-checksum = "sha256:4dba8d7e06199f841a9d6b54e4eb58d446a5c20c65085a916190dd0162c6e93b"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260807/cpython-3.14.7+20260807-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"
+checksum = "sha256:8a0798baa8a2c27b5751d590aced543eaa85e20b3f73d93c1af049688acdc9c5"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.linux-arm64-musl"]
@@ -4704,8 +4722,8 @@ url = "https://github.com/astral-sh/python-build-standalone/releases/download/20
 provenance = "github-attestations"
 
 [tools.python."platforms.linux-x64"]
-checksum = "sha256:a2478d654ed51d443bae21ec20ad927f116b4f5aae4094ab74918a6aa38f0575"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260807/cpython-3.14.7+20260807-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
+checksum = "sha256:3959f92825141e04adf44982d3a83ee57af0877e893b0796e04c1468749d9b04"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.linux-x64-baseline"]
@@ -4724,8 +4742,8 @@ url = "https://github.com/astral-sh/python-build-standalone/releases/download/20
 provenance = "github-attestations"
 
 [tools.python."platforms.macos-arm64"]
-checksum = "blake3:0fffab4211fa179caf8acb8324e08af1ba0c13288d5f1677c4f8eb2b40601cc0"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260807/cpython-3.14.7+20260807-aarch64-apple-darwin-install_only_stripped.tar.gz"
+checksum = "sha256:4632cb1a6edad9e73d3c81b6d2e69131637d995173e3e85005df14102b0592ba"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-aarch64-apple-darwin-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.macos-x64"]
