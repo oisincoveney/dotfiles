@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Install Catppuccin Mocha themes for the TUIs (+ a ghostty cursor shader).
 # Idempotent: each asset is fetched only if missing. Data-driven — one (url dest)
 # table drives the plain-file fetches; tool-specific installs (bat cache rebuild,
