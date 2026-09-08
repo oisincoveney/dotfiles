@@ -11,11 +11,27 @@ set -euo pipefail
 export MISE_SYSTEM_CONFIG_FILE="$HOME/.config/mise/agent.toml"
 mise exec -- omp plugin install npm:pi-cliproxiapi-auth
 
+# chezmoi renders an unset variable as an empty string, so a missing credential
+# produces a valid JSON file with an empty key. The endpoint then answers 401 and
+# omp silently falls back to its 3 built-in models. Fail loudly instead.
+api_key='{{ env "BROKER_API_KEY" }}'
+if [[ -z "$api_key" ]]; then
+	echo "BROKER_API_KEY is empty; cannot provision the cliproxy provider." >&2
+	echo "Run 'secret sync' to write ~/.config/zsh/secrets.zsh, then open a new shell." >&2
+	exit 1
+fi
+
 mkdir -p "$HOME/.local/share/pi/agent"
-cat > "$HOME/.local/share/pi/agent/cliproxy.json" <<EOF
+config="$HOME/.local/share/pi/agent/cliproxy.json"
+
+# The file holds an API key. `secret sync` writes its own output at 600, so match
+# that. Create the file before the content lands, because a later chmod leaves a
+# window where the key is world-readable.
+install -m 600 /dev/null "$config"
+cat > "$config" <<EOF
 {
   "baseURL": "https://cliproxy.momokaya.ee/v1",
-  "apiKey": "{{ env "BROKER_API_KEY" }}",
+  "apiKey": "$api_key",
   "modelsJsonPath": "$HOME/.omp/agent/cliproxy-models.json"
 }
 EOF
