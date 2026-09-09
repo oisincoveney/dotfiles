@@ -1016,16 +1016,16 @@ version = "0.153.4"
 backend = "aqua:openai/codex"
 
 [tools.codex."platforms.linux-arm64"]
-checksum = "sha256:fc395cb043a1093ab0db34f44aba3199bfaa9ce640cd9be7fd588f44b0da64a4"
-url = "https://github.com/openai/codex/releases/download/rust-v0.153.4/codex-package-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:7a148fb7e7ed8a4bfa3ac4ffe014336070398eff780893582afab9195c6652f7"
+url = "https://github.com/openai/codex/releases/download/rust-v0.153.4/codex-aarch64-unknown-linux-musl.zst"
 
 [tools.codex."platforms.linux-arm64-musl"]
 checksum = "sha256:fc395cb043a1093ab0db34f44aba3199bfaa9ce640cd9be7fd588f44b0da64a4"
 url = "https://github.com/openai/codex/releases/download/rust-v0.153.4/codex-package-aarch64-unknown-linux-musl.tar.gz"
 
 [tools.codex."platforms.linux-x64"]
-checksum = "sha256:a822187e1a2420c61c5926721bfbd878701ed95547c9bb0d4de4498a16ba1821"
-url = "https://github.com/openai/codex/releases/download/rust-v0.153.4/codex-package-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:c485e889611b73ff5c3cc11fb5cea7551ef504465ad8675163766b9b1a9ec84a"
+url = "https://github.com/openai/codex/releases/download/rust-v0.153.4/codex-x86_64-unknown-linux-musl.zst"
 
 [tools.codex."platforms.linux-x64-baseline"]
 checksum = "sha256:a822187e1a2420c61c5926721bfbd878701ed95547c9bb0d4de4498a16ba1821"
@@ -1040,8 +1040,8 @@ checksum = "sha256:a822187e1a2420c61c5926721bfbd878701ed95547c9bb0d4de4498a16ba1
 url = "https://github.com/openai/codex/releases/download/rust-v0.153.4/codex-package-x86_64-unknown-linux-musl.tar.gz"
 
 [tools.codex."platforms.macos-arm64"]
-checksum = "sha256:35438da1fbf7a6db7ddb3bcec84448fa6015ba188461472a97d9d1da7d9c4353"
-url = "https://github.com/openai/codex/releases/download/rust-v0.153.4/codex-package-aarch64-apple-darwin.tar.gz"
+checksum = "sha256:6b3f07b335225b8c59800ee260d062550c2a1859591102a0aac4d75ec719569f"
+url = "https://github.com/openai/codex/releases/download/rust-v0.153.4/codex-aarch64-apple-darwin.zst"
 
 [tools.codex."platforms.macos-x64"]
 checksum = "sha256:3ee638d7155c856ef31f3f4a85cb2195de1939962d3924c935b24f0514564a3d"
@@ -2433,6 +2433,16 @@ url_api = "https://api.github.com/repos/mr-karan/doggo/releases/assets/539320011
 [[tools."github:oisin-ee/agent"]]
 version = "0.2.0"
 backend = "github:oisin-ee/agent"
+
+[tools."github:oisin-ee/agent"."platforms.linux-x64"]
+checksum = "sha256:8e1afb7631b25d70bd008dabca85058f5e5e3abbcbe160d94236b1e7c114e065"
+url = "https://github.com/oisin-ee/agent/releases/download/v0.2.0/agent-sync-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/agent/releases/assets/537861334"
+
+[tools."github:oisin-ee/agent"."platforms.macos-arm64"]
+checksum = "sha256:791c1feaecf93c4a2624608546a9a911c8ecdaa2b9665396a4b1be5bb81b86ff"
+url = "https://github.com/oisin-ee/agent/releases/download/v0.2.0/agent-sync-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oisin-ee/agent/releases/assets/537861332"
 
 [[tools."github:tstack/lnav"]]
 version = "0.14.1"
@@ -4085,7 +4095,7 @@ backend = "aqua:pvolok/mprocs"
 
 [tools.mprocs."platforms.linux-arm64"]
 checksum = "sha256:ebe73f04e02e2134df463c8f0a0e1c293aa3b41dd7909180687529b21780adb0"
-url = "https://github.com/pvolok/mprocs/releases/download/v0.9.6/mprocs-0.9.6-linux-aarch64-musl.tar.gz"
+url = "https://github.com/pvolok/dekit/releases/download/v0.9.6/mprocs-0.9.6-linux-aarch64-musl.tar.gz"
 
 [tools.mprocs."platforms.linux-arm64-musl"]
 checksum = "sha256:ebe73f04e02e2134df463c8f0a0e1c293aa3b41dd7909180687529b21780adb0"
@@ -4093,7 +4103,7 @@ url = "https://github.com/pvolok/mprocs/releases/download/v0.9.6/mprocs-0.9.6-li
 
 [tools.mprocs."platforms.linux-x64"]
 checksum = "sha256:52591a9aab797a5e164fa37a5f81b516fa3c25f125b59a60724e38ae98bfe77b"
-url = "https://github.com/pvolok/mprocs/releases/download/v0.9.6/mprocs-0.9.6-linux-x86_64-musl.tar.gz"
+url = "https://github.com/pvolok/dekit/releases/download/v0.9.6/mprocs-0.9.6-linux-x86_64-musl.tar.gz"
 
 [tools.mprocs."platforms.linux-x64-baseline"]
 checksum = "sha256:52591a9aab797a5e164fa37a5f81b516fa3c25f125b59a60724e38ae98bfe77b"
@@ -4109,7 +4119,7 @@ url = "https://github.com/pvolok/mprocs/releases/download/v0.9.6/mprocs-0.9.6-li
 
 [tools.mprocs."platforms.macos-arm64"]
 checksum = "sha256:6b557dc4d446009105f2ae1a33206f54f97cea72f9674af513a7279572350641"
-url = "https://github.com/pvolok/mprocs/releases/download/v0.9.6/mprocs-0.9.6-darwin-aarch64.tar.gz"
+url = "https://github.com/pvolok/dekit/releases/download/v0.9.6/mprocs-0.9.6-darwin-aarch64.tar.gz"
 
 [tools.mprocs."platforms.macos-x64"]
 checksum = "sha256:51c3b363d5a2d32ae50a5307954b8d5aa336379aa986be580e9fe27682392545"
@@ -4259,6 +4269,22 @@ url = "https://nodejs.org/dist/v24.19.0/node-v24.19.0-win-x64.zip"
 [tools.node."platforms.windows-x64-baseline"]
 checksum = "sha256:57f71ab3652e797d84acddc79c81cc9ff1c6ddb2a1974cdb83f00fee9bff4c73"
 url = "https://nodejs.org/dist/v24.19.0/node-v24.19.0-win-x64.zip"
+
+[[tools.node]]
+version = "26.8.1"
+backend = "core:node"
+
+[tools.node."platforms.linux-arm64"]
+checksum = "sha256:d5f973ce975e4bd03e6c2038260f7e9201615aa8e1ee293c72f8dcc2a6d9fddb"
+url = "https://nodejs.org/dist/v26.8.1/node-v26.8.1-linux-arm64.tar.gz"
+
+[tools.node."platforms.linux-x64"]
+checksum = "sha256:b2b76660fa4ded4e0b2a41ee3c0c651cd52ea8170ead91ebac1e147ac3d55643"
+url = "https://nodejs.org/dist/v26.8.1/node-v26.8.1-linux-x64.tar.gz"
+
+[tools.node."platforms.macos-arm64"]
+checksum = "sha256:6e577fd0d9db776db82306629e441a9dace416702622aebdd171c9dfaa41f4d2"
+url = "https://nodejs.org/dist/v26.8.1/node-v26.8.1-darwin-arm64.tar.gz"
 
 [[tools."npm:@anthropic-ai/sandbox-runtime"]]
 version = "0.0.75"
@@ -4730,8 +4756,8 @@ version = "3.14.7"
 backend = "core:python"
 
 [tools.python."platforms.linux-arm64"]
-checksum = "sha256:4dba8d7e06199f841a9d6b54e4eb58d446a5c20c65085a916190dd0162c6e93b"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260807/cpython-3.14.7+20260807-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"
+checksum = "sha256:8a0798baa8a2c27b5751d590aced543eaa85e20b3f73d93c1af049688acdc9c5"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.linux-arm64-musl"]
@@ -4740,8 +4766,8 @@ url = "https://github.com/astral-sh/python-build-standalone/releases/download/20
 provenance = "github-attestations"
 
 [tools.python."platforms.linux-x64"]
-checksum = "sha256:a2478d654ed51d443bae21ec20ad927f116b4f5aae4094ab74918a6aa38f0575"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260807/cpython-3.14.7+20260807-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
+checksum = "sha256:3959f92825141e04adf44982d3a83ee57af0877e893b0796e04c1468749d9b04"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.linux-x64-baseline"]
@@ -4760,8 +4786,8 @@ url = "https://github.com/astral-sh/python-build-standalone/releases/download/20
 provenance = "github-attestations"
 
 [tools.python."platforms.macos-arm64"]
-checksum = "blake3:0fffab4211fa179caf8acb8324e08af1ba0c13288d5f1677c4f8eb2b40601cc0"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260807/cpython-3.14.7+20260807-aarch64-apple-darwin-install_only_stripped.tar.gz"
+checksum = "sha256:4632cb1a6edad9e73d3c81b6d2e69131637d995173e3e85005df14102b0592ba"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.14.7+20260901-aarch64-apple-darwin-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.macos-x64"]
