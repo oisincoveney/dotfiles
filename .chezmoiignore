@@ -87,7 +87,6 @@ tests
 .config/zsh
 .config/tmux
 .config/nvim
-.config/zellij
 .config/mise
 .rulesync
 {{ end }}

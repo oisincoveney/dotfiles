@@ -78,8 +78,7 @@ brew "unzip"
 brew "wireguard-tools"
 # Generate your Xcode project from a spec file and your folder structure
 brew "xcodegen"
-# Pluggable terminal workspace, with terminal multiplexer as the base feature
-brew "zellij"
+
 # Watcher for macOS 10.14+ light/dark mode changes
 brew "cormacrelf/tap/dark-notify"
 # A Powerful Command Line for automating iOS Simulators
