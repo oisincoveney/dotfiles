@@ -38,7 +38,17 @@ STUB
 }
 
 @test "mise bootstrap runs after the package step that installs curl and before the tool sync" {
-  [ ! -e "$ROOT/run_onchange_before_00-mise-bootstrap.sh.tmpl" ]
-  [ -e "$ROOT/run_onchange_after_00-mise-bootstrap.sh.tmpl" ]
-  [[ "00-mise-bootstrap" < "03-mise-install" ]]
+  # chezmoi runs before_ scripts first, then after_ scripts, each group in target-name order.
+  # The package step installs curl, which the bootstrap needs, so the bootstrap must be an
+  # after_ script whose target name sorts before the tool sync.
+  bootstrap="$(cd "$ROOT" && ls run_*mise-bootstrap.sh.tmpl)"
+  packages="$(cd "$ROOT" && ls run_*install-packages.sh.tmpl)"
+  toolsync="$(cd "$ROOT" && ls run_*mise-install.sh.tmpl)"
+  [ "$(wc -l <<<"$bootstrap")" -eq 1 ]
+
+  [[ "$bootstrap" == run_onchange_after_* ]]
+  [[ "$packages" != run_*before_* ]]
+
+  target() { sed -E 's/^run_(once_|onchange_)?(before_|after_)?//; s/\.tmpl$//' <<<"$1"; }
+  [[ "$(target "$bootstrap")" < "$(target "$toolsync")" ]]
 }
