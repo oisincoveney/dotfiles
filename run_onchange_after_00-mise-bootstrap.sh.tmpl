@@ -6,6 +6,9 @@
 # The version lives in .chezmoidata.toml. This is a run_onchange script: the embedded version makes
 # chezmoi re-run it when the pin moves. MISE_INSTALL_SKIP_IF_EXISTS makes a rerun at the same version
 # a no-op. The installer verifies the download against the release SHASUMS256.txt.
+#
+# Ordering: an after-script numbered 00, so it runs once run_once_01-install-packages has put curl on
+# a fresh Linux host and before run_after_03-mise-install needs the binary.
 # Docs: https://mise.jdx.dev/installing-mise.html#mise-run
 set -euo pipefail
 
