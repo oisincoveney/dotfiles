@@ -1,0 +1,4 @@
+# Version of the mise binary that run_onchange_before_00-mise-bootstrap installs on every host.
+# Bump it here. Homebrew and NixOS do not ship mise, so this is the only source of the version.
+[mise]
+version = "2026.9.3"

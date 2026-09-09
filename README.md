@@ -35,6 +35,10 @@ The main zsh config sources that file when it exists.
 
 ## Mise
 
+The mise binary itself is pinned in `.chezmoidata.toml`. `run_onchange_before_00-mise-bootstrap`
+installs that version with the official installer on every host, so the lockfile format is the
+same everywhere. Bump the pin there. Do not install mise through Homebrew, Nix, or a distro package.
+
 The human global manifest and merged lockfile are tracked under `.mise-global/`.
 Chezmoi exposes them as `~/.config/mise/config.toml` and `~/.config/mise/mise.lock`
 symlinks. The agent manifest is rendered from GitHub as mise's lower-precedence system config,

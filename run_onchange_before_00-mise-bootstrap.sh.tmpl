@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Install the pinned mise binary with the official installer on every host, macOS and Linux alike.
+# One version for the fleet keeps the lockfile format identical, so `cza` on one host never rewrites
+# `.mise-global/mise.lock` in a format that another host's mise strips again.
+#
+# The version lives in .chezmoidata.toml. This is a run_onchange script: the embedded version makes
+# chezmoi re-run it when the pin moves. MISE_INSTALL_SKIP_IF_EXISTS makes a rerun at the same version
+# a no-op. The installer verifies the download against the release SHASUMS256.txt.
+# Docs: https://mise.jdx.dev/installing-mise.html#mise-run
+set -euo pipefail
+
+export MISE_VERSION="v{{ .mise.version }}"
+export MISE_INSTALL_PATH="$HOME/.local/bin/mise"
+export MISE_INSTALL_SKIP_IF_EXISTS=1
+
+echo "Installing mise $MISE_VERSION to $MISE_INSTALL_PATH …"
+curl -fsSL https://mise.run | sh
+"$MISE_INSTALL_PATH" --version

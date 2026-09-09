@@ -53,8 +53,6 @@ brew "librsvg"
 brew "macmon"
 # Mac App Store command-line interface
 brew "mas"
-# Polyglot runtime manager (asdf rust clone)
-brew "mise"
 # Capability-based sandbox shell for AI agents with OS-enforced isolation
 brew "nono"
 # Create, run, and share large language models (LLMs)
