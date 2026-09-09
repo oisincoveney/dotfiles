@@ -38,17 +38,21 @@ STUB
 }
 
 @test "mise bootstrap runs after the package step that installs curl and before the tool sync" {
-  # chezmoi runs before_ scripts first, then after_ scripts, each group in target-name order.
-  # The package step installs curl, which the bootstrap needs, so the bootstrap must be an
-  # after_ script whose target name sorts before the tool sync.
+  # chezmoi runs before_ scripts, then in-place scripts, then after_ scripts, each phase in
+  # target-name order. The package step installs curl, which the bootstrap needs, and the tool
+  # sync needs the bootstrapped binary, so the run order must be packages, bootstrap, tool sync.
   bootstrap="$(cd "$ROOT" && ls run_*mise-bootstrap.sh.tmpl)"
   packages="$(cd "$ROOT" && ls run_*install-packages.sh.tmpl)"
   toolsync="$(cd "$ROOT" && ls run_*mise-install.sh.tmpl)"
   [ "$(wc -l <<<"$bootstrap")" -eq 1 ]
 
-  [[ "$bootstrap" == run_onchange_after_* ]]
-  [[ "$packages" != run_*before_* ]]
-
-  target() { sed -E 's/^run_(once_|onchange_)?(before_|after_)?//; s/\.tmpl$//' <<<"$1"; }
-  [[ "$(target "$bootstrap")" < "$(target "$toolsync")" ]]
+  # Sort key that reproduces chezmoi's run order: phase first, then target name.
+  run_key() {
+    local phase=1
+    [[ "$1" == run_*before_* ]] && phase=0
+    [[ "$1" == run_*after_* ]] && phase=2
+    printf '%s %s\n' "$phase" "$(sed -E 's/^run_(once_|onchange_)?(before_|after_)?//; s/\.tmpl$//' <<<"$1")"
+  }
+  [[ "$(run_key "$packages")" < "$(run_key "$bootstrap")" ]]
+  [[ "$(run_key "$bootstrap")" < "$(run_key "$toolsync")" ]]
 }
