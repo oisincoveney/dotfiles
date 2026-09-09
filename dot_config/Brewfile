@@ -9,7 +9,6 @@ tap "khoi/sand", trusted: true
 tap "muxy-app/tap"
 tap "oven-sh/bun", trusted: true
 tap "sst/tap", "https://github.com/anomalyco/homebrew-tap.git", trusted: true
-tap "stablyai/orca"
 tap "stacklok/tap", trusted: true
 tap "stripe/stripe-cli", trusted: true
 tap "thdxg/tap", trusted: true
