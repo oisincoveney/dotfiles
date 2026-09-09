@@ -11,3 +11,6 @@
 .claude/commands/moka-inspect.md
 .claude/commands/moka-quick.md
 .claude/agents/moka-inspector.md
+
+# Zellij is retired; the Brewfile no longer installs it and the source config is gone. Remove the deployed directory on every host so the next apply is clean.
+.config/zellij

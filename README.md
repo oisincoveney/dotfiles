@@ -21,7 +21,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:oisincoveney
 - shared aliases and PATH helpers in `~/.config/zsh`
 - Git config, global ignores, and global Git hook wrappers
 - package bootstrap scripts for macOS and Ubuntu
-- Neovim, tmux, zellij, Codex, Claude, Gemini, and rulesync config
+- Neovim, tmux, Codex, Claude, Gemini, and rulesync config
 
 ## Local secrets
 
