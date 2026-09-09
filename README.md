@@ -35,7 +35,7 @@ The main zsh config sources that file when it exists.
 
 ## Mise
 
-The mise binary itself is pinned in `.chezmoidata.toml`. `run_onchange_before_00-mise-bootstrap`
+The mise binary itself is pinned in `.chezmoidata.toml`. `run_onchange_after_00-mise-bootstrap`
 installs that version with the official installer on every host, so the lockfile format is the
 same everywhere. Bump the pin there. Do not install mise through Homebrew, Nix, or a distro package.
 
