@@ -96,6 +96,7 @@ neonctl = "latest"
 "npm:@moonshot-ai/kimi-code" = "0.29.0"
 dotnet = "9"
 "npm:oxlint-tsgolint" = "7.0.2001"
+"npm:@getpaseo/cli" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
