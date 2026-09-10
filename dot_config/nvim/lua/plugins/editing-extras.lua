@@ -22,28 +22,6 @@ return {
     },
     opts = {},
   },
-  -- LSP-aware code folding
-  {
-    "kevinhwang91/nvim-ufo",
-    dependencies = { "kevinhwang91/promise-async" },
-    event = "BufReadPost",
-    keys = {
-      { "zR", function() require("ufo").openAllFolds() end, desc = "Open all folds" },
-      { "zM", function() require("ufo").closeAllFolds() end, desc = "Close all folds" },
-      { "zK", function() require("ufo").peekFoldedLinesUnderCursor() end, desc = "Peek fold" },
-    },
-    opts = {
-      provider_selector = function()
-        return { "lsp", "indent" }
-      end,
-    },
-    init = function()
-      vim.o.foldcolumn = "1"
-      vim.o.foldlevel = 99
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
-    end,
-  },
   -- Smart autosave
   {
     "okuuva/auto-save.nvim",
