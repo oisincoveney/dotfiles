@@ -2573,6 +2573,65 @@ checksum = "sha256:3ca446da68c8071db6664af54929feaa38bbb37236b2addb850a23c819a95
 url = "https://github.com/dathere/qsv/releases/download/22.0.1/qsv-22.0.1-x86_64-pc-windows-gnu.zip"
 url_api = "https://api.github.com/repos/dathere/qsv/releases/assets/507340682"
 
+[[tools."github:getpaseo/paseo"]]
+version = "0.7.2"
+backend = "github:getpaseo/paseo"
+
+[tools."github:getpaseo/paseo"."platforms.linux-arm64"]
+checksum = "sha256:9805e2212f8d0d3b69a7b17abab4b4d1a7d2a6529527e90822d419a1eddcca5c"
+url = "https://github.com/getpaseo/paseo/releases/download/v0.7.2/latest-linux.yml"
+url_api = "https://api.github.com/repos/getpaseo/paseo/releases/assets/540368215"
+
+[tools."github:getpaseo/paseo"."platforms.linux-arm64-musl"]
+checksum = "sha256:9805e2212f8d0d3b69a7b17abab4b4d1a7d2a6529527e90822d419a1eddcca5c"
+url = "https://github.com/getpaseo/paseo/releases/download/v0.7.2/latest-linux.yml"
+url_api = "https://api.github.com/repos/getpaseo/paseo/releases/assets/540368215"
+
+[tools."github:getpaseo/paseo"."platforms.linux-x64"]
+checksum = "sha256:9805e2212f8d0d3b69a7b17abab4b4d1a7d2a6529527e90822d419a1eddcca5c"
+url = "https://github.com/getpaseo/paseo/releases/download/v0.7.2/latest-linux.yml"
+url_api = "https://api.github.com/repos/getpaseo/paseo/releases/assets/540368215"
+
+[tools."github:getpaseo/paseo"."platforms.linux-x64-baseline"]
+checksum = "sha256:9805e2212f8d0d3b69a7b17abab4b4d1a7d2a6529527e90822d419a1eddcca5c"
+url = "https://github.com/getpaseo/paseo/releases/download/v0.7.2/latest-linux.yml"
+url_api = "https://api.github.com/repos/getpaseo/paseo/releases/assets/540368215"
+
+[tools."github:getpaseo/paseo"."platforms.linux-x64-musl"]
+checksum = "sha256:9805e2212f8d0d3b69a7b17abab4b4d1a7d2a6529527e90822d419a1eddcca5c"
+url = "https://github.com/getpaseo/paseo/releases/download/v0.7.2/latest-linux.yml"
+url_api = "https://api.github.com/repos/getpaseo/paseo/releases/assets/540368215"
+
+[tools."github:getpaseo/paseo"."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:9805e2212f8d0d3b69a7b17abab4b4d1a7d2a6529527e90822d419a1eddcca5c"
+url = "https://github.com/getpaseo/paseo/releases/download/v0.7.2/latest-linux.yml"
+url_api = "https://api.github.com/repos/getpaseo/paseo/releases/assets/540368215"
+
+[tools."github:getpaseo/paseo"."platforms.macos-arm64"]
+checksum = "sha256:2a3458bd7a4ff96acf89fe011c0ed32b2afdda119f1461abf681fbfe01c0afbe"
+url = "https://github.com/getpaseo/paseo/releases/download/v0.7.2/latest-mac.yml"
+url_api = "https://api.github.com/repos/getpaseo/paseo/releases/assets/540368214"
+
+[tools."github:getpaseo/paseo"."platforms.macos-x64"]
+checksum = "sha256:2a3458bd7a4ff96acf89fe011c0ed32b2afdda119f1461abf681fbfe01c0afbe"
+url = "https://github.com/getpaseo/paseo/releases/download/v0.7.2/latest-mac.yml"
+url_api = "https://api.github.com/repos/getpaseo/paseo/releases/assets/540368214"
+
+[tools."github:getpaseo/paseo"."platforms.macos-x64-baseline"]
+checksum = "sha256:2a3458bd7a4ff96acf89fe011c0ed32b2afdda119f1461abf681fbfe01c0afbe"
+url = "https://github.com/getpaseo/paseo/releases/download/v0.7.2/latest-mac.yml"
+url_api = "https://api.github.com/repos/getpaseo/paseo/releases/assets/540368214"
+
+[tools."github:getpaseo/paseo"."platforms.windows-x64"]
+checksum = "sha256:a88e26398de7de53b7b3b9c892a6fc9d4480a8561a78dc22117745a5b3cd345c"
+url = "https://github.com/getpaseo/paseo/releases/download/v0.7.2/Paseo-Setup-0.7.2-x64.exe"
+url_api = "https://api.github.com/repos/getpaseo/paseo/releases/assets/540363750"
+
+[tools."github:getpaseo/paseo"."platforms.windows-x64-baseline"]
+checksum = "sha256:a88e26398de7de53b7b3b9c892a6fc9d4480a8561a78dc22117745a5b3cd345c"
+url = "https://github.com/getpaseo/paseo/releases/download/v0.7.2/Paseo-Setup-0.7.2-x64.exe"
+url_api = "https://api.github.com/repos/getpaseo/paseo/releases/assets/540363750"
+
 [[tools."github:goreleaser/goreleaser"]]
 version = "2.18.1"
 backend = "github:goreleaser/goreleaser"
@@ -5024,54 +5083,6 @@ url = "https://nodejs.org/dist/v24.21.0/node-v24.21.0-win-x64.zip"
 checksum = "sha256:158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541"
 url = "https://nodejs.org/dist/v24.21.0/node-v24.21.0-win-x64.zip"
 
-[[tools.node]]
-version = "26.8.2"
-backend = "core:node"
-
-[tools.node."platforms.linux-arm64"]
-checksum = "sha256:746cdbf21565b4ea06f77642bb0e85466de8bb722242be2c5e006f272c361c63"
-url = "https://nodejs.org/dist/v26.8.2/node-v26.8.2-linux-arm64.tar.gz"
-
-[tools.node."platforms.linux-arm64-musl"]
-checksum = "sha256:125437a0b59d69592b8f4bb813a47245337afac8c973d15ab7720f0ec55d182d"
-url = "https://unofficial-builds.nodejs.org/download/release/v26.8.2/node-v26.8.2-linux-arm64-musl.tar.gz"
-
-[tools.node."platforms.linux-x64"]
-checksum = "sha256:badb3fe6a61b85e1352ca6564dc56b8b7bd5ecd5c474c52acc21dd0cdd586f35"
-url = "https://nodejs.org/dist/v26.8.2/node-v26.8.2-linux-x64.tar.gz"
-
-[tools.node."platforms.linux-x64-baseline"]
-checksum = "sha256:badb3fe6a61b85e1352ca6564dc56b8b7bd5ecd5c474c52acc21dd0cdd586f35"
-url = "https://nodejs.org/dist/v26.8.2/node-v26.8.2-linux-x64.tar.gz"
-
-[tools.node."platforms.linux-x64-musl"]
-checksum = "sha256:696eb0180248a06c9893f3f07bcc4e2680891c83118c73aaf1de330efd053910"
-url = "https://unofficial-builds.nodejs.org/download/release/v26.8.2/node-v26.8.2-linux-x64-musl.tar.gz"
-
-[tools.node."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:696eb0180248a06c9893f3f07bcc4e2680891c83118c73aaf1de330efd053910"
-url = "https://unofficial-builds.nodejs.org/download/release/v26.8.2/node-v26.8.2-linux-x64-musl.tar.gz"
-
-[tools.node."platforms.macos-arm64"]
-checksum = "sha256:974b6d5fb2fc7c33ff2354db0902b4e91c2de01ec8acc6de48e543c97e18c9e1"
-url = "https://nodejs.org/dist/v26.8.2/node-v26.8.2-darwin-arm64.tar.gz"
-
-[tools.node."platforms.macos-x64"]
-checksum = "sha256:adb8feb2d4987df3d72d2ec46f4fc4b58039c859b8c3f0e3cc2d3c6cbaf8629c"
-url = "https://nodejs.org/dist/v26.8.2/node-v26.8.2-darwin-x64.tar.gz"
-
-[tools.node."platforms.macos-x64-baseline"]
-checksum = "sha256:adb8feb2d4987df3d72d2ec46f4fc4b58039c859b8c3f0e3cc2d3c6cbaf8629c"
-url = "https://nodejs.org/dist/v26.8.2/node-v26.8.2-darwin-x64.tar.gz"
-
-[tools.node."platforms.windows-x64"]
-checksum = "sha256:cf02f5d0c06c794b84f277177d5cf3743d0924ca49f6641cd435dd7cb6ee9085"
-url = "https://nodejs.org/dist/v26.8.2/node-v26.8.2-win-x64.zip"
-
-[tools.node."platforms.windows-x64-baseline"]
-checksum = "sha256:cf02f5d0c06c794b84f277177d5cf3743d0924ca49f6641cd435dd7cb6ee9085"
-url = "https://nodejs.org/dist/v26.8.2/node-v26.8.2-win-x64.zip"
-
 [[tools."npm:@anthropic-ai/sandbox-runtime"]]
 version = "0.0.75"
 backend = "npm:@anthropic-ai/sandbox-runtime"
@@ -5087,6 +5098,10 @@ backend = "npm:@bitwarden/mcp-server"
 [[tools."npm:@devcontainers/cli"]]
 version = "0.89.0"
 backend = "npm:@devcontainers/cli"
+
+[[tools."npm:@getpaseo/cli"]]
+version = "0.8.0"
+backend = "npm:@getpaseo/cli"
 
 [[tools."npm:@intellectronica/ruler"]]
 version = "0.3.44"
