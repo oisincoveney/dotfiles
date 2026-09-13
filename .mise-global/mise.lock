@@ -2466,63 +2466,63 @@ url = "https://github.com/Canop/broot/releases/download/v1.60.0/broot_1.60.0.zip
 url_api = "https://api.github.com/repos/Canop/broot/releases/assets/546051489"
 
 [[tools."github:can1357/oh-my-pi"]]
-version = "18.1.14"
+version = "18.1.18"
 backend = "github:can1357/oh-my-pi"
 
 [tools."github:can1357/oh-my-pi"."platforms.linux-arm64"]
-checksum = "sha256:93ba1143e95c6a138ecfaea5efa6057e45aa6e40853d88a55b48586d118f7325"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.14/omp-linux-arm64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/549227318"
+checksum = "sha256:1ae8273c231ceb88cebc9971901cf7f5d97ed4149cdc740a814f629cd2b4dcb2"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.18/omp-linux-arm64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/558067175"
 
 [tools."github:can1357/oh-my-pi"."platforms.linux-arm64-musl"]
-checksum = "sha256:b5401be8afee11bd706b452660844101985f89774ecb2aeee03d588d60b942aa"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.14/omp-linux-musl-arm64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/549227312"
+checksum = "sha256:24b80ad97661d3f76fbffa3f63121a33d744f87ba8c1ae40aa2c885152d5b677"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.18/omp-linux-musl-arm64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/558067180"
 
 [tools."github:can1357/oh-my-pi"."platforms.linux-x64"]
-checksum = "sha256:27dd66cb6a2c39fff51e1fe6db40f1f376fee4a3d04457f236edaa5d0290e4d2"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.14/omp-linux-x64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/549227311"
+checksum = "sha256:45421f9a5f112bc47cb9f77c4b4d7927631f8ff859624f821287ec854eb239fc"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.18/omp-linux-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/558067177"
 
 [tools."github:can1357/oh-my-pi"."platforms.linux-x64-baseline"]
-checksum = "sha256:27dd66cb6a2c39fff51e1fe6db40f1f376fee4a3d04457f236edaa5d0290e4d2"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.14/omp-linux-x64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/549227311"
+checksum = "sha256:45421f9a5f112bc47cb9f77c4b4d7927631f8ff859624f821287ec854eb239fc"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.18/omp-linux-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/558067177"
 
 [tools."github:can1357/oh-my-pi"."platforms.linux-x64-musl"]
-checksum = "sha256:617d67627154f2e1a07d5bae36e190a47240a55379a3308cd61e7f62b4ce2e82"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.14/omp-linux-musl-x64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/549227310"
+checksum = "sha256:23e2b7170a47f83cd2941e5f6fe51b2218873b8fe0de97a0d2170afa3cdba406"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.18/omp-linux-musl-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/558067170"
 
 [tools."github:can1357/oh-my-pi"."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:617d67627154f2e1a07d5bae36e190a47240a55379a3308cd61e7f62b4ce2e82"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.14/omp-linux-musl-x64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/549227310"
+checksum = "sha256:23e2b7170a47f83cd2941e5f6fe51b2218873b8fe0de97a0d2170afa3cdba406"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.18/omp-linux-musl-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/558067170"
 
 [tools."github:can1357/oh-my-pi"."platforms.macos-arm64"]
-checksum = "sha256:66c09cc5ffc8e080335649579c7cc32212d7e2a13d486a14f45d00f3088ea6d2"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.14/omp-darwin-arm64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/549227320"
+checksum = "sha256:035a35dcb249edb939fa02b74fc7c0df9b2eb659079349fbffb188e1b558957a"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.18/omp-darwin-arm64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/558067172"
 
 [tools."github:can1357/oh-my-pi"."platforms.macos-x64"]
-checksum = "sha256:bf5653dfc74bc9aa6edd6967323cabf0cfb76ade80f669ae2e554f27fa2dad0e"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.14/omp-darwin-x64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/549227313"
+checksum = "sha256:29fead1b667dc969b825c5aa4798aadb5b7ec9b2f15c3304b10196d7afa4171d"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.18/omp-darwin-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/558067179"
 
 [tools."github:can1357/oh-my-pi"."platforms.macos-x64-baseline"]
-checksum = "sha256:bf5653dfc74bc9aa6edd6967323cabf0cfb76ade80f669ae2e554f27fa2dad0e"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.14/omp-darwin-x64"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/549227313"
+checksum = "sha256:29fead1b667dc969b825c5aa4798aadb5b7ec9b2f15c3304b10196d7afa4171d"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.18/omp-darwin-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/558067179"
 
 [tools."github:can1357/oh-my-pi"."platforms.windows-x64"]
-checksum = "sha256:f5b46850f92ad2c2aa337b094fbf51742417ecdd808c088e24bb3d21b19e5177"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.14/omp-windows-x64.exe"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/549227319"
+checksum = "sha256:d9cf773ee3fd3823af9bc073c880fce4013920b2478bd5a02feff35920424378"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.18/omp-windows-x64.exe"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/558067169"
 
 [tools."github:can1357/oh-my-pi"."platforms.windows-x64-baseline"]
-checksum = "sha256:f5b46850f92ad2c2aa337b094fbf51742417ecdd808c088e24bb3d21b19e5177"
-url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.14/omp-windows-x64.exe"
-url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/549227319"
+checksum = "sha256:d9cf773ee3fd3823af9bc073c880fce4013920b2478bd5a02feff35920424378"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.1.18/omp-windows-x64.exe"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/558067169"
 
 [[tools."github:dathere/qsv"]]
 version = "22.0.1"
