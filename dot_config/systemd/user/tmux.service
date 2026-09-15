@@ -1,0 +1,35 @@
+# Persistent tmux server, owned by the systemd user manager instead of an SSH
+# login session.
+#
+# A tmux server started from an interactive SSH shell is placed in that login's
+# session scope (/user.slice/user-1001.slice/session-N.scope). The scope lives
+# and dies with the SSH connection, so closing the laptop takes the agents with
+# it. Starting the server from the user manager puts it in
+# user@<uid>.service/app.slice instead, which outlives every login. Combined
+# with `loginctl enable-linger`, the server survives a closed laptop, a dropped
+# network, and a full logout.
+#
+# tmux reads ~/.config/tmux/tmux.conf on its own, so no -f flag is needed.
+# `sh -c` resolves tmux from the user manager PATH, which keeps the unit
+# portable across hosts instead of pinning a Nix store path.
+
+[Unit]
+Description=Persistent tmux server
+Documentation=man:tmux(1)
+After=default.target
+
+[Service]
+Type=forking
+# `new-session -d` forks the server and exits, which is exactly what
+# Type=forking expects. systemd then tracks the server as the main process.
+ExecStart=/usr/bin/env sh -c 'exec tmux new-session -d -s main'
+ExecStop=/usr/bin/env sh -c 'exec tmux kill-server'
+# tmux defaults to `exit-empty on`, so killing the last session stops the
+# server. Restarting it keeps the base session permanently available.
+# `systemctl --user stop tmux` remains the deliberate off switch.
+Restart=always
+RestartSec=2
+KillMode=control-group
+
+[Install]
+WantedBy=default.target

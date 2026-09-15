@@ -28,6 +28,30 @@ export GUM_FILTER_INDICATOR_FOREGROUND='#cba6f7'
 # headless `chezmoi apply` never hits the "has changed" TTY prompt.
 export CODER_SSH_CONFIG_FILE="$HOME/.ssh/config.d/coder.conf"
 
+# ── tmux: attach to the persistent server, never start a session-scoped one ────
+# The tmux server runs under systemd (~/.config/systemd/user/tmux.service), so it
+# outlives every SSH login. `t` attaches to a named session and creates it inside
+# that already-running server when it is missing. Never run a bare `tmux` over
+# SSH: that forks a NEW server into the login's session scope, which systemd
+# destroys on disconnect, taking any agent running in it along.
+if command -v tmux >/dev/null 2>&1; then
+  t() {
+    local session="${1:-main}"
+    # -A attaches when the session exists and creates it otherwise; -d keeps
+    # that idempotent create detached so an already-attached client can then
+    # switch to it instead of nesting a second client inside the current pane.
+    tmux new-session -d -A -s "$session" || return
+    if [[ -n "${TMUX:-}" ]]; then
+      tmux switch-client -t "$session"
+    else
+      tmux attach-session -t "$session"
+    fi
+  }
+  # Completion over live session names, so `t <Tab>` lists what is running.
+  _t() { compadd -- ${(f)"$(tmux list-sessions -F '#S' 2>/dev/null)"} }
+  compdef _t t
+fi
+
 # ── cached tool init: fork the binary once, cache its shell output, re-source ──
 # `eval "$(starship init zsh)"` forks a process every startup. Caching the output
 # and regenerating only when the binary is newer turns N forks into zero on warm
