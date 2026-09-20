@@ -97,6 +97,8 @@ neonctl = "latest"
 dotnet = "9"
 "npm:oxlint-tsgolint" = "7.0.2001"
 "npm:@getpaseo/cli" = "latest"
+supabase = "2.95.5"
+postgres = "17"
 
 [settings]
 idiomatic_version_file_enable_tools = []
