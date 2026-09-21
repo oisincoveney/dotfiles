@@ -2334,6 +2334,65 @@ checksum = "sha256:de4a054424ac01ef73fb30c3b3fac0cda437e7426388085d7467b5e0aaa1c
 url = "https://github.com/Canop/broot/releases/download/v1.60.1/broot_1.60.1.zip"
 url_api = "https://api.github.com/repos/Canop/broot/releases/assets/551127327"
 
+[[tools."github:can1357/oh-my-pi"]]
+version = "18.2.7"
+backend = "github:can1357/oh-my-pi"
+
+[tools."github:can1357/oh-my-pi"."platforms.linux-arm64"]
+checksum = "sha256:dee01159c63577eafe1e9396b1687462352063ec1b62203177946fc5d5acff1a"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.2.7/omp-linux-arm64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/578016054"
+
+[tools."github:can1357/oh-my-pi"."platforms.linux-arm64-musl"]
+checksum = "sha256:aaaeb6821a1cebc4c2203e616cec949ff8b760a61f3ae8dfd98f32ef24eca983"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.2.7/omp-linux-musl-arm64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/578016050"
+
+[tools."github:can1357/oh-my-pi"."platforms.linux-x64"]
+checksum = "sha256:1c28ed66566ecabab814514cfe626b4aff5981b7ca9892477b46550fe6b6d83b"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.2.7/omp-linux-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/578016047"
+
+[tools."github:can1357/oh-my-pi"."platforms.linux-x64-baseline"]
+checksum = "sha256:1c28ed66566ecabab814514cfe626b4aff5981b7ca9892477b46550fe6b6d83b"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.2.7/omp-linux-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/578016047"
+
+[tools."github:can1357/oh-my-pi"."platforms.linux-x64-musl"]
+checksum = "sha256:0d6d55db070259f69521c1d353627f8ae825b9809ea259be90d7502ba5090ac4"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.2.7/omp-linux-musl-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/578016056"
+
+[tools."github:can1357/oh-my-pi"."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:0d6d55db070259f69521c1d353627f8ae825b9809ea259be90d7502ba5090ac4"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.2.7/omp-linux-musl-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/578016056"
+
+[tools."github:can1357/oh-my-pi"."platforms.macos-arm64"]
+checksum = "sha256:2b2ff2084a34f61a018634c03929aaa9117009d107dbef553d8fc51eb5c28b14"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.2.7/omp-darwin-arm64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/578016052"
+
+[tools."github:can1357/oh-my-pi"."platforms.macos-x64"]
+checksum = "sha256:d06854d75506be68d6314ebdb60798539ecc02bf65051b360689dd9ba37b2285"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.2.7/omp-darwin-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/578016051"
+
+[tools."github:can1357/oh-my-pi"."platforms.macos-x64-baseline"]
+checksum = "sha256:d06854d75506be68d6314ebdb60798539ecc02bf65051b360689dd9ba37b2285"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.2.7/omp-darwin-x64"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/578016051"
+
+[tools."github:can1357/oh-my-pi"."platforms.windows-x64"]
+checksum = "sha256:8901de39644c31f8ae3ef5a6d192be2a2c4fd808e8f0119b3e4445a2cc5c946c"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.2.7/omp-windows-x64.exe"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/578016053"
+
+[tools."github:can1357/oh-my-pi"."platforms.windows-x64-baseline"]
+checksum = "sha256:8901de39644c31f8ae3ef5a6d192be2a2c4fd808e8f0119b3e4445a2cc5c946c"
+url = "https://github.com/can1357/oh-my-pi/releases/download/v18.2.7/omp-windows-x64.exe"
+url_api = "https://api.github.com/repos/can1357/oh-my-pi/releases/assets/578016053"
+
 [[tools."github:mr-karan/doggo"]]
 version = "1.4.0"
 backend = "github:mr-karan/doggo"
@@ -3248,6 +3307,11 @@ backend = "npm:@moonshot-ai/kimi-code"
 [[tools."npm:oxlint-tsgolint"]]
 version = "7.0.2001"
 backend = "npm:oxlint-tsgolint"
+
+[[tools."npm:repomix"]]
+version = "1.18.0"
+aube = { path = "locks/npm-repomix/1.18.0", digest = "sha256:18cad01cfefd0dc857cf6cdff7d7abd0f1b01bec4fa79652a380d39c2c314d5c" }
+backend = "npm:repomix"
 
 [[tools.okteto]]
 version = "3.23.1"
