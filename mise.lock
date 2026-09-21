@@ -1973,7 +1973,7 @@ url = "https://github.com/dandavison/delta/releases/download/0.19.2/delta-0.19.2
 url_api = "https://api.github.com/repos/dandavison/delta/releases/assets/383663165"
 
 [[tools.dotnet]]
-version = "9.0.318"
+version = "10.0.401"
 backend = "core:dotnet"
 
 [[tools.duf]]
@@ -3301,11 +3301,11 @@ version = "0.8.0"
 backend = "npm:@getpaseo/cli"
 
 [[tools."npm:@moonshot-ai/kimi-code"]]
-version = "0.29.0"
+version = "2.0.2"
 backend = "npm:@moonshot-ai/kimi-code"
 
 [[tools."npm:oxlint-tsgolint"]]
-version = "7.0.2001"
+version = "7.0.2002"
 backend = "npm:oxlint-tsgolint"
 
 [[tools."npm:repomix"]]
