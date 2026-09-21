@@ -10,8 +10,8 @@ setup() {
   : >"$CMD_LOG"
 
   export PATH="$STUB_BIN:$PATH"
-  export MAC_BURST_LIB="$ROOT/dot_local/share/mac-burst/lib.sh"
-  export MAC_BURST_VALUES_DIR="$ROOT/dot_local/share/mac-burst"
+  export MAC_BURST_LIB="$ROOT/home/.local/share/mac-burst/lib.sh"
+  export MAC_BURST_VALUES_DIR="$ROOT/home/.local/share/mac-burst"
   export MAC_BURST_STATE_DIR="$BATS_TEST_TMPDIR/state"
   export MAC_BURST_GITHUB_CONFIG_URL="https://github.com/oisin-ee"
   export STUB_K3D_CLUSTER_EXISTS=0
@@ -170,7 +170,7 @@ refute_file_contains() {
 }
 
 @test "mac-burst-up canary renders pinned ARC/k3d values without leaking gh token" {
-  run "$ROOT/dot_local/bin/executable_mac-burst-up" --mode canary
+  run "$ROOT/home/.local/bin/mac-burst-up" --mode canary
 
   [ "$status" -eq 0 ]
   refute_output_contains 'ghp_test_token_secret'
@@ -198,7 +198,7 @@ refute_file_contains() {
   export STUB_K3D_FAIL_CREATE=1
   export STUB_HELM_REQUIRE_KUBECONFIG=1
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-up" --mode canary
+  run "$ROOT/home/.local/bin/mac-burst-up" --mode canary
 
   [ "$status" -eq 46 ]
   refute_file_contains 'helm uninstall' "$CMD_LOG"
@@ -211,7 +211,7 @@ refute_file_contains() {
   export STUB_K3D_FAIL_DELETE=1
   export STUB_HELM_REQUIRE_KUBECONFIG=1
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-up" --mode canary
+  run "$ROOT/home/.local/bin/mac-burst-up" --mode canary
 
   [ "$status" -eq 46 ]
   assert_output_contains 'startup cluster deletion failed; retained cluster=mac-burst'
@@ -226,7 +226,7 @@ refute_file_contains() {
   export STUB_K3D_FAIL_CREATE=1
   export STUB_HELM_REQUIRE_KUBECONFIG=1
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-up" --mode capacity
+  run "$ROOT/home/.local/bin/mac-burst-up" --mode capacity
 
   [ "$status" -eq 46 ]
   [ ! -e "$MAC_BURST_STATE_DIR/docker-config" ]
@@ -238,7 +238,7 @@ refute_file_contains() {
 @test "mac-burst-up failed startup removes kubeconfig, temp creds, caffeinate, and cluster" {
   export STUB_HELM_FAIL_RELEASE=arc-runner-set
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-up" --mode production
+  run "$ROOT/home/.local/bin/mac-burst-up" --mode production
 
   [ "$status" -eq 42 ]
   [ ! -e "$MAC_BURST_STATE_DIR/kubeconfig" ]
@@ -251,7 +251,7 @@ refute_file_contains() {
   export STUB_HELM_FAIL_RELEASE=arc-runner-set
   export STUB_HELM_FAIL_UNINSTALL_RELEASE=arc-controller
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-up" --mode production
+  run "$ROOT/home/.local/bin/mac-burst-up" --mode production
 
   [ "$status" -eq 42 ]
   assert_output_contains 'controller uninstall failed; retained controller=arc-controller'
@@ -271,7 +271,7 @@ refute_file_contains() {
   export STUB_HELM_FAIL_RELEASE=arc-runner-set
   export STUB_K3D_FAIL_DELETE=1
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-up" --mode production
+  run "$ROOT/home/.local/bin/mac-burst-up" --mode production
 
   [ "$status" -eq 42 ]
   assert_output_contains 'startup cluster deletion failed; retained cluster=mac-burst'
@@ -292,7 +292,7 @@ refute_file_contains() {
   mkdir -p "$MAC_BURST_STATE_DIR"
   printf 'apiVersion: v1\n' >"$MAC_BURST_STATE_DIR/kubeconfig"
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-down"
+  run "$ROOT/home/.local/bin/mac-burst-down"
 
   [ "$status" -ne 0 ]
   assert_output_contains 'active runner pods remain'
@@ -308,7 +308,7 @@ refute_file_contains() {
   printf 'githubConfigUrl: https://github.com/oisin-ee\n' >"$MAC_BURST_STATE_DIR/scale-set-values.yaml"
   printf '999999\n' >"$MAC_BURST_STATE_DIR/caffeinate.pid"
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-down" --force
+  run "$ROOT/home/.local/bin/mac-burst-down" --force
 
   [ "$status" -eq 47 ]
   assert_output_contains 'runner pod discovery unavailable'
@@ -331,7 +331,7 @@ refute_file_contains() {
   printf 'apiVersion: v1\n' >"$MAC_BURST_STATE_DIR/kubeconfig"
   printf '999999\n' >"$MAC_BURST_STATE_DIR/caffeinate.pid"
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-down" --force
+  run "$ROOT/home/.local/bin/mac-burst-down" --force
 
   [ "$status" -eq 0 ]
   [ ! -e "$MAC_BURST_STATE_DIR/kubeconfig" ]
@@ -355,7 +355,7 @@ PY
   printf 'githubConfigUrl: https://github.com/oisin-ee\n' >"$MAC_BURST_STATE_DIR/scale-set-values.yaml"
   printf '999999\n' >"$MAC_BURST_STATE_DIR/caffeinate.pid"
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-down"
+  run "$ROOT/home/.local/bin/mac-burst-down"
 
   [ "$status" -ne 0 ]
   assert_output_contains 'scale set uninstall failed; retained scale-set=arc-runner-set controller=arc-controller'
@@ -379,7 +379,7 @@ PY
   printf 'githubConfigUrl: https://github.com/oisin-ee\n' >"$MAC_BURST_STATE_DIR/scale-set-values.yaml"
   printf '999999\n' >"$MAC_BURST_STATE_DIR/caffeinate.pid"
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-down"
+  run "$ROOT/home/.local/bin/mac-burst-down"
 
   [ "$status" -ne 0 ]
   assert_output_contains 'controller uninstall failed; retained controller=arc-controller'
@@ -399,7 +399,7 @@ PY
   printf 'apiVersion: v1\n' >"$MAC_BURST_STATE_DIR/kubeconfig"
   printf '999999\n' >"$MAC_BURST_STATE_DIR/caffeinate.pid"
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-down"
+  run "$ROOT/home/.local/bin/mac-burst-down"
 
   [ "$status" -eq 0 ]
   grep -q 'helm uninstall arc-runner-set' "$CMD_LOG"
@@ -416,7 +416,7 @@ PY
   printf 'apiVersion: v1\n' >"$MAC_BURST_STATE_DIR/kubeconfig"
   printf '%s\n' "$$" >"$MAC_BURST_STATE_DIR/caffeinate.pid"
 
-  run "$ROOT/dot_local/bin/executable_mac-burst-status"
+  run "$ROOT/home/.local/bin/mac-burst-status"
 
   [ "$status" -eq 0 ]
   assert_output_contains 'cluster:'

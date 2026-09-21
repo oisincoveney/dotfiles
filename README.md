@@ -1,27 +1,47 @@
 # Oisin's dotfiles
 
-Chezmoi-managed shell, git, editor, and terminal config for macOS and Ubuntu.
+mise-managed shell, git, editor, and terminal config for macOS and Ubuntu.
+`config.toml` is the whole machine: tools, Homebrew/App Store packages, git repos,
+dotfiles, and the persistent-tmux unit.
 
 ## Install
 
 ```sh
-chezmoi init git@github.com:oisincoveney/dotfiles.git
-chezmoi apply
+mise bootstrap --adopt oisincoveney/dotfiles
 ```
 
-On a machine without Chezmoi:
+That clones this repository into `~/.config/mise`, then applies it. On a machine
+without mise, install the binary first:
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:oisincoveney/dotfiles.git
+curl -fsSL https://mise.run | sh
 ```
+
+A brand-new host needs two `mise bootstrap` runs. The first clones `~/dev/agent`
+(the agent harness repo, `[bootstrap.repos]`); the second sees it as mise's system
+config — `.zshenv` exports `MISE_SYSTEM_CONFIG_FILE` — and installs the harness
+from that repo's own `[dotfiles]` table.
 
 ## What is managed
 
-- `zsh` with Oh My Zsh
-- shared aliases and PATH helpers in `~/.config/zsh`
+- `zsh`, with the modules in `~/.config/zsh` and zinit for plugins
 - Git config, global ignores, and global Git hook wrappers
-- package bootstrap scripts for macOS and Ubuntu
-- Neovim, tmux, Codex, Claude, Gemini, and rulesync config
+- Homebrew formulae, casks, fonts, and Mac App Store apps in `[bootstrap.packages]`
+- Neovim, tmux, ghostty, yazi, lazygit, btop, bat, starship, and the Catppuccin themes
+- The persistent tmux systemd user unit on Linux
+
+## Layout
+
+| Path | Contents |
+| --- | --- |
+| `config.toml` | `~/.config/mise/config.toml` — tools, packages, repos, dotfiles, units |
+| `mise.lock` | `~/.config/mise/mise.lock` — resolved versions and checksums |
+| `home/` | `dotfiles.root`; every file maps to the same path under `$HOME` |
+| `home/*.tera` | Rendered, not linked: `.gitconfig`, `.ssh/config` |
+
+`home/` is applied with one `symlink-each` entry using `manifest = "git"`, so only
+Git-tracked files are linked and unmanaged neighbours in a target directory survive.
+Editing a deployed file edits this checkout.
 
 ## Local secrets
 
@@ -31,32 +51,27 @@ Do not commit tokens or machine-local credentials. Put local shell secrets in:
 ~/.config/zsh/secrets.zsh
 ```
 
-The main zsh config sources that file when it exists.
+`secret sync` regenerates that file from OpenBao; `.zshenv` sources it when it
+exists, so non-interactive shells and agents get them too.
 
-## Mise
+## mise
 
-The mise binary itself is pinned in `.chezmoidata.toml`. `run_onchange_after_00-mise-bootstrap`
-installs that version with the official installer on every host, so the lockfile format is the
-same everywhere. Bump the pin there. Do not install mise through Homebrew, Nix, or a distro package.
-
-The human global manifest and merged lockfile are tracked under `.mise-global/`.
-Chezmoi exposes them as `~/.config/mise/config.toml` and `~/.config/mise/mise.lock`
-symlinks. The agent manifest is rendered from GitHub as mise's lower-precedence system config,
-so normal global commands write directly back to this repository:
+`~/.config/mise/config.toml` is a symlink to this repository's `config.toml`, so
+normal global commands write straight back here:
 
 ```sh
 mise use --global bat@latest
 mise up
 ```
 
-Commit those manifest or lockfile changes normally. After pulling them on another
-host, run `cza` to refresh the agent manifest, install the committed tool state,
-and reconcile the agent-sync-owned Claude/Codex/OMP harness.
+Commit the manifest or lockfile change normally. After pulling it on another host,
+run `cza` (`mise bootstrap --yes`) to install the committed state.
 
 ## Useful commands
 
 ```sh
-chezmoi diff
-chezmoi apply
-chezmoi cd
+mise bootstrap --dry-run       # preview every phase
+mise bootstrap status          # what is out of sync
+mise dot diff                  # dotfile changes only
+mise bootstrap packages status
 ```

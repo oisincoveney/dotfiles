@@ -1,0 +1,73 @@
+[init]
+	defaultBranch = main
+[push]
+	autoSetupRemote = true
+[spice "branchCreate"]
+	commit = false
+[user]
+	email = {{ vars.git_email }}
+	name = {{ vars.git_name }}
+[rerere]
+  enabled = true
+
+[core]
+    pager = delta
+    hooksPath = ~/.git-hooks
+    excludesFile = ~/.gitignore_global
+    attributesFile = ~/.config/git/attributes
+
+[diff]
+    external = difft
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    features = catppuccin-mocha
+    navigate = true  # use n and N to move between diff sections
+    side-by-side = true
+    line-numbers = true
+    syntax-theme = Catppuccin Mocha
+
+# Catppuccin Mocha decorations — https://github.com/catppuccin/delta
+[delta "catppuccin-mocha"]
+    minus-style = normal "#543a48"
+    minus-non-emph-style = normal "#543a48"
+    minus-emph-style = normal "#8c4f5a"
+    minus-empty-line-marker-style = normal "#543a48"
+    line-numbers-minus-style = "#f38ba8"
+    plus-style = syntax "#3c4d3c"
+    plus-non-emph-style = syntax "#3c4d3c"
+    plus-emph-style = syntax "#5b7a5b"
+    plus-empty-line-marker-style = syntax "#3c4d3c"
+    line-numbers-plus-style = "#a6e3a1"
+    line-numbers-zero-style = "#6c7086"
+    file-style = "#cba6f7"
+    file-decoration-style = "#cba6f7" ul
+    hunk-header-style = "#89b4fa"
+    hunk-header-decoration-style = "#6c7086" box
+
+[merge]
+    conflictStyle = zdiff3
+
+# mergiraf — syntax-aware (AST) merge driver. Resolves structural conflicts git's
+# line-based merge reports as conflicts (reordered imports, adjacent edits, etc.)
+# and falls back to git's merge for unsupported file types. Enabled per-path via
+# ~/.config/git/attributes (`* merge=mergiraf`). https://mergiraf.org/
+[merge "mergiraf"]
+    name = mergiraf
+    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
+
+# difftastic — syntax-aware diff used by default via Git's external diff integration.
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
+[difftool]
+    prompt = false
+[alias]
+    dft = difftool --tool=difftastic
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !gh auth git-credential

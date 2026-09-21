@@ -1,0 +1,343 @@
+# Human toolset and machine setup — this mac laptop and any user-facing Linux box.
+# Headless agent runner pods do NOT get these; they get the agent repo's mise.toml
+# and nothing else.
+#
+# This checkout lives at ~/.config/mise, so `mise use -g` and `mise up` write
+# straight back into the repository.
+# The agent-functional toolset is loaded as mise's lower-precedence system config
+# from `~/dev/agent/mise.toml` (MISE_SYSTEM_CONFIG_FILE, exported by .zshenv), so
+# human `[tools]` entries override the agent's (e.g. node) and human `[settings]`
+# win.
+#
+# `mise bootstrap` is the whole installer: packages, repos, dotfiles, and services.
+# `cza` runs it. A brand-new host needs two runs: the first clones ~/dev/agent,
+# and the second loads that system config and installs the agent harness.
+
+# Git identity for ~/.gitconfig. Override per machine with GIT_AUTHOR_NAME /
+# GIT_AUTHOR_EMAIL; otherwise these portable defaults apply.
+[vars]
+git_name = "{{ get_env(name='GIT_AUTHOR_NAME', default='Oisin Coveney') }}"
+git_email = "{{ get_env(name='GIT_AUTHOR_EMAIL', default='git@oisin.ee') }}"
+
+[tools]
+# ── override of an agent tool ──
+node = "lts" # laptop tracks LTS; the agent repo pins node=latest for birth-seeding
+
+# ── core replacements (shell UX) ──
+"cargo:eza" = "latest"
+bat = "latest"
+fzf = "latest"
+zoxide = "latest"
+starship = "latest"
+atuin = "latest"
+delta = "latest"
+# ── zen TUIs ──
+yazi = "latest"
+lazygit = "latest"
+lazydocker = "latest"
+television = "latest"
+"github:Canop/broot" = "latest"
+mprocs = "latest"               # run parallel procs in split panes
+# ── modern-unix drop-ins ──
+dust = "latest"
+duf = "latest"
+"aqua:dalance/procs" = "latest"
+sd = "latest"
+choose = "latest"
+hyperfine = "latest"
+tokei = "latest"
+# ── charm + fetch (the sexy) ──
+fastfetch = "latest"
+"aqua:o2sh/onefetch" = "latest"
+glow = "latest"
+gum = "latest"
+# ── data / http / net (interactive viewers) ──
+xh = "latest"
+jless = "latest"
+"github:mr-karan/doggo" = "latest"
+gping = "latest"
+# ── shell UX ──
+carapace = "latest"
+"cargo:tealdeer" = "latest"     # builds a binary named `tldr`
+"cargo:navi" = "latest"
+"cargo:pay-respects" = "latest"
+# ── notes + LLM REPL ──
+"aqua:zk-org/zk" = "latest"      # plain-text zettelkasten/notes CLI (zk-org maintained fork)
+"aqua:sigoden/aichat" = "latest" # all-in-one LLM CLI: REPL, shell-assistant, RAG, agents
+# ── logs ──
+"github:tstack/lnav" = "latest" # log viewer with SQL queries over log files
+# ── HTTP + DB TUIs (CLI half of the GUI dbeaver/tableplus/posting workflow) ──
+"pipx:posting" = "latest" # terminal HTTP client — Postman/Insomnia in a TUI (darrenburns)
+# pgcli's psycopg dep uses the system libpq on non-Windows; inject psycopg[binary]
+# so it ships the libpq-bundled wheel and is self-contained on mac + Linux.
+"pipx:pgcli" = { version = "latest", uvx_args = "--with psycopg[binary]" } # Postgres CLI: autocompletion + syntax highlight (dbcli)
+"pipx:litecli" = "latest"                                                  # SQLite CLI (dbcli)
+"pipx:mycli" = "latest"                                                    # MySQL/MariaDB CLI (dbcli)
+
+# ── portable human CLIs a user-facing Linux box needs through mise. Only tools
+#    with a maintained mise/aqua backend live here; the rest are Homebrew
+#    formulae in [bootstrap.packages].
+# editors / docs / markup
+neovim = "latest"
+pandoc = "latest"
+typst = "latest"
+svgo = "latest"
+# git / secrets / certs
+git-filter-repo = "latest"
+age = "latest"
+mkcert = "latest"
+# CI / build / net
+act = "latest"        # run GitHub Actions locally
+actionlint = "latest" # lint GitHub Actions workflows
+websocat = "latest"   # WebSocket client
+protobuf = "latest"   # protoc
+# infra / platform CLIs (dev-facing; agents' k8s kit lives in the agent file)
+argocd = "latest"
+crane = "latest"    # container registry client
+k3d = "latest"      # local k3s in Docker
+kubeseal = "latest" # sealed-secrets client
+flyctl = "latest"
+coder = "latest"
+okteto = "latest"
+openbao = "latest"  # `bao`
+neonctl = "latest"
+"npm:@moonshot-ai/kimi-code" = "0.29.0"
+dotnet = "9"
+"npm:oxlint-tsgolint" = "7.0.2001"
+"npm:@getpaseo/cli" = "latest"
+supabase = "2.95.5"
+postgres = "17"
+# `mas` backs the [bootstrap.packages] "mas:" entries below.
+mas = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = []
+# Private github: backends (e.g. oisin-ee/yeet) resolve their token through git's
+# existing gh credential helper (~/.gitconfig already sets gh auth git-credential).
+github.use_git_credentials = true
+# Keep readable latest/lts policy here while mise records exact resolved versions and
+# checksums in the tracked global mise.lock.
+lockfile = true
+trusted_config_paths = ["/Users/oisin/dev"]
+# Explicit source paths below resolve relative to this configuration file.
+
+# ── Repositories cloned before dotfiles are applied. The agent harness checkout
+#    is MISE_SYSTEM_CONFIG_FILE's home (see .zshenv); oh-my-tmux supplies the
+#    tmux.conf the dotfile entry below links to.
+[bootstrap.repos]
+"~/dev/agent" = { url = "git@github.com:oisin-ee/agent.git", ref = "main" }
+"~/.local/share/tmux/oh-my-tmux" = { url = "https://github.com/gpakosz/.tmux.git" }
+
+# ── Dotfiles. One `symlink-each` pass over the Git-tracked `home/` tree covers
+#    every plain file: the target keeps unmanaged neighbours, and editing a
+# deployed file edits the checkout. Templates are declared separately.
+[dotfiles]
+"~" = { source = "home", mode = "symlink-each", manifest = "git", exclude = [".gitconfig.tera", ".ssh/config.tera"] }
+
+# Git identity comes from the environment or the defaults above.
+"~/.gitconfig" = { source = "home/.gitconfig.tera", mode = "template" }
+
+# Manage only this block: preserve hosts written by SSH tooling outside it.
+# The template keeps UseKeychain macOS-only.
+"~/.ssh/config/include" = { source = "home/.ssh/config.tera", template = "tera" }
+
+# oh-my-tmux ships one conf; ~/.config/tmux/tmux.conf.local (tracked above) holds
+# every override.
+"~/.config/tmux/tmux.conf" = "~/.local/share/tmux/oh-my-tmux/.tmux.conf"
+
+# ── Homebrew formulae, casks, and App Store apps. mise installs these into the
+#    canonical Homebrew prefix without Homebrew itself, so there is no installer
+#    script and no Brewfile. Portable CLIs belong in [tools] above; this list is
+#    GUI apps, macOS-only utilities, and formulae with no mise backend.
+# `tobi/try` is the one tap whose GitHub URL mise cannot infer: the repo is
+# `tobi/try`, not `tobi/homebrew-try`. The rest follow the convention.
+[bootstrap.brew.taps]
+"tobi/try" = "https://github.com/tobi/try"
+
+[bootstrap.packages]
+# Linux base shell + git. mise skips the managers a host does not have.
+"apt:btop" = { version = "latest", os = "linux" }
+"apt:curl" = { version = "latest", os = "linux" }
+"apt:gh" = { version = "latest", os = "linux" }
+"apt:git" = { version = "latest", os = "linux" }
+"apt:unzip" = { version = "latest", os = "linux" }
+"apt:xclip" = { version = "latest", os = "linux" }
+"apt:zsh" = { version = "latest", os = "linux" }
+
+# formulae
+"brew:xz" = "latest"
+"brew:backlog-md" = "latest"
+"brew:bash" = "latest"
+"brew:bitwarden-cli" = "latest"
+"brew:btop" = { version = "latest", os = "macos" }
+"brew:cocoapods" = { version = "latest", os = "macos" }
+"brew:coreutils" = "latest"
+"brew:ffmpeg" = "latest"
+"brew:fontforge" = "latest"
+"brew:git-spice" = "latest"
+"brew:gnupg" = "latest"
+"brew:grep" = "latest"
+"brew:gzip" = "latest"
+"brew:lefthook" = "latest"
+"brew:librsvg" = "latest"
+"brew:macmon" = { version = "latest", os = "macos" }
+"brew:nono" = "latest"
+"brew:ollama" = "latest"
+"brew:oterm" = "latest"
+"brew:oxfmt" = "latest"
+"brew:poppler" = "latest"
+"brew:python@3.12" = "latest"
+"brew:qrencode" = "latest"
+"brew:tectonic" = "latest"
+"brew:wireguard-tools" = "latest"
+"brew:xcodegen" = { version = "latest", os = "macos" }
+"brew:cormacrelf/tap/dark-notify" = { version = "latest", os = "macos" }
+"brew:facebook/fb/idb-companion" = { version = "latest", os = "macos" }
+"brew:hashicorp/tap/terraform" = "latest"
+"brew:stacklok/tap/thv" = "latest"
+"brew:tobi/try/try" = "latest"
+"brew:yakitrak/yakitrak/obsidian-cli" = "latest"
+
+# casks — macOS apps
+"brew-cask:arc" = { os = "macos" }
+"brew-cask:background-music" = { os = "macos" }
+"brew-cask:bitwarden" = { os = "macos" }
+"brew-cask:boop" = { os = "macos" }
+"brew-cask:contexts" = { os = "macos" }
+"brew-cask:dbeaver-community" = { os = "macos" }
+"brew-cask:discord" = { os = "macos" }
+"brew-cask:figma" = { os = "macos" }
+"brew-cask:flameshot" = { os = "macos" }
+"brew-cask:freelens" = { os = "macos" }
+"brew-cask:gcloud-cli" = { os = "macos" }
+"brew-cask:ghostty" = { os = "macos" }
+"brew-cask:github" = { os = "macos" }
+"brew-cask:google-chrome" = { os = "macos" }
+"brew-cask:handy" = { os = "macos" }
+"brew-cask:inkscape" = { os = "macos" }
+"brew-cask:loom" = { os = "macos" }
+"brew-cask:lunacy" = { os = "macos" }
+"brew-cask:lunatask" = { os = "macos" }
+"brew-cask:markedit" = { os = "macos" }
+"brew-cask:mos" = { os = "macos" }
+"brew-cask:muxy-app/tap/muxy" = { os = "macos" }
+"brew-cask:nordvpn" = { os = "macos" }
+"brew-cask:obsidian" = { os = "macos" }
+"brew-cask:orbstack" = { os = "macos" }
+"brew-cask:pearcleaner" = { os = "macos" }
+"brew-cask:quicklook-json" = { os = "macos" }
+"brew-cask:raycast" = { os = "macos" }
+"brew-cask:screen-studio" = { os = "macos" }
+"brew-cask:sketch" = { os = "macos" }
+"brew-cask:slack" = { os = "macos" }
+"brew-cask:spotify" = { os = "macos" }
+"brew-cask:tableplus" = { os = "macos" }
+"brew-cask:ticktick" = { os = "macos" }
+"brew-cask:transmission" = { os = "macos" }
+"brew-cask:whatsapp" = { os = "macos" }
+"brew-cask:xykong/tap/flux-markdown" = { os = "macos" }
+"brew-cask:zed" = { os = "macos" }
+"brew-cask:zoom" = { os = "macos" }
+
+# App Store
+"mas:1423210932" = "latest" # Flow
+"mas:6472865291" = "latest" # keymapp
+"mas:1532419400" = "latest" # MeetingBar
+"mas:1451685025" = "latest" # WireGuard
+"mas:497799835" = "latest"  # Xcode
+
+# Nerd Fonts + display fonts. Font casks are the one cask family mise installs on
+# Linux too, into $XDG_DATA_HOME/fonts.
+"brew-cask:font-0xproto-nerd-font" = "latest"
+"brew-cask:font-3270-nerd-font" = "latest"
+"brew-cask:font-adwaita-mono-nerd-font" = "latest"
+"brew-cask:font-agave-nerd-font" = "latest"
+"brew-cask:font-anonymice-nerd-font" = "latest"
+"brew-cask:font-arimo-nerd-font" = "latest"
+"brew-cask:font-atkynson-mono-nerd-font" = "latest"
+"brew-cask:font-aurulent-sans-mono-nerd-font" = "latest"
+"brew-cask:font-bigblue-terminal-nerd-font" = "latest"
+"brew-cask:font-bitstream-vera-sans-mono-nerd-font" = "latest"
+"brew-cask:font-blex-mono-nerd-font" = "latest"
+"brew-cask:font-caskaydia-cove-nerd-font" = "latest"
+"brew-cask:font-caskaydia-mono-nerd-font" = "latest"
+"brew-cask:font-code-new-roman-nerd-font" = "latest"
+"brew-cask:font-comic-shanns-mono-nerd-font" = "latest"
+"brew-cask:font-commit-mono-nerd-font" = "latest"
+"brew-cask:font-cousine-nerd-font" = "latest"
+"brew-cask:font-d2coding-nerd-font" = "latest"
+"brew-cask:font-daddy-time-mono-nerd-font" = "latest"
+"brew-cask:font-dejavu-sans-mono-nerd-font" = "latest"
+"brew-cask:font-departure-mono-nerd-font" = "latest"
+"brew-cask:font-droid-sans-mono-nerd-font" = "latest"
+"brew-cask:font-envy-code-r-nerd-font" = "latest"
+"brew-cask:font-fantasque-sans-mono-nerd-font" = "latest"
+"brew-cask:font-fira-code-nerd-font" = "latest"
+"brew-cask:font-fira-mono-nerd-font" = "latest"
+"brew-cask:font-geist-mono-nerd-font" = "latest"
+"brew-cask:font-go-mono-nerd-font" = "latest"
+"brew-cask:font-gohufont-nerd-font" = "latest"
+"brew-cask:font-hack-nerd-font" = "latest"
+"brew-cask:font-hasklug-nerd-font" = "latest"
+"brew-cask:font-heavy-data-nerd-font" = "latest"
+"brew-cask:font-hurmit-nerd-font" = "latest"
+"brew-cask:font-im-writing-nerd-font" = "latest"
+"brew-cask:font-inconsolata-go-nerd-font" = "latest"
+"brew-cask:font-inconsolata-lgc-nerd-font" = "latest"
+"brew-cask:font-inconsolata-nerd-font" = "latest"
+"brew-cask:font-intone-mono-nerd-font" = "latest"
+"brew-cask:font-iosevka-nerd-font" = "latest"
+"brew-cask:font-iosevka-term-nerd-font" = "latest"
+"brew-cask:font-iosevka-term-slab-nerd-font" = "latest"
+"brew-cask:font-jetbrains-mono-nerd-font" = "latest"
+"brew-cask:font-lekton-nerd-font" = "latest"
+"brew-cask:font-liberation-nerd-font" = "latest"
+"brew-cask:font-lilex-nerd-font" = "latest"
+"brew-cask:font-m+-nerd-font" = "latest"
+"brew-cask:font-martian-mono-nerd-font" = "latest"
+"brew-cask:font-meslo-lg-nerd-font" = "latest"
+"brew-cask:font-monaspice-nerd-font" = "latest"
+"brew-cask:font-monocraft-nerd-font" = "latest"
+"brew-cask:font-monofur-nerd-font" = "latest"
+"brew-cask:font-monoid-nerd-font" = "latest"
+"brew-cask:font-mononoki-nerd-font" = "latest"
+"brew-cask:font-noto-nerd-font" = "latest"
+"brew-cask:font-opendyslexic-nerd-font" = "latest"
+"brew-cask:font-overpass-nerd-font" = "latest"
+"brew-cask:font-profont-nerd-font" = "latest"
+"brew-cask:font-proggy-clean-tt-nerd-font" = "latest"
+"brew-cask:font-recursive-mono-nerd-font" = "latest"
+"brew-cask:font-roboto" = "latest"
+"brew-cask:font-roboto-mono-nerd-font" = "latest"
+"brew-cask:font-sauce-code-pro-nerd-font" = "latest"
+"brew-cask:font-sf-mono-nerd-font-ligaturized" = "latest"
+"brew-cask:font-shure-tech-mono-nerd-font" = "latest"
+"brew-cask:font-source-code-pro" = "latest"
+"brew-cask:font-source-code-pro-for-powerline" = "latest"
+"brew-cask:font-space-mono-nerd-font" = "latest"
+"brew-cask:font-symbols-only-nerd-font" = "latest"
+"brew-cask:font-terminess-ttf-nerd-font" = "latest"
+"brew-cask:font-tinos-nerd-font" = "latest"
+"brew-cask:font-ubuntu-mono-nerd-font" = "latest"
+"brew-cask:font-ubuntu-nerd-font" = "latest"
+"brew-cask:font-ubuntu-sans-nerd-font" = "latest"
+"brew-cask:font-victor-mono-nerd-font" = "latest"
+"brew-cask:font-zed-mono-nerd-font" = "latest"
+
+# ── Persistent tmux on Linux boxes. A tmux server started from an interactive SSH
+#    shell lives in that login's session scope, which systemd tears down on
+# disconnect. Infrastructure enables linger when it creates the account.
+# The user manager must supply tmux on PATH; interactive shell activation does
+# not configure the user manager environment.
+[bootstrap.linux.systemd.units.tmux]
+description = "Persistent tmux server"
+# `new-session -d` forks the server and exits, which is what Type=forking expects.
+type = "forking"
+exec_start = "/usr/bin/env sh -c 'exec tmux new-session -d -s main'"
+exec_stop = "/usr/bin/env sh -c 'exec tmux kill-server'"
+# tmux defaults to `exit-empty on`, so killing the last session stops the server.
+# Restarting keeps the base session permanently available; `systemctl --user stop
+# dev.mise.tmux` remains the deliberate off switch.
+restart = "always"
+restart_sec = "2s"
+

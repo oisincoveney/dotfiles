@@ -1,0 +1,155 @@
+# Modern CLI tool integrations + the catppuccin-mocha theming that ties the
+# terminal together. Two data-driven loaders own the repetitive shapes; only the
+# genuinely-unique integrations (atuin, terminal-specific) are spelled out.
+
+# ── theme: catppuccin mocha, single source for fzf / bat / eza colours ────────
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--color=selected-bg:#45475a,border:#585b70,label:#cdd6f4 \
+--height 60% --layout reverse --border rounded --info inline-right"
+export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type=d --hidden --strip-cwd-prefix --exclude .git'
+export BAT_THEME='Catppuccin Mocha'
+# glow markdown catppuccin theme (fetched by run_once_04) + gum (charm) palette
+export GLAMOUR_STYLE="${XDG_CONFIG_HOME:-$HOME/.config}/glow/catppuccin-mocha.json"
+export GUM_INPUT_CURSOR_FOREGROUND='#f5e0dc'
+export GUM_INPUT_PROMPT_FOREGROUND='#cba6f7'
+export GUM_CHOOSE_CURSOR_FOREGROUND='#f5e0dc'
+export GUM_CHOOSE_SELECTED_FOREGROUND='#a6e3a1'
+export GUM_FILTER_INDICATOR_FOREGROUND='#cba6f7'
+
+# ── coder: redirect its generated SSH block out of the managed base ───────────
+# `coder config-ssh` rewrites its host block into this file (default ~/.ssh/config).
+# Pointing it at the tool-owned include dir (base config does `Include
+# ~/.ssh/config.d/*.conf`) keeps ~/.ssh/config stable, so the rendered template
+# never fights a tool-written block.
+export CODER_SSH_CONFIG_FILE="$HOME/.ssh/config.d/coder.conf"
+
+# ── tmux: attach to the persistent server, never start a session-scoped one ────
+# The tmux server runs under systemd (dev.mise.tmux.service from [bootstrap.linux
+# .systemd.units] in the dotfiles config.toml), so it
+# outlives every SSH login. `t` attaches to a named session and creates it inside
+# that already-running server when it is missing. Never run a bare `tmux` over
+# SSH: that forks a NEW server into the login's session scope, which systemd
+# destroys on disconnect, taking any agent running in it along.
+if command -v tmux >/dev/null 2>&1; then
+  t() {
+    local session="${1:-main}"
+    # -A attaches when the session exists and creates it otherwise; -d keeps
+    # that idempotent create detached so an already-attached client can then
+    # switch to it instead of nesting a second client inside the current pane.
+    tmux new-session -d -A -s "$session" || return
+    if [[ -n "${TMUX:-}" ]]; then
+      tmux switch-client -t "$session"
+    else
+      tmux attach-session -t "$session"
+    fi
+  }
+  # Completion over live session names, so `t <Tab>` lists what is running.
+  _t() { compadd -- ${(f)"$(tmux list-sessions -F '#S' 2>/dev/null)"} }
+  compdef _t t
+fi
+
+# ── cached tool init: fork the binary once, cache its shell output, re-source ──
+# `eval "$(starship init zsh)"` forks a process every startup. Caching the output
+# and regenerating only when the binary is newer turns N forks into zero on warm
+# starts — the single biggest startup win here.
+_evalcache() {
+  local bin="$1" binpath
+  binpath="$(command -v -- "$bin" 2>/dev/null)" || return 0
+  local cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/evalcache/${bin}.zsh"
+  # Regenerate when the cache is missing/stale, the binary is newer, OR the
+  # resolved binary PATH changed (e.g. moved brew -> mise). A path change isn't
+  # caught by mtime, and inits like starship bake the absolute binary path into
+  # $PROMPT — a stale path silently breaks the prompt. The `# path:` marker line
+  # records which binary the cache was built from.
+  if [[ ! -s "$cache" || "$binpath" -nt "$cache" ]] || ! grep -qxF "# path:$binpath" "$cache" 2>/dev/null; then
+    mkdir -p "${cache:h}"
+    if { print -r -- "# path:$binpath"; "$@"; } >| "$cache" 2>/dev/null; then :; else
+      rm -f "$cache"
+      "$@" 2>/dev/null | source /dev/stdin   # binary can't cache: run live
+      return 0
+    fi
+  fi
+  source "$cache"
+}
+
+# One concept ("activate shell integration if the binary exists, cached") owns
+# this axis, instead of a stack of near-identical `if command -v X` blocks.
+# mise FIRST — it puts starship/zoxide/atuin/… on PATH, so their inits below can
+# actually find them (they're mise-managed now, not brew/always-on-PATH).
+_evalcache mise activate zsh
+_evalcache starship init zsh
+_evalcache zoxide init zsh
+# gwq: git-worktree manager (replaces wtp). Its completion doubles as the shell
+# integration — with cd.launch_shell=false (see ~/.config/gwq/config.toml) it
+# defines the wrapper that makes `gwq cd`/`gwq add -s` change the current shell.
+_evalcache gwq completion zsh
+
+# zen kit: tree-nav (broot `br`), cheatsheets (navi, ctrl-g), command-fix
+# (pay-respects `f`), fuzzy switchboard (television).
+_evalcache broot --print-shell-function zsh
+_evalcache navi widget zsh
+_evalcache pay-respects zsh --alias f
+_evalcache tv init zsh
+# direnv: per-directory env; hooks precmd to load/unload .envrc (needs `direnv
+# allow` per project — by-design, not maintenance).
+_evalcache direnv hook zsh
+
+# ── helper: source the first readable file from a candidate list (SDKs) ───────
+_source_first() {
+  local f
+  for f in "$@"; do
+    [[ -r "$f" ]] && { source "$f"; return 0; }
+  done
+  return 1
+}
+
+# Google Cloud SDK PATH — needed eagerly so the `gcloud` binary resolves.
+_source_first /opt/homebrew/share/google-cloud-sdk/path.zsh.inc \
+              "$HOME/google-cloud-sdk/path.zsh.inc"
+
+# ── defer heavy completions to just after the first prompt ────────────────────
+# gcloud's completion.inc fires compinit + ~1000 compdefs (~300ms). Running it on
+# the first precmd keeps time-to-prompt low — the shell is usable instantly and
+# completions arrive a beat later. Runs once.
+autoload -Uz add-zsh-hook
+_load_deferred_completions() {
+  _source_first /opt/homebrew/share/google-cloud-sdk/completion.zsh.inc \
+                "$HOME/google-cloud-sdk/completion.zsh.inc"
+  add-zsh-hook -d precmd _load_deferred_completions
+  unset -f _load_deferred_completions
+}
+add-zsh-hook precmd _load_deferred_completions
+
+# ── unique integrations that don't fit the table ─────────────────────────────
+
+# atuin LAST: it rebinds Ctrl-R / Up, so it must win over fzf's bindings.
+# --disable-up-arrow keeps the Up key as plain previous-line history. Cached.
+_evalcache atuin init zsh --disable-up-arrow
+
+# The agent harness (Claude Code, Codex, OMP, pi) installs through `mise bootstrap`
+# out of ~/dev/agent/mise.toml's [dotfiles] table. No shell-startup trigger and no
+# separate installer binary remains.
+
+# yazi: `y` opens the file manager and cd's to wherever you quit it.
+if command -v yazi >/dev/null 2>&1; then
+  y() {
+    local tmp cwd
+    tmp="$(mktemp -t yazi-cwd.XXXXXX)"
+    yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd < "$tmp"
+    [[ -n "$cwd" && "$cwd" != "$PWD" ]] && builtin cd -- "$cwd"
+    rm -f -- "$tmp"
+  }
+fi
+
+# Greeting: fastfetch once per terminal window (not per subshell). Interactive
+# TTY only; the exported flag makes nested shells skip it, so it never repeats.
+if [[ -o interactive && -t 1 && -z "${_SHELL_GREETED:-}" ]] && command -v fastfetch >/dev/null 2>&1; then
+  fastfetch
+  export _SHELL_GREETED=1
+fi

@@ -1,0 +1,24 @@
+# ~/.zshrc — thin loader. All behaviour lives in ~/.config/zsh/<module>.zsh,
+# sourced in the dependency order below. Prompt = starship, plugins = zinit
+# (both wired inside the modules). No framework.
+
+export DOTFILES="${DOTFILES:-$HOME/.config/mise}"
+export ZDOTDIR_CONF="${ZDOTDIR_CONF:-$HOME/.config/zsh}"
+
+# Locale
+export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+export LANG="${LANG:-en_US.UTF-8}"
+
+# Extra completions dropped into ~/.zsh/completions stay on fpath.
+[[ -d "$HOME/.zsh/completions" ]] && fpath=("$HOME/.zsh/completions" $fpath)
+
+# Ordered module load. One loop owns load-order; secrets.zsh is intentionally
+# absent here and sourced last, below, so it is never part of the tracked set.
+for _mod in path options history plugins completion tools keybindings aliases; do
+  [[ -r "$ZDOTDIR_CONF/$_mod.zsh" ]] && source "$ZDOTDIR_CONF/$_mod.zsh"
+done
+unset _mod
+
+# Machine-local env vars, tokens, and one-off overrides. Not committed
+# (this dotfiles repo is public); see ~/.config/zsh/secrets.zsh.
+[[ -r "$ZDOTDIR_CONF/secrets.zsh" ]] && source "$ZDOTDIR_CONF/secrets.zsh"
