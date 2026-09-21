@@ -109,6 +109,8 @@ supabase = "2.95.5"
 postgres = "17"
 # `mas` backs the [bootstrap.packages] "mas:" entries below.
 mas = "latest"
+"github:can1357/oh-my-pi" = "18.2.7"
+"npm:repomix" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
@@ -128,11 +130,24 @@ trusted_config_paths = ["/Users/oisin/dev"]
 "~/dev/agent" = { url = "git@github.com:oisin-ee/agent.git", ref = "main" }
 "~/.local/share/tmux/oh-my-tmux" = { url = "https://github.com/gpakosz/.tmux.git" }
 
-# ── Dotfiles. One `symlink-each` pass over the Git-tracked `home/` tree covers
-#    every plain file: the target keeps unmanaged neighbours, and editing a
-# deployed file edits the checkout. Templates are declared separately.
+# ── Dotfiles. `symlink-each` walks the TARGET tree to reconcile its recorded
+#    links, so the entries below are scoped to the four directories the repo
+#    actually owns. A single `"~"` entry would walk all of $HOME (Library,
+#    Trash, every node_modules) on every apply — minutes of CPU per run.
+#    Targets keep unmanaged neighbours, and editing a deployed file edits the
+#    checkout. Templates and the six top-level files are declared separately.
 [dotfiles]
-"~" = { source = "home", mode = "symlink-each", manifest = "git", exclude = [".gitconfig.tera", ".ssh/config.tera"] }
+"~/.config" = { source = "home/.config", mode = "symlink-each", manifest = "git" }
+"~/.local/bin" = { source = "home/.local/bin", mode = "symlink-each", manifest = "git" }
+"~/.local/share/mac-burst" = { source = "home/.local/share/mac-burst", mode = "symlink-each", manifest = "git" }
+"~/.git-hooks" = { source = "home/.git-hooks", mode = "symlink-each", manifest = "git" }
+
+# Top-level shell files: one entry each, no directory walk.
+"~/.zshenv" = { source = "home/.zshenv", mode = "symlink" }
+"~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
+"~/.zprofile" = { source = "home/.zprofile", mode = "symlink" }
+"~/.profile" = { source = "home/.profile", mode = "symlink" }
+"~/.gitignore_global" = { source = "home/.gitignore_global", mode = "symlink" }
 
 # Git identity comes from the environment or the defaults above.
 "~/.gitconfig" = { source = "home/.gitconfig.tera", mode = "template" }
