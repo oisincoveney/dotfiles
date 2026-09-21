@@ -111,6 +111,7 @@ postgres = "17"
 mas = "latest"
 "github:can1357/oh-my-pi" = "18.2.7"
 "npm:repomix" = "latest"
+shfmt = "3.14.1"
 
 [settings]
 idiomatic_version_file_enable_tools = []
@@ -160,10 +161,14 @@ trusted_config_paths = ["/Users/oisin/dev"]
 # every override.
 "~/.config/tmux/tmux.conf" = "~/.local/share/tmux/oh-my-tmux/.tmux.conf"
 
-# ── Homebrew formulae, casks, and App Store apps. mise installs these into the
-#    canonical Homebrew prefix without Homebrew itself, so there is no installer
-#    script and no Brewfile. Portable CLIs belong in [tools] above; this list is
-#    GUI apps, macOS-only utilities, and formulae with no mise backend.
+# ── Homebrew formulae, casks, and App Store apps. macOS only: Homebrew is the
+#    macOS package manager, and every entry below is scoped `os = "macos"` so a
+#    Linux host never provisions a Homebrew prefix. Linux packages come from that
+#    host's own manager (`apt:` above, or Nix on a NixOS box).
+#    mise installs these into the canonical Homebrew prefix without Homebrew
+#    itself, so there is no installer script and no Brewfile. Portable CLIs
+#    belong in [tools] above; this list is GUI apps, macOS-only utilities, and
+#    formulae with no mise backend.
 # `tobi/try` is the one tap whose GitHub URL mise cannot infer: the repo is
 # `tobi/try`, not `tobi/homebrew-try`. The rest follow the convention.
 [bootstrap.brew.taps]
@@ -180,39 +185,39 @@ trusted_config_paths = ["/Users/oisin/dev"]
 "apt:zsh" = { version = "latest", os = "linux" }
 
 # formulae
-"brew:xz" = "latest"
-"brew:backlog-md" = "latest"
-"brew:bash" = "latest"
-"brew:bitwarden-cli" = "latest"
+"brew:xz" = { version = "latest", os = "macos" }
+"brew:backlog-md" = { version = "latest", os = "macos" }
+"brew:bash" = { version = "latest", os = "macos" }
+"brew:bitwarden-cli" = { version = "latest", os = "macos" }
 "brew:btop" = { version = "latest", os = "macos" }
 "brew:cocoapods" = { version = "latest", os = "macos" }
-"brew:coreutils" = "latest"
-"brew:ffmpeg" = "latest"
-"brew:fontforge" = "latest"
-"brew:git-spice" = "latest"
-"brew:gnupg" = "latest"
-"brew:grep" = "latest"
-"brew:gzip" = "latest"
-"brew:lefthook" = "latest"
-"brew:librsvg" = "latest"
+"brew:coreutils" = { version = "latest", os = "macos" }
+"brew:ffmpeg" = { version = "latest", os = "macos" }
+"brew:fontforge" = { version = "latest", os = "macos" }
+"brew:git-spice" = { version = "latest", os = "macos" }
+"brew:gnupg" = { version = "latest", os = "macos" }
+"brew:grep" = { version = "latest", os = "macos" }
+"brew:gzip" = { version = "latest", os = "macos" }
+"brew:lefthook" = { version = "latest", os = "macos" }
+"brew:librsvg" = { version = "latest", os = "macos" }
 "brew:macmon" = { version = "latest", os = "macos" }
-"brew:nono" = "latest"
-"brew:ollama" = "latest"
-"brew:oterm" = "latest"
-"brew:oxfmt" = "latest"
-"brew:poppler" = "latest"
-"brew:python@3.12" = "latest"
-"brew:qrencode" = "latest"
-"brew:tectonic" = "latest"
-"brew:wireguard-tools" = "latest"
+"brew:nono" = { version = "latest", os = "macos" }
+"brew:ollama" = { version = "latest", os = "macos" }
+"brew:oterm" = { version = "latest", os = "macos" }
+"brew:oxfmt" = { version = "latest", os = "macos" }
+"brew:poppler" = { version = "latest", os = "macos" }
+"brew:python@3.12" = { version = "latest", os = "macos" }
+"brew:qrencode" = { version = "latest", os = "macos" }
+"brew:tectonic" = { version = "latest", os = "macos" }
+"brew:wireguard-tools" = { version = "latest", os = "macos" }
 "brew:xcodegen" = { version = "latest", os = "macos" }
 "brew:cormacrelf/tap/dark-notify" = { version = "latest", os = "macos" }
 "brew:facebook/fb/idb-companion" = { version = "latest", os = "macos" }
-"brew:hashicorp/tap/terraform" = "latest"
-"brew:stacklok/tap/thv" = "latest"
-"brew:tobi/try/try" = "latest"
+"brew:hashicorp/tap/terraform" = { version = "latest", os = "macos" }
+"brew:stacklok/tap/thv" = { version = "latest", os = "macos" }
+"brew:tobi/try/try" = { version = "latest", os = "macos" }
 # Upstream renamed obsidian-cli to notesmd-cli; the old formula no longer exists in the tap.
-"brew:yakitrak/yakitrak/notesmd-cli" = "latest"
+"brew:yakitrak/yakitrak/notesmd-cli" = { version = "latest", os = "macos" }
 
 # casks — macOS apps
 "brew-cask:arc" = { os = "macos" }
@@ -256,89 +261,89 @@ trusted_config_paths = ["/Users/oisin/dev"]
 "brew-cask:zoom" = { os = "macos" }
 
 # App Store
-"mas:1423210932" = "latest" # Flow
-"mas:6472865291" = "latest" # keymapp
-"mas:1532419400" = "latest" # MeetingBar
-"mas:1451685025" = "latest" # WireGuard
-"mas:497799835" = "latest"  # Xcode
+"mas:1423210932" = { version = "latest", os = "macos" } # Flow
+"mas:6472865291" = { version = "latest", os = "macos" } # keymapp
+"mas:1532419400" = { version = "latest", os = "macos" } # MeetingBar
+"mas:1451685025" = { version = "latest", os = "macos" } # WireGuard
+"mas:497799835" = { version = "latest", os = "macos" }  # Xcode
 
 # Nerd Fonts + display fonts. Font casks are the one cask family mise installs on
 # Linux too, into $XDG_DATA_HOME/fonts.
-"brew-cask:font-0xproto-nerd-font" = "latest"
-"brew-cask:font-3270-nerd-font" = "latest"
-"brew-cask:font-adwaita-mono-nerd-font" = "latest"
-"brew-cask:font-agave-nerd-font" = "latest"
-"brew-cask:font-anonymice-nerd-font" = "latest"
-"brew-cask:font-arimo-nerd-font" = "latest"
-"brew-cask:font-atkynson-mono-nerd-font" = "latest"
-"brew-cask:font-aurulent-sans-mono-nerd-font" = "latest"
-"brew-cask:font-bigblue-terminal-nerd-font" = "latest"
-"brew-cask:font-bitstream-vera-sans-mono-nerd-font" = "latest"
-"brew-cask:font-blex-mono-nerd-font" = "latest"
-"brew-cask:font-caskaydia-cove-nerd-font" = "latest"
-"brew-cask:font-caskaydia-mono-nerd-font" = "latest"
-"brew-cask:font-code-new-roman-nerd-font" = "latest"
-"brew-cask:font-comic-shanns-mono-nerd-font" = "latest"
-"brew-cask:font-commit-mono-nerd-font" = "latest"
-"brew-cask:font-cousine-nerd-font" = "latest"
-"brew-cask:font-d2coding-nerd-font" = "latest"
-"brew-cask:font-daddy-time-mono-nerd-font" = "latest"
-"brew-cask:font-dejavu-sans-mono-nerd-font" = "latest"
-"brew-cask:font-departure-mono-nerd-font" = "latest"
-"brew-cask:font-droid-sans-mono-nerd-font" = "latest"
-"brew-cask:font-envy-code-r-nerd-font" = "latest"
-"brew-cask:font-fantasque-sans-mono-nerd-font" = "latest"
-"brew-cask:font-fira-code-nerd-font" = "latest"
-"brew-cask:font-fira-mono-nerd-font" = "latest"
-"brew-cask:font-geist-mono-nerd-font" = "latest"
-"brew-cask:font-go-mono-nerd-font" = "latest"
-"brew-cask:font-gohufont-nerd-font" = "latest"
-"brew-cask:font-hack-nerd-font" = "latest"
-"brew-cask:font-hasklug-nerd-font" = "latest"
-"brew-cask:font-heavy-data-nerd-font" = "latest"
-"brew-cask:font-hurmit-nerd-font" = "latest"
-"brew-cask:font-im-writing-nerd-font" = "latest"
-"brew-cask:font-inconsolata-go-nerd-font" = "latest"
-"brew-cask:font-inconsolata-lgc-nerd-font" = "latest"
-"brew-cask:font-inconsolata-nerd-font" = "latest"
-"brew-cask:font-intone-mono-nerd-font" = "latest"
-"brew-cask:font-iosevka-nerd-font" = "latest"
-"brew-cask:font-iosevka-term-nerd-font" = "latest"
-"brew-cask:font-iosevka-term-slab-nerd-font" = "latest"
-"brew-cask:font-jetbrains-mono-nerd-font" = "latest"
-"brew-cask:font-lekton-nerd-font" = "latest"
-"brew-cask:font-liberation-nerd-font" = "latest"
-"brew-cask:font-lilex-nerd-font" = "latest"
-"brew-cask:font-m+-nerd-font" = "latest"
-"brew-cask:font-martian-mono-nerd-font" = "latest"
-"brew-cask:font-meslo-lg-nerd-font" = "latest"
-"brew-cask:font-monaspice-nerd-font" = "latest"
-"brew-cask:font-monocraft-nerd-font" = "latest"
-"brew-cask:font-monofur-nerd-font" = "latest"
-"brew-cask:font-monoid-nerd-font" = "latest"
-"brew-cask:font-mononoki-nerd-font" = "latest"
-"brew-cask:font-noto-nerd-font" = "latest"
-"brew-cask:font-opendyslexic-nerd-font" = "latest"
-"brew-cask:font-overpass-nerd-font" = "latest"
-"brew-cask:font-profont-nerd-font" = "latest"
-"brew-cask:font-proggy-clean-tt-nerd-font" = "latest"
-"brew-cask:font-recursive-mono-nerd-font" = "latest"
-"brew-cask:font-roboto" = "latest"
-"brew-cask:font-roboto-mono-nerd-font" = "latest"
-"brew-cask:font-sauce-code-pro-nerd-font" = "latest"
-"brew-cask:font-sf-mono-nerd-font-ligaturized" = "latest"
-"brew-cask:font-shure-tech-mono-nerd-font" = "latest"
-"brew-cask:font-source-code-pro" = "latest"
-"brew-cask:font-source-code-pro-for-powerline" = "latest"
-"brew-cask:font-space-mono-nerd-font" = "latest"
-"brew-cask:font-symbols-only-nerd-font" = "latest"
-"brew-cask:font-terminess-ttf-nerd-font" = "latest"
-"brew-cask:font-tinos-nerd-font" = "latest"
-"brew-cask:font-ubuntu-mono-nerd-font" = "latest"
-"brew-cask:font-ubuntu-nerd-font" = "latest"
-"brew-cask:font-ubuntu-sans-nerd-font" = "latest"
-"brew-cask:font-victor-mono-nerd-font" = "latest"
-"brew-cask:font-zed-mono-nerd-font" = "latest"
+"brew-cask:font-0xproto-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-3270-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-adwaita-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-agave-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-anonymice-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-arimo-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-atkynson-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-aurulent-sans-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-bigblue-terminal-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-bitstream-vera-sans-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-blex-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-caskaydia-cove-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-caskaydia-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-code-new-roman-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-comic-shanns-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-commit-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-cousine-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-d2coding-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-daddy-time-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-dejavu-sans-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-departure-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-droid-sans-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-envy-code-r-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-fantasque-sans-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-fira-code-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-fira-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-geist-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-go-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-gohufont-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-hack-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-hasklug-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-heavy-data-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-hurmit-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-im-writing-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-inconsolata-go-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-inconsolata-lgc-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-inconsolata-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-intone-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-iosevka-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-iosevka-term-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-iosevka-term-slab-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-jetbrains-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-lekton-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-liberation-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-lilex-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-m+-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-martian-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-meslo-lg-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-monaspice-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-monocraft-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-monofur-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-monoid-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-mononoki-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-noto-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-opendyslexic-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-overpass-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-profont-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-proggy-clean-tt-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-recursive-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-roboto" = { version = "latest", os = "macos" }
+"brew-cask:font-roboto-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-sauce-code-pro-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-sf-mono-nerd-font-ligaturized" = { version = "latest", os = "macos" }
+"brew-cask:font-shure-tech-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-source-code-pro" = { version = "latest", os = "macos" }
+"brew-cask:font-source-code-pro-for-powerline" = { version = "latest", os = "macos" }
+"brew-cask:font-space-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-symbols-only-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-terminess-ttf-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-tinos-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-ubuntu-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-ubuntu-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-ubuntu-sans-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-victor-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:font-zed-mono-nerd-font" = { version = "latest", os = "macos" }
 
 # ── Persistent tmux on Linux boxes. A tmux server started from an interactive SSH
 #    shell lives in that login's session scope, which systemd tears down on
