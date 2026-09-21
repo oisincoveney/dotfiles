@@ -211,7 +211,8 @@ trusted_config_paths = ["/Users/oisin/dev"]
 "brew:hashicorp/tap/terraform" = "latest"
 "brew:stacklok/tap/thv" = "latest"
 "brew:tobi/try/try" = "latest"
-"brew:yakitrak/yakitrak/obsidian-cli" = "latest"
+# Upstream renamed obsidian-cli to notesmd-cli; the old formula no longer exists in the tap.
+"brew:yakitrak/yakitrak/notesmd-cli" = "latest"
 
 # casks — macOS apps
 "brew-cask:arc" = { os = "macos" }
