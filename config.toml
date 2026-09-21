@@ -354,7 +354,10 @@ trusted_config_paths = ["/Users/oisin/dev"]
 description = "Persistent tmux server"
 # `new-session -d` forks the server and exits, which is what Type=forking expects.
 type = "forking"
-exec_start = "/usr/bin/env sh -c 'exec tmux new-session -d -s main'"
+# Idempotent: `restart = "always"` re-runs this against a server that is already
+# up, and a bare `new-session -s main` exits 1 with "duplicate session". Reuse the
+# existing session instead of failing the unit.
+exec_start = "/usr/bin/env sh -c 'tmux has-session -t main 2>/dev/null || exec tmux new-session -d -s main'"
 exec_stop = "/usr/bin/env sh -c 'exec tmux kill-server'"
 # tmux defaults to `exit-empty on`, so killing the last session stops the server.
 # Restarting keeps the base session permanently available; `systemctl --user stop
