@@ -1,13 +1,13 @@
 # Human toolset and machine setup — this mac laptop and any user-facing Linux box.
-# Headless agent runner pods do NOT get these; they get the agent repo's mise.toml
+# Headless agent runner pods do NOT get these; they load agent-runtime.toml
 # and nothing else.
 #
 # This checkout lives at ~/.config/mise, so `mise use -g` and `mise up` write
 # straight back into the repository.
 # The agent-functional toolset is loaded as mise's lower-precedence system config
-# from `~/dev/agent/mise.toml` (MISE_SYSTEM_CONFIG_FILE, exported by .zshenv), so
-# human `[tools]` entries override the agent's (e.g. node) and human `[settings]`
-# win.
+# from `~/dev/agent/agent-runtime.toml` (MISE_SYSTEM_CONFIG_FILE, exported by
+# .zshenv), so human `[tools]` entries override the agent's (e.g. node) and
+# human `[settings]` win.
 #
 # `mise bootstrap` is the whole installer: packages, repos, dotfiles, and services.
 # `cza` runs it. A brand-new host needs two runs: the first clones ~/dev/agent,
@@ -99,7 +99,6 @@ kubeseal = "latest" # sealed-secrets client
 flyctl = "latest"
 coder = "latest"
 okteto = "latest"
-openbao = "latest"  # `bao`
 neonctl = "latest"
 "npm:@moonshot-ai/kimi-code" = "2.0.2"
 dotnet = "10"
@@ -109,9 +108,6 @@ supabase = "2.95.5"
 postgres = "17"
 # `mas` backs the [bootstrap.packages] "mas:" entries below.
 mas = "latest"
-"github:can1357/oh-my-pi" = "18.2.7"
-"npm:repomix" = "latest"
-shfmt = "3.14.1"
 
 [settings]
 idiomatic_version_file_enable_tools = []

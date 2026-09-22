@@ -2,10 +2,10 @@
 
 # uv
 export PATH="$HOME/.local/bin:$PATH"
-# The agent harness repo's mise.toml is mise's lower-precedence system config, so
-# every shell (and every agent subprocess) sees the agent-functional toolset while
-# ~/.config/mise/config.toml — this repo's config.toml — still wins on any shared key.
-export MISE_SYSTEM_CONFIG_FILE="$HOME/dev/agent/mise.toml"
+# The agent harness repo's agent-runtime.toml is mise's lower-precedence system
+# config, so every shell (and every agent subprocess) sees the agent-functional
+# toolset while this repo's config.toml still wins on shared keys.
+export MISE_SYSTEM_CONFIG_FILE="$HOME/dev/agent/agent-runtime.toml"
 
 # Machine-local, non-public overrides (e.g. internal infra endpoints). Not
 # tracked here — this dotfiles repo is public. See ~/.zshenv.local.
