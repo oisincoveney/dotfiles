@@ -2,4 +2,6 @@
 /plugins/
 .worktrees
 repomix-output.xml
+# Host-local, rewritten by every `cza`; tracking them keeps this checkout dirty and blocks the next run.
 mise.lock
+/locks/

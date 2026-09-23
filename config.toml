@@ -71,6 +71,11 @@ carapace = "latest"
 # ── logs ──
 "github:tstack/lnav" = "latest" # log viewer with SQL queries over log files
 # ── HTTP + DB TUIs (CLI half of the GUI dbeaver/tableplus/posting workflow) ──
+# The pipx: entries install through uv into a mise Python. The agent runtime also
+# declares both, but a first bootstrap runs before that system config is loaded,
+# so declare them here too.
+uv = "latest"
+python = "latest"
 "pipx:posting" = "latest" # terminal HTTP client — Postman/Insomnia in a TUI (darrenburns)
 # pgcli's psycopg dep uses the system libpq on non-Windows; inject psycopg[binary]
 # so it ships the libpq-bundled wheel and is self-contained on mac + Linux.
@@ -87,7 +92,9 @@ pandoc = "latest"
 typst = "latest"
 svgo = "latest"
 # git / secrets / certs
-git-filter-repo = "latest"
+# Explicit backend: without a lockfile entry, the short name resolves its pipx
+# backend only once uv is installed, so a first run aborts the whole tools phase.
+"pipx:git-filter-repo" = "latest"
 age = "latest"
 mkcert = "latest"
 # CI / build / net
