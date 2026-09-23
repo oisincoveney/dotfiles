@@ -21,12 +21,6 @@
 [hook "strip-coauthor"]
     event = commit-msg
     command = ~/.config/git/hooks/strip-coauthor
-[hook "beads-post-checkout"]
-    event = post-checkout
-    command = ~/.config/git/hooks/beads post-checkout
-[hook "beads-post-merge"]
-    event = post-merge
-    command = ~/.config/git/hooks/beads post-merge
 
 [diff]
     external = difft
