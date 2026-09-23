@@ -118,16 +118,21 @@ idiomatic_version_file_enable_tools = []
 # Private github: backends (e.g. oisin-ee/yeet) resolve their token through git's
 # existing gh credential helper (~/.gitconfig already sets gh auth git-credential).
 github.use_git_credentials = true
-# Keep readable latest/lts policy here while mise records exact resolved versions and
-# checksums in the tracked global mise.lock.
+# Readable latest/lts policy lives here. mise records the exact resolved versions and
+# checksums in mise.lock, which stays host-local (.gitignore) like the agent repo's:
+# every `cza` rewrites it, so tracking it would make this checkout permanently dirty.
 lockfile = true
 trusted_config_paths = ["/Users/oisin/dev"]
 # Explicit source paths below resolve relative to this configuration file.
 
 # ── Repositories cloned before dotfiles are applied. The agent harness checkout
 #    is MISE_SYSTEM_CONFIG_FILE's home (see .zshenv); oh-my-tmux supplies the
-#    tmux.conf the dotfile entry below links to.
+#    tmux.conf the dotfile entry below links to. This checkout declares itself
+#    too, so `cza` fast-forwards it exactly like the agent repo and refuses to run
+#    while either has local changes (for example an uncommitted `mise use -g`)
+#    instead of leaving them behind or overwriting them.
 [bootstrap.repos]
+"~/.config/mise" = { url = "git@github.com:oisincoveney/dotfiles.git", ref = "main" }
 "~/dev/agent" = { url = "git@github.com:oisin-ee/agent.git", ref = "main" }
 "~/.local/share/tmux/oh-my-tmux" = { url = "https://github.com/gpakosz/.tmux.git" }
 

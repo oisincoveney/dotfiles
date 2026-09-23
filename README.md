@@ -52,7 +52,7 @@ mise bootstrap --yes   # the `cza` alias in an interactive shell
 | Path | Contents |
 | --- | --- |
 | `config.toml` | `~/.config/mise/config.toml` — tools, packages, repos, dotfiles, units |
-| `mise.lock` | `~/.config/mise/mise.lock` — resolved versions and checksums |
+| `mise.lock` | Host-local, ignored — resolved versions and checksums for this machine |
 | `home/` | `dotfiles.root`; every file maps to the same path under `$HOME` |
 | `home/*.tera` | Rendered, not linked: `.gitconfig`, `.ssh/config` |
 
@@ -77,12 +77,16 @@ exists, so non-interactive shells and agents get them too.
 normal global commands write straight back here:
 
 ```sh
-mise use --global bat@latest
-mise up
+mise use --global gwq@latest
 ```
 
-Commit the manifest or lockfile change normally. After pulling it on another host,
-run `cza` (`mise bootstrap --yes`) to install the committed state.
+Commit and push that change. `cza` (`mise bootstrap --yes`) then does three things:
+
+1. Fast-forwards this checkout and `~/dev/agent`. Either one with uncommitted
+   changes stops the run, so a local `mise use -g` is never left behind or overwritten.
+2. Installs missing tools, packages, and dotfiles.
+3. Upgrades every `latest` tool to its newest release at least 24 hours old
+   (mise's `minimum_release_age`), from this repository and the agent repository.
 
 ## Useful commands
 

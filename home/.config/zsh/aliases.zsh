@@ -41,9 +41,10 @@ if command -v kubecolor >/dev/null 2>&1 && command -v kubectl >/dev/null 2>&1; t
 fi
 
 # Shortcuts
-# `mise bootstrap` is the whole installer: packages, repos, dotfiles, units, and
-# the agent harness (the agent repo's mise.toml is mise's system config). A
-# missing BROKER_API_KEY aborts the run before any mutation.
+# `mise bootstrap` is the whole installer: repos (this checkout and ~/dev/agent,
+# fast-forwarded, refused while dirty), packages, dotfiles, units, tools upgraded
+# to latest, and the agent harness. A missing BROKER_API_KEY aborts the run
+# before any mutation.
 alias cza="mise bootstrap --yes"
 alias reloadshell="exec zsh"
 alias compile="commit 'compile'"
