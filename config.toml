@@ -128,7 +128,7 @@ trusted_config_paths = ["/Users/oisin/dev"]
 "~/.local/share/tmux/oh-my-tmux" = { url = "https://github.com/gpakosz/.tmux.git" }
 
 # ── Dotfiles. `symlink-each` walks the TARGET tree to reconcile its recorded
-#    links, so the entries below are scoped to the four directories the repo
+#    links, so the entries below are scoped to the three directories the repo
 #    actually owns. A single `"~"` entry would walk all of $HOME (Library,
 #    Trash, every node_modules) on every apply — minutes of CPU per run.
 #    Targets keep unmanaged neighbours, and editing a deployed file edits the
@@ -137,7 +137,6 @@ trusted_config_paths = ["/Users/oisin/dev"]
 "~/.config" = { source = "home/.config", mode = "symlink-each", manifest = "git" }
 "~/.local/bin" = { source = "home/.local/bin", mode = "symlink-each", manifest = "git" }
 "~/.local/share/mac-burst" = { source = "home/.local/share/mac-burst", mode = "symlink-each", manifest = "git" }
-"~/.git-hooks" = { source = "home/.git-hooks", mode = "symlink-each", manifest = "git" }
 
 # Top-level shell files: one entry each, no directory walk.
 "~/.zshenv" = { source = "home/.zshenv", mode = "symlink" }

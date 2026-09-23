@@ -12,9 +12,21 @@
 
 [core]
     pager = delta
-    hooksPath = ~/.git-hooks
+    # No hooksPath: each repository owns .git/hooks (lefthook installs there).
+    # Machine-wide hooks run through [hook "..."] entries below, beside repo hooks.
     excludesFile = ~/.gitignore_global
     attributesFile = ~/.config/git/attributes
+
+# Config-defined hooks (git-hook(1)) run before each repository's own hook.
+[hook "strip-coauthor"]
+    event = commit-msg
+    command = ~/.config/git/hooks/strip-coauthor
+[hook "beads-post-checkout"]
+    event = post-checkout
+    command = ~/.config/git/hooks/beads post-checkout
+[hook "beads-post-merge"]
+    event = post-merge
+    command = ~/.config/git/hooks/beads post-merge
 
 [diff]
     external = difft
