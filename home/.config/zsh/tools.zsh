@@ -132,7 +132,7 @@ add-zsh-hook precmd _load_deferred_completions
 _evalcache atuin init zsh --disable-up-arrow
 
 # The agent harness (Claude Code, Codex, OMP, pi) installs through `mise bootstrap`
-# out of ~/dev/agent/mise.toml's [dotfiles] table. No shell-startup trigger and no
+# out of ~/dev/agent/agent-runtime.toml's [dotfiles] table. No shell-startup trigger and no
 # separate installer binary remains.
 
 # yazi: `y` opens the file manager and cd's to wherever you quit it.

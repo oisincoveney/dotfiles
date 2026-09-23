@@ -6,21 +6,38 @@ dotfiles, and the persistent-tmux unit.
 
 ## Install
 
-```sh
-mise bootstrap --adopt oisincoveney/dotfiles
-```
-
-That clones this repository into `~/.config/mise`, then applies it. On a machine
-without mise, install the binary first:
+On a machine without mise, install the binary first and put it on `PATH`. Adopting
+the repository needs `git` before the first run installs it; stock Ubuntu lacks it:
 
 ```sh
 curl -fsSL https://mise.run | sh
+export PATH="$HOME/.local/bin:$PATH"
+sudo apt-get install -y git      # Debian/Ubuntu; macOS ships git
 ```
 
-A brand-new host needs two `mise bootstrap` runs. The first clones `~/dev/agent`
-(the agent harness repo, `[bootstrap.repos]`); the second sees it as mise's system
-config — `.zshenv` exports `MISE_SYSTEM_CONFIG_FILE` — and installs the harness
-from that repo's own `[dotfiles]` table.
+Then adopt and apply this repository. `--force-dotfiles` replaces the distribution's
+stock `~/.profile`, which otherwise blocks the first apply:
+
+```sh
+mise bootstrap --adopt oisincoveney/dotfiles --yes --force-dotfiles
+```
+
+That clones this repository into `~/.config/mise`, then applies it. The first run
+also clones `~/dev/agent` (the agent harness, `[bootstrap.repos]`) over SSH, so the
+host needs a GitHub key with access to `oisin-ee/agent`. The first run also installs
+`gh`.
+
+A brand-new host needs a second run from a new login shell. That shell sources
+`.zshenv`, which exports `MISE_SYSTEM_CONFIG_FILE`, so mise loads the agent
+repository as its system config and installs the harness from its `[dotfiles]`:
+
+```sh
+exec zsh -l
+gh auth login          # mise resolves ~100 GitHub releases; anonymous API access allows 60/h
+secret sync            # writes BROKER_API_KEY; the harness bootstrap needs it
+exec zsh -l            # reload so .zshenv sources the new secrets file
+mise bootstrap --yes   # the `cza` alias in an interactive shell
+```
 
 ## What is managed
 

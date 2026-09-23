@@ -24,6 +24,9 @@ git_email = "{{ get_env(name='GIT_AUTHOR_EMAIL', default='git@oisin.ee') }}"
 node = "lts" # laptop tracks LTS; the agent repo pins node=latest for birth-seeding
 
 # ── core replacements (shell UX) ──
+# Every "cargo:" tool here installs through cargo-binstall's published binaries; a fresh
+# host has no Rust toolchain for the cargo backend to compile with.
+cargo-binstall = "latest"
 "cargo:eza" = "latest"
 bat = "latest"
 fzf = "latest"
@@ -45,7 +48,8 @@ duf = "latest"
 sd = "latest"
 choose = "latest"
 hyperfine = "latest"
-tokei = "latest"
+# macOS only: tokei 14+ publishes no Linux binary, and Linux hosts carry no Rust toolchain.
+tokei = { version = "latest", os = ["macos"] }
 # ── charm + fetch (the sexy) ──
 fastfetch = "latest"
 "aqua:o2sh/onefetch" = "latest"
@@ -58,7 +62,7 @@ jless = "latest"
 gping = "latest"
 # ── shell UX ──
 carapace = "latest"
-"cargo:tealdeer" = "latest"     # builds a binary named `tldr`
+"github:tealdeer-rs/tealdeer" = { version = "latest", bin = "tldr" } # published musl/darwin binaries
 "cargo:navi" = "latest"
 "cargo:pay-respects" = "latest"
 # ── notes + LLM REPL ──
@@ -170,13 +174,15 @@ trusted_config_paths = ["/Users/oisin/dev"]
 "tobi/try" = "https://github.com/tobi/try"
 
 [bootstrap.packages]
-# Linux base shell + git. mise skips the managers a host does not have.
+# Linux base shell, git, and tmux (the persistent tmux unit below runs it).
+# mise skips the managers a host does not have.
 "apt:btop" = { version = "latest", os = "linux" }
 "apt:curl" = { version = "latest", os = "linux" }
 "apt:gh" = { version = "latest", os = "linux" }
 "apt:git" = { version = "latest", os = "linux" }
 "apt:unzip" = { version = "latest", os = "linux" }
 "apt:xclip" = { version = "latest", os = "linux" }
+"apt:tmux" = { version = "latest", os = "linux" }
 "apt:zsh" = { version = "latest", os = "linux" }
 
 # formulae
