@@ -117,6 +117,10 @@ dotnet = "10"
 "npm:@getpaseo/cli" = "latest"
 supabase = "2.95.5"
 postgres = "17"
+# The machine-wide development proxy that the `portless` units below run. Keep
+# this pin equal to the `portless` devDependency of every repository that calls
+# `portless run`, so the proxy and its clients share one route-state format.
+"npm:portless" = "0.15.6"
 # `mas` backs the [bootstrap.packages] "mas:" entries below.
 mas = "latest"
 
@@ -377,4 +381,32 @@ exec_stop = "/usr/bin/env sh -c 'exec tmux kill-server'"
 # dev.mise.tmux` remains the deliberate off switch.
 restart = "always"
 restart_sec = "2s"
+
+# ── One Portless development proxy per machine. Repositories only run
+#    `portless run`, which discovers this proxy through ~/.portless/proxy.port,
+#    so no checkout starts, stops, or reconfigures it.
+#    - Plain HTTP on port 1355: no root, no local CA, and no sudo prompt.
+#    - `localhost` serves this machine. `momokaya.ee` serves the netcup edge
+#      (oisin-ee/infra hosts/netcup/rondo-dev-edge.nix), which forwards
+#      <name>.momokaya.ee to this port. On a laptop the extra TLD is unused.
+#    - No Tailscale or Funnel sharing: the edge is the only public path, and it
+#      keeps the SSO gate in front of development-only routes.
+#    The executable is the mise shim, so the unit runs the pinned version above.
+#    `working_directory` is home, so the shim resolves this global config and
+#    not the configuration of whichever project the user last opened.
+[bootstrap.linux.systemd.units.portless]
+description = "Portless development proxy"
+exec_start = "~/.local/share/mise/shims/portless proxy start --foreground --port 1355 --no-tls --tld localhost --tld momokaya.ee --skip-trust"
+working_directory = "~"
+restart = "always"
+restart_sec = "2s"
+
+[bootstrap.macos.launchd.agents.portless]
+program = "~/.local/share/mise/shims/portless"
+args = ["proxy", "start", "--foreground", "--port", "1355", "--no-tls", "--tld", "localhost", "--tld", "momokaya.ee", "--skip-trust"]
+working_directory = "~"
+run_at_load = true
+keep_alive = true
+stdout_path = "~/Library/Logs/portless.log"
+stderr_path = "~/Library/Logs/portless.log"
 
