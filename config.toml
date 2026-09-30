@@ -113,6 +113,8 @@ okteto = "latest"
 neonctl = "latest"
 "npm:@moonshot-ai/kimi-code" = "2.0.2"
 dotnet = "10"
+# Gradle JDK for native Android builds; matches the temurin 21 that CI uses.
+java = "temurin-21"
 "npm:oxlint-tsgolint" = "7.0.2002"
 "npm:@getpaseo/cli" = "latest"
 supabase = "2.95.5"
