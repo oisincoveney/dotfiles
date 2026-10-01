@@ -22,10 +22,6 @@ background-blur-radius = 20
 macos-titlebar-style = tabs
 macos-option-as-alt = true
 
-# Animated cursor-trail shader (vendored in shaders/). Small GPU cost; delete
-# these two lines to disable.
-custom-shader = shaders/cursor_blaze.glsl
-custom-shader-animation = true
 window-colorspace = display-p3
 
 # Splits + quick terminal
@@ -45,3 +41,4 @@ copy-on-select = clipboard
 confirm-close-surface = false
 mouse-hide-while-typing = true
 window-save-state = always
+clipboard-paste-protection = false
