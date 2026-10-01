@@ -423,21 +423,26 @@ restart_sec = "2s"
 #    recorded paths differ or the job is not loaded, so sudo prompts only then.
 #    It also retires the earlier user LaunchAgent on port 1355
 #    (dev.mise.portless), which would otherwise answer beside the service.
+#    Both proxies share ~/.portless, and a stopping proxy deletes proxy.port
+#    and resets the TLS and TLD markers there, so retiring the agent always
+#    reinstalls the service, which rewrites them.
 [bootstrap.hooks]
 final = """
 {%- if os() == "macos" -%}
 set -eu
 agent="$HOME/Library/LaunchAgents/dev.mise.portless.plist"
+retired=no
 if [ -f "$agent" ]; then
   launchctl bootout "gui/$(id -u)/dev.mise.portless" 2>/dev/null || true
   rm -f "$agent"
+  retired=yes
 fi
 cd "$HOME"
 node="$(mise which node)"
 entry="$(mise where npm:portless)/node_modules/portless/dist/cli.js"
 plist=/Library/LaunchDaemons/sh.portless.proxy.plist
 recorded="$(/usr/libexec/PlistBuddy -c 'Print :ProgramArguments:0' "$plist" 2>/dev/null || true) $(/usr/libexec/PlistBuddy -c 'Print :ProgramArguments:1' "$plist" 2>/dev/null || true)"
-if [ "$recorded" != "$node $entry" ] || ! launchctl print system/sh.portless.proxy >/dev/null 2>&1; then
+if [ "$retired" = yes ] || [ "$recorded" != "$node $entry" ] || ! launchctl print system/sh.portless.proxy >/dev/null 2>&1; then
   "$node" "$entry" service install
 fi
 {%- else -%}
