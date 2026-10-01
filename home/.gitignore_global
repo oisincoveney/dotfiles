@@ -1,1 +1,3 @@
 **/.claude/settings.local.json
+# macOS Finder metadata. An untracked one makes `mise bootstrap repos` refuse a checkout.
+.DS_Store
