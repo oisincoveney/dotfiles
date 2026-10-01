@@ -125,6 +125,9 @@ postgres = "17"
 "npm:portless" = "0.15.6"
 # `mas` backs the [bootstrap.packages] "mas:" entries below.
 mas = "latest"
+# Agent multiplexer. Keep in step with the netcup server (infra hosts/netcup/herdr.nix):
+# a protocol mismatch makes Herdr offer to replace the remote server.
+herdr = "0.9.3"
 
 [settings]
 idiomatic_version_file_enable_tools = []
