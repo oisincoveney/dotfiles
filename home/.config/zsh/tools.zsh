@@ -81,7 +81,10 @@ _evalcache() {
 # this axis, instead of a stack of near-identical `if command -v X` blocks.
 # mise FIRST — it puts starship/zoxide/atuin/… on PATH, so their inits below can
 # actually find them (they're mise-managed now, not brew/always-on-PATH).
-_evalcache mise activate zsh
+# Not cached: `mise activate` prints the current PATH as a literal, so a cached
+# copy resets every new shell to the PATH of the shell that built the cache and
+# drops whatever the parent process prepended (a venv, momo-agent's gh).
+eval "$(mise activate zsh)"
 _evalcache starship init zsh
 _evalcache zoxide init zsh
 # gwq: git-worktree manager (replaces wtp). Its completion doubles as the shell
