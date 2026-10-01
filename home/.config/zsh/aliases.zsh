@@ -120,6 +120,16 @@ alias wip="commit wip"
 #                           e.g. `srt "claude --dangerously-skip-permissions"`, restrictions in ~/.srt-settings.json
 #   • container-use / cu  — run the agent inside a disposable dagger dev container
 #   • nono <cmd>          — capability-based sandbox shell (mac; profile-driven)
-alias cc="env CLAUDE_CODE_NO_FLICKER=1 claude --dangerously-skip-permissions"
-alias co="codex --dangerously-bypass-approvals-and-sandbox"
+#
+# Agents publish to GitHub as the momo-momokaya[bot] App: `momo-agent` gives the
+# agent the Momo Git identity, credentials, and gh. `herdr agent start` types the
+# bare agent name at the prompt, so the plain names are wrapped too. Set up once
+# with `mise run momo:setup` (see ~/dev/agent/docs/agent-identity.md).
+if (( $+commands[momo-agent] )); then
+  _momo="momo-agent "
+  alias claude="momo-agent claude" codex="momo-agent codex" pi="momo-agent pi" omp="momo-agent omp"
+fi
+alias cc="${_momo}env CLAUDE_CODE_NO_FLICKER=1 claude --dangerously-skip-permissions"
+alias co="${_momo}codex --dangerously-bypass-approvals-and-sandbox"
+unset _momo
 alias ki="kimi --yolo"

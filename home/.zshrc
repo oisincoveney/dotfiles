@@ -19,6 +19,10 @@ for _mod in path options history plugins completion tools keybindings aliases; d
 done
 unset _mod
 
+# An agent started by momo-agent keeps its gh wrapper first; mise activation
+# above reorders PATH. See ~/dev/agent/docs/agent-identity.md.
+[[ -n ${MOMO_AGENT_BIN-} ]] && path=("$MOMO_AGENT_BIN" $path)
+
 # Machine-local env vars, tokens, and one-off overrides. Not committed
 # (this dotfiles repo is public); see ~/.config/zsh/secrets.zsh.
 [[ -r "$ZDOTDIR_CONF/secrets.zsh" ]] && source "$ZDOTDIR_CONF/secrets.zsh"
