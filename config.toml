@@ -13,11 +13,14 @@
 # `cza` runs it. A brand-new host needs two runs: the first clones ~/dev/agent,
 # and the second loads that system config and installs the agent harness.
 
-# Git identity for ~/.gitconfig. Override per machine with GIT_AUTHOR_NAME /
-# GIT_AUTHOR_EMAIL; otherwise these portable defaults apply.
+# Personal Git identity for ~/.gitconfig. Do not read GIT_AUTHOR_NAME or
+# GIT_AUTHOR_EMAIL here: agent sessions set them to momo-momokaya[bot], so a
+# `cza` run inside an agent would write the bot identity into ~/.gitconfig.
+# Agents get their identity from ~/.config/momo-agent/gitconfig, which includes
+# this file and replaces only [user] and the GitHub credentials.
 [vars]
-git_name = "{{ get_env(name='GIT_AUTHOR_NAME', default='Oisin Coveney') }}"
-git_email = "{{ get_env(name='GIT_AUTHOR_EMAIL', default='git@oisin.ee') }}"
+git_name = "Oisin Coveney"
+git_email = "git@oisin.ee"
 
 [tools]
 # ── override of an agent tool ──
@@ -40,7 +43,9 @@ lazygit = "latest"
 lazydocker = "latest"
 television = "latest"
 "github:Canop/broot" = "latest"
-mprocs = "latest"               # run parallel procs in split panes
+# dekit is mprocs renamed (v0.10.0). `dekit mprocs` runs an existing mprocs.yaml.
+# The aqua registry entry behind `mprocs` still expects the old asset names.
+"github:pvolok/dekit" = "latest" # run parallel procs in split panes
 # ── modern-unix drop-ins ──
 dust = "latest"
 duf = "latest"
