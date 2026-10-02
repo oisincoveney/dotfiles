@@ -14,10 +14,11 @@
 # and the second loads that system config and installs the agent harness.
 
 # Personal Git identity for ~/.gitconfig. Do not read GIT_AUTHOR_NAME or
-# GIT_AUTHOR_EMAIL here: agent sessions set them to momo-momokaya[bot], so a
-# `cza` run inside an agent would write the bot identity into ~/.gitconfig.
-# Agents get their identity from ~/.config/momo-agent/gitconfig, which includes
-# this file and replaces only [user] and the GitHub credentials.
+# GIT_AUTHOR_EMAIL here: a parent process can set them to momo-momokaya[bot],
+# so a `cza` run there would write the bot identity into ~/.gitconfig. Agents
+# keep this identity outside oisin-ee: ~/.config/momo-agent/gitconfig includes
+# this file, adds the Momo author only for oisin-ee remotes, and replaces the
+# GitHub credentials.
 [vars]
 git_name = "Oisin Coveney"
 git_email = "git@oisin.ee"

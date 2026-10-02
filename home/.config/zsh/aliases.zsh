@@ -121,10 +121,11 @@ alias wip="commit wip"
 #   • container-use / cu  — run the agent inside a disposable dagger dev container
 #   • nono <cmd>          — capability-based sandbox shell (mac; profile-driven)
 #
-# Agents publish to GitHub as the momo-momokaya[bot] App: `momo-agent` gives the
-# agent the Momo Git identity, credentials, and gh. `herdr agent start` types the
-# bare agent name at the prompt, so the plain names are wrapped too. Set up once
-# with `mise run momo:setup` (see ~/dev/agent/docs/agent-identity.md).
+# Agents start through `momo-agent`: in oisin-ee repositories an agent acts as the
+# momo-momokaya[bot] App, and in every other repository as your personal login.
+# Your own shells always use the personal login. `herdr agent start` types the
+# bare agent name at the prompt, so the plain names are wrapped too. `cza`
+# installs the App key (see ~/dev/agent/docs/agent-identity.md).
 if (( $+commands[momo-agent] )); then
   _momo="momo-agent "
   alias claude="momo-agent claude" codex="momo-agent codex" pi="momo-agent pi" omp="momo-agent omp"
