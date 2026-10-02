@@ -134,7 +134,7 @@ add-zsh-hook precmd _load_deferred_completions
 # --disable-up-arrow keeps the Up key as plain previous-line history. Cached.
 _evalcache atuin init zsh --disable-up-arrow
 
-# The agent harness (Claude Code, Codex, OMP, pi) installs through `mise bootstrap`
+# The agent harness (Claude Code, Codex, pi) installs through `mise bootstrap`
 # out of ~/dev/agent/agent-runtime.toml's [dotfiles] table. No shell-startup trigger and no
 # separate installer binary remains.
 

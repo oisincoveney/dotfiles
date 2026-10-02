@@ -128,7 +128,7 @@ alias wip="commit wip"
 # installs the App key (see ~/dev/agent/docs/agent-identity.md).
 if (( $+commands[momo-agent] )); then
   _momo="momo-agent "
-  alias claude="momo-agent claude" codex="momo-agent codex" pi="momo-agent pi" omp="momo-agent omp"
+  alias claude="momo-agent claude" codex="momo-agent codex" pi="momo-agent pi"
 fi
 alias cc="${_momo}env CLAUDE_CODE_NO_FLICKER=1 claude --dangerously-skip-permissions"
 alias co="${_momo}codex --dangerously-bypass-approvals-and-sandbox"
