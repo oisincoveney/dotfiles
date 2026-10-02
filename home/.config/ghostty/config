@@ -17,8 +17,6 @@ shell-integration-features = cursor,sudo,title
 window-padding-x = 14
 window-padding-y = 10
 window-padding-balance = true
-background-opacity = 0.95
-background-blur-radius = 20
 macos-titlebar-style = tabs
 macos-option-as-alt = true
 
