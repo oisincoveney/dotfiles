@@ -176,6 +176,9 @@ trusted_config_paths = ["/Users/oisin/dev"]
 "~/.profile" = { source = "home/.profile", mode = "symlink" }
 "~/.gitignore_global" = { source = "home/.gitignore_global", mode = "symlink" }
 
+# Cargo user config: stops the macOS object-file leak in target/ (see the file).
+"~/.cargo/config.toml" = { source = "home/.cargo/config.toml", mode = "symlink" }
+
 # Git identity comes from the environment or the defaults above.
 "~/.gitconfig" = { source = "home/.gitconfig.tera", mode = "template" }
 

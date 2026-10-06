@@ -1,0 +1,12 @@
+# Cargo defaults `split-debuginfo` to "unpacked" on macOS. Since Rust 1.88 each
+# build then leaves a new set of `*.rcgu.o` files in target/*/deps that nothing
+# removes (https://github.com/rust-lang/rust/issues/161824). "off" lets rustc
+# delete the objects after linking. "packed" also stops the leak, but it runs
+# dsymutil on every link (about 30 s for the Rondo API test binary).
+# "off" is already the Linux default, so this changes nothing there.
+# Remove this file when https://github.com/rust-lang/rust/pull/162561 ships.
+#
+# For a debugging session that needs source lines in lldb or backtraces, run:
+#   CARGO_PROFILE_DEV_SPLIT_DEBUGINFO=unpacked cargo ...
+[profile.dev]
+split-debuginfo = "off"
