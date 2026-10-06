@@ -1,0 +1,4 @@
+# Worktrunk (`wt`) user config. See https://worktrunk.dev/config/.
+# Repositories keep worktrees in repo-local .worktrees/, which the agent rules
+# require. Repositories declare their own remove hooks in .config/wt.toml.
+worktree-path = ".worktrees/{{ branch | sanitize }}"

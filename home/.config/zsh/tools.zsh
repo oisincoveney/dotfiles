@@ -87,10 +87,9 @@ _evalcache() {
 eval "$(mise activate zsh)"
 _evalcache starship init zsh
 _evalcache zoxide init zsh
-# gwq: git-worktree manager (replaces wtp). Its completion doubles as the shell
-# integration — with cd.launch_shell=false (see ~/.config/gwq/config.toml) it
-# defines the wrapper that makes `gwq cd`/`gwq add -s` change the current shell.
-_evalcache gwq completion zsh
+# Worktrunk (`wt`): git-worktree manager with lifecycle hooks. The shell
+# integration defines the wrapper that lets `wt switch` change the current shell.
+_evalcache wt config shell init zsh
 
 # zen kit: tree-nav (broot `br`), cheatsheets (navi, ctrl-g), command-fix
 # (pay-respects `f`), fuzzy switchboard (television).

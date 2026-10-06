@@ -87,15 +87,12 @@ projects() {
 # Parent navigation — `..` (one up) is built into zsh; add `...` for two up.
 alias ...='cd ../..'
 
-# Worktree manager (gwq). Each guarded; relies on `gwq completion zsh` in
-# tools.zsh to wire the in-shell `gwq cd` behavior. Keep aliases concise so
-# they stay discoverable next to the existing tool handles above.
-if command -v gwq >/dev/null 2>&1; then
-  alias gwl='gwq list'
-  alias gwls='gwq list -v'
-  alias gws='gwq status'
-  alias gwc='gwq cd'
-  alias gwg='gwq get'
+# Worktree manager (Worktrunk). `wt config shell init zsh` in tools.zsh wires
+# the in-shell `wt switch` behavior.
+if command -v wt >/dev/null 2>&1; then
+  alias gwl='wt list'
+  alias gwc='wt switch'
+  alias gwr='wt remove'
 fi
 
 # Git
