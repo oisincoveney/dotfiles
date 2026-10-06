@@ -125,10 +125,6 @@ java = "temurin-21"
 "npm:@getpaseo/cli" = "latest"
 supabase = "2.95.5"
 postgres = "17"
-# The machine-wide development proxy that the `portless` units below run. Keep
-# this pin equal to the `portless` devDependency of every repository that calls
-# `portless run`, so the proxy and its clients share one route-state format.
-"npm:portless" = "0.15.6"
 # `mas` backs the [bootstrap.packages] "mas:" entries below.
 mas = "latest"
 # Agent multiplexer. Keep in step with the netcup server (infra hosts/netcup/herdr.nix):
@@ -392,62 +388,4 @@ exec_stop = "/usr/bin/env sh -c 'exec tmux kill-server'"
 # dev.mise.tmux` remains the deliberate off switch.
 restart = "always"
 restart_sec = "2s"
-
-# ── One Portless development proxy per machine. Repositories only run
-#    `portless run`, which discovers this proxy through ~/.portless/proxy.port,
-#    so no checkout starts, stops, or reconfigures it. No Tailscale or Funnel
-#    sharing on either platform: the netcup edge is the only public path, and
-#    it keeps the SSO gate in front of development-only routes.
-#
-#    Linux: plain HTTP on port 1355, as a user unit (no root, no local CA). On
-#    netcup, Traefik owns port 443 and the edge
-#    (oisin-ee/infra hosts/netcup/rondo-dev-edge.nix) forwards
-#    https://<name>.momokaya.ee to this port, so the URL people open has no
-#    port. `localhost` serves agents on the box itself.
-#    The executable is the mise shim, so the unit runs the pinned version above.
-#    `working_directory` is home, so the shim resolves this global config and
-#    not the configuration of whichever project the user last opened.
-[bootstrap.linux.systemd.units.portless]
-description = "Portless development proxy"
-exec_start = "~/.local/share/mise/shims/portless proxy start --foreground --port 1355 --no-tls --tld localhost --tld momokaya.ee --skip-trust"
-working_directory = "~"
-restart = "always"
-restart_sec = "2s"
-
-# macOS: HTTPS on port 443, so https://<name>.localhost has no port. Only root
-#    can bind a loopback port below 1024 on macOS, and mise manages user
-#    LaunchAgents only, so this host runs Portless's own startup service
-#    (`portless service install`: the root LaunchDaemon sh.portless.proxy with
-#    the local CA). The service records absolute paths to node and to the
-#    portless entry script. The final hook below installs it from the pinned
-#    `npm:portless` and the `node/lts` alias, and reinstalls it only when the
-#    recorded paths differ or the job is not loaded, so sudo prompts only then.
-#    It also retires the earlier user LaunchAgent on port 1355
-#    (dev.mise.portless), which would otherwise answer beside the service.
-#    Both proxies share ~/.portless, and a stopping proxy deletes proxy.port
-#    and resets the TLS and TLD markers there, so retiring the agent always
-#    reinstalls the service, which rewrites them.
-[bootstrap.hooks]
-final = """
-{%- if os() == "macos" -%}
-set -eu
-agent="$HOME/Library/LaunchAgents/dev.mise.portless.plist"
-retired=no
-if [ -f "$agent" ]; then
-  launchctl bootout "gui/$(id -u)/dev.mise.portless" 2>/dev/null || true
-  rm -f "$agent"
-  retired=yes
-fi
-cd "$HOME"
-node="$(mise which node)"
-entry="$(mise where npm:portless)/node_modules/portless/dist/cli.js"
-plist=/Library/LaunchDaemons/sh.portless.proxy.plist
-recorded="$(/usr/libexec/PlistBuddy -c 'Print :ProgramArguments:0' "$plist" 2>/dev/null || true) $(/usr/libexec/PlistBuddy -c 'Print :ProgramArguments:1' "$plist" 2>/dev/null || true)"
-if [ "$retired" = yes ] || [ "$recorded" != "$node $entry" ] || ! launchctl print system/sh.portless.proxy >/dev/null 2>&1; then
-  "$node" "$entry" service install
-fi
-{%- else -%}
-true
-{%- endif -%}
-"""
 
