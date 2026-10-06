@@ -46,6 +46,7 @@ mise bootstrap --yes   # the `cza` alias in an interactive shell
 - Homebrew formulae, casks, fonts, and Mac App Store apps in `[bootstrap.packages]`
 - Neovim, tmux, ghostty, yazi, lazygit, btop, bat, starship, and the Catppuccin themes
 - The persistent tmux systemd user unit on Linux
+- The Portless development proxy: plain HTTP on port 1355 as a systemd user unit on Linux, and Portless's own HTTPS startup service on port 443 on macOS. The final bootstrap hook installs the macOS service and prompts for `sudo` only when the service is missing or records other tool paths
 
 ## Layout
 
