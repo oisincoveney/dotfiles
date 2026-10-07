@@ -442,7 +442,8 @@ if [ -f "$agent" ]; then
   retired=yes
 fi
 cd "$HOME"
-node="$(mise which node)"
+# `mise which node` names an alias such as node/lts; the plist records the resolved node path.
+node="$(realpath "$(mise which node)")"
 entry="$(mise where npm:portless)/node_modules/portless/dist/cli.js"
 plist=/Library/LaunchDaemons/sh.portless.proxy.plist
 recorded="$(/usr/libexec/PlistBuddy -c 'Print :ProgramArguments:0' "$plist" 2>/dev/null || true) $(/usr/libexec/PlistBuddy -c 'Print :ProgramArguments:1' "$plist" 2>/dev/null || true)"
