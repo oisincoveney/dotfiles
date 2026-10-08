@@ -138,7 +138,7 @@ mas = "latest"
 # Agent multiplexer. Keep in step with the netcup server (infra hosts/netcup/herdr.nix):
 # a protocol mismatch makes Herdr offer to replace the remote server.
 herdr = "0.9.3"
-"github:oisin-ee/wrangle" = "v0.2.0"
+"github:oisin-ee/wrangle" = "v0.2.1"
 
 [settings]
 idiomatic_version_file_enable_tools = []
