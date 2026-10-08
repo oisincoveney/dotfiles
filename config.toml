@@ -56,6 +56,10 @@ choose = "latest"
 hyperfine = "latest"
 # macOS only: tokei 14+ publishes no Linux binary, and Linux hosts carry no Rust toolchain.
 tokei = { version = "latest", os = ["macos"] }
+# macOS only: the Determinate Nix installer. Nix needs a root daemon and its own
+# APFS volume, so the final hook below runs this pinned binary once with sudo.
+# NixOS hosts get Nix from their system configuration.
+"github:DeterminateSystems/nix-installer" = { version = "3.23.1", bin = "nix-installer", os = ["macos"] }
 # ── charm + fetch (the sexy) ──
 fastfetch = "latest"
 "aqua:o2sh/onefetch" = "latest"
@@ -453,6 +457,11 @@ plist=/Library/LaunchDaemons/sh.portless.proxy.plist
 recorded="$(/usr/libexec/PlistBuddy -c 'Print :ProgramArguments:0' "$plist" 2>/dev/null || true) $(/usr/libexec/PlistBuddy -c 'Print :ProgramArguments:1' "$plist" 2>/dev/null || true)"
 if [ "$retired" = yes ] || [ "$recorded" != "$node $entry" ] || ! launchctl print system/sh.portless.proxy >/dev/null 2>&1; then
   "$node" "$entry" service install
+fi
+# Determinate Nix: install once, so sudo prompts only on a Mac without it.
+# Determinate Nixd owns upgrades after that (`sudo determinate-nixd upgrade`).
+if [ ! -x /nix/var/nix/profiles/default/bin/nix ]; then
+  sudo "$(mise which nix-installer)" install --no-confirm
 fi
 {%- endif %}
 # Herdr peers: netcup, momokaya-2 and the Mac reach each other (hosts in
