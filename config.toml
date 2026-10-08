@@ -156,6 +156,9 @@ trusted_config_paths = ["/Users/oisin/dev"]
 [bootstrap.repos]
 "~/.config/mise" = { url = "git@github.com:oisincoveney/dotfiles.git", ref = "main" }
 "~/dev/agent" = { url = "git@github.com:oisin-ee/agent.git", ref = "main" }
+# infra owns the agent-mesh peer list (modules/agent-host/peers.nix) that the
+# final hook reads for the Mac's authorized_keys.
+"~/dev/infra" = { url = "git@github.com:oisin-ee/infra.git", ref = "main" }
 "~/.local/share/tmux/oh-my-tmux" = { url = "https://github.com/gpakosz/.tmux.git" }
 
 # ── Dotfiles. `symlink-each` walks the TARGET tree to reconcile its recorded
@@ -431,7 +434,7 @@ restart_sec = "2s"
 #    and resets the TLS and TLD markers there, so retiring the agent always
 #    reinstalls the service, which rewrites them.
 [bootstrap.hooks]
-final = """
+final = '''
 {%- if os() == "macos" -%}
 set -eu
 agent="$HOME/Library/LaunchAgents/dev.mise.portless.plist"
@@ -470,12 +473,18 @@ if command -v herdr >/dev/null 2>&1; then
   done
 fi
 {%- if os() == "macos" %}
-# The Mac accepts the agent hosts' keys (infra owns the keys on the Linux hosts).
+# The Mac accepts every agent-mesh peer key but its own, from the one list in
+# infra (modules/agent-host/peers.nix); NixOS applies the same list on the
+# Linux hosts.
 touch "$HOME/.ssh/authorized_keys"
 chmod 600 "$HOME/.ssh/authorized_keys"
+own="$(cat "$HOME/.ssh/id_ed25519.pub" 2>/dev/null || true)"
+sed -n 's/^ *publicKey = "\(.*\)";$/\1/p' "$HOME/dev/infra/modules/agent-host/peers.nix" |
 while IFS= read -r key; do
-  [ -n "$key" ] && ! grep -qxF "$key" "$HOME/.ssh/authorized_keys" && printf '%s\n' "$key" >> "$HOME/.ssh/authorized_keys"
-done < "$HOME/.config/mise/home/.ssh/authorized_keys.peers"
+  if [ -n "$key" ] && [ "$key" != "$own" ] && ! grep -qxF "$key" "$HOME/.ssh/authorized_keys"; then
+    printf '%s\n' "$key" >> "$HOME/.ssh/authorized_keys"
+  fi
+done
 {%- endif %}
-"""
+'''
 
