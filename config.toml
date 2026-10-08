@@ -450,8 +450,32 @@ recorded="$(/usr/libexec/PlistBuddy -c 'Print :ProgramArguments:0' "$plist" 2>/d
 if [ "$retired" = yes ] || [ "$recorded" != "$node $entry" ] || ! launchctl print system/sh.portless.proxy >/dev/null 2>&1; then
   "$node" "$entry" service install
 fi
-{%- else -%}
-true
-{%- endif -%}
+{%- endif %}
+# Herdr peers: netcup, momokaya-2 and the Mac reach each other (hosts in
+# home/.ssh/config.tera). Add each missing peer once; `herdr machine add` is
+# not idempotent, so match on the saved SSH target first.
+if command -v herdr >/dev/null 2>&1; then
+  case "$(hostname -s)" in
+    netcup) self=netcup-dev ;;
+    momokaya-2) self=momokaya-2-dev ;;
+    *) self=oisin-mac ;;
+  esac
+  saved="$(herdr machine list 2>/dev/null | cut -f3)"
+  for peer in netcup-dev:netcup momokaya-2-dev:momokaya-2 oisin-mac:local-mac; do
+    target="${peer%%:*}"
+    [ "$target" = "$self" ] && continue
+    printf '%s\n' "$saved" | grep -qx "$target" && continue
+    herdr machine add "$target" --label "${peer#*:}" --remote-session default \
+      || echo "herdr: $target is not reachable yet; rerun mise bootstrap" >&2
+  done
+fi
+{%- if os() == "macos" %}
+# The Mac accepts the agent hosts' keys (infra owns the keys on the Linux hosts).
+touch "$HOME/.ssh/authorized_keys"
+chmod 600 "$HOME/.ssh/authorized_keys"
+while IFS= read -r key; do
+  [ -n "$key" ] && ! grep -qxF "$key" "$HOME/.ssh/authorized_keys" && printf '%s\n' "$key" >> "$HOME/.ssh/authorized_keys"
+done < "$HOME/.config/mise/home/.ssh/authorized_keys.peers"
+{%- endif %}
 """
 
