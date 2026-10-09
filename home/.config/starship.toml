@@ -16,8 +16,6 @@ $git_status\
 [](fg:blue bg:teal)\
 $nodejs$bun$rust$golang$python\
 [](fg:teal)\
-${custom.npm_package}\
-${custom.npm_scripts}\
 $fill\
 $git_metrics\
 $kubernetes\
@@ -149,24 +147,6 @@ command = "sed -n 's/^project *= *//p' ~/.config/gcloud/configurations/config_de
 symbol = "󱇶 "
 style = "peach"
 format = '[$symbol$output]($style) '
-shell = ['bash', '--noprofile', '--norc']
-
-# custom npm_package: show package.json identity (name@version) instead of a bare version.
-[custom.npm_package]
-detect_files = ['package.json']
-command = '''node -e 'const p=require("./package.json");process.stdout.write(p.name+"@"+p.version)' 2>/dev/null'''
-symbol = "󰏗 "
-style = "bg:teal fg:crust"
-format = '[ $symbol $output ]($style)'
-shell = ['bash', '--noprofile', '--norc']
-
-# custom npm_scripts: bounded count of package.json scripts (no per-prompt enumeration of names).
-[custom.npm_scripts]
-detect_files = ['package.json']
-command = '''node -e 'const p=require("./package.json");process.stdout.write(String(Object.keys(p.scripts||{}).length))' 2>/dev/null'''
-symbol = "▶ "
-style = "bg:teal fg:crust"
-format = '[ $symbol $output scripts ]($style)'
 shell = ['bash', '--noprofile', '--norc']
 
 [terraform]
